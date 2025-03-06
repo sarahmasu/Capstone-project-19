@@ -26,7 +26,7 @@ def read_data():
             check_username.append(split_lines[0])
             check_passwd.append(split_lines[1])
     file.close()
-    # Create a dictionay to check the user credentials
+    # Create a dictionary to check the user credentials
     for i, j in zip(check_username, check_passwd):
         user.update({i: j})
 
@@ -272,6 +272,12 @@ def register():
                     add_file.writelines(f"\n{new_user}, {confirm_new_passwd}")
                     print("New user and password saved!")
                     break
+
+                elif new_passwd == "":
+                    print(f"\nPlease enter a password for the new user.")
+                    new_passwd = input("Enter new user's password: ").lower()
+                    confirm_new_passwd = input("Confirm password: ").lower()
+
     # user.update({new_user: new_passwd})
 
 
@@ -285,7 +291,7 @@ def add_task():
         # the description and when it's due
         user_task = input("\nEnter the user you want to assign a task to: ")
         task_title = input("Enter the title of the task: ")
-        task_description = input("Enter the decription of the task: ")
+        task_description = input("Enter the description of the task: ")
         task_due_date = input("Enter the due date of the task (dd Mon YYYY): ")
 
         # Get current date and format it to dd/MMM/YYYY
@@ -555,7 +561,7 @@ if __name__ == "__main__":
     - https://www.youtube.com/watch?v=MeMCBdnhvQs
     - https://www.w3resource.com/python-exercises/tkinter/python-tkinter-layout-management-exercise-3.php
 
-    Colour pallete
+    Colour palette
     - https://za.pinterest.com/pin/330310953935935490/
 
     Clearing the widgets:
