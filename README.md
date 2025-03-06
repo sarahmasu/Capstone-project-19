@@ -6,10 +6,15 @@
 
 1. [Introduction](#introduction)
 2. [Project Description](#project-description)
-    [Registering Users](#reg_users)
-    [Adding Tasks](#add_tasks)
-    [Viewing Tasks](#view_tasks)
-    [Statistics](#view_stats)
+
+    2.1. [Registering Users](#reg_users)
+
+    2.2. [Adding Tasks](#add_tasks)
+
+    2.3. [Viewing Tasks](#view_tasks)
+
+    2.4. [Statistics](#view_stats)
+    
 3. [References](#references)
 
 This was a bootcamp capstone project I wanted to revisit. I've added both the old code, updated code, and the GUI using Tkinter.
