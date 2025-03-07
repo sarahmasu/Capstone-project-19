@@ -36,11 +36,9 @@ def login(username, passwd):
     if username in user and passwd == user[username]:
         print("Access granted!")
 
-    # If the user doesn't enter any information in the textboxes
-    # display error message.
-
     # else display error message
     else:
+        
         while (
             username in user
             and passwd != user[username]
@@ -48,12 +46,17 @@ def login(username, passwd):
             and passwd == user[username]
         ):
             print("Access denied! Username or password is incorrect. Please try again.")
+
+            # Request user to re-enter username and password
             username = input("Enter a username: ").lower()
             passwd = input("Enter the password: ").lower()
 
             if username in user and passwd == user[username]:
                 print("Access granted!")
                 break
+            
+            # If the user doesn't enter any information in the textboxes
+            # display error message.
             elif username == "" or passwd == "":
                 print("Please enter a username and/or password!")
 
@@ -220,7 +223,7 @@ def stats():
 def menu(username):
     if username == "admin":
         while True:
-            
+
             # Present the menu to the user and
             # make sure that the user input is converted to lower case.
 
