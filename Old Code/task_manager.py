@@ -32,7 +32,7 @@ def read_data():
 
 
 def login(username, passwd):
-
+    # if the username and the password is correct, proceed.
     if username in user and passwd == user[username]:
         print("Access granted!")
 
@@ -197,6 +197,7 @@ def display_output(
 
 # ====Statistics Section====
 
+
 def stats():
     # Reads the task.txt
     # Counts the number of tasks
@@ -211,7 +212,7 @@ def stats():
     with open("user.txt", "r") as read:
         total_user = len(read.readlines())
         print(f"Total number of users: {total_user}")
-        
+
 
 # ====Menu Section====
 
@@ -219,8 +220,10 @@ def stats():
 def menu(username):
     if username == "admin":
         while True:
+            
             # Present the menu to the user and
             # make sure that the user input is converted to lower case.
+
             menu = input(
                 """Select one of the following options:
         r - register a user
@@ -233,24 +236,32 @@ def menu(username):
             ).lower()
 
             if menu == "r":
+
+                print(f"\n")
                 Reg_users()
 
             elif menu == "a":
 
+                print(f"\n")
                 add_task()
 
             elif menu == "va":
 
-                view_tasks(menu)
+                print(f"\n")
+                view_tasks(menu, username)
 
             elif menu == "vm":
 
-                view_tasks(menu)
+                print(f"\n")
+                view_tasks(menu, username)
 
             elif menu == "s":
+
+                print(f"\n")
                 stats()
 
             elif menu == "e":
+
                 print("Goodbye!!!")
                 exit()
 
@@ -259,8 +270,6 @@ def menu(username):
 
     else:
         while True:
-            # Present the menu to the user and
-            # make sure that the user input is converted to lower case.
             menu = input(
                 """Select one of the following options:
         a - add task
@@ -271,15 +280,22 @@ def menu(username):
             ).lower()
 
             if menu == "a":
+
+                print(f"\n")
                 add_task()
 
             elif menu == "va":
+
+                print(f"\n")
                 view_tasks(menu, username)
 
             elif menu == "vm":
+
+                print(f"\n")
                 view_tasks(menu, username)
 
             elif menu == "e":
+
                 print("Goodbye!!!")
                 exit()
 
@@ -292,14 +308,16 @@ def menu(username):
 if __name__ == "__main__":
 
     read_data()
-    # if the username and the password is correct, proceed.
+
     # Request the user to enter the username
 
     username = input("Enter the username: ").lower()
     passwd = input(f"Enter the password: ").lower()
 
+    # Checks Credentials
     login(username, passwd)
 
+    # Loads the menu
     menu(username)
 
 # ======= References ========
