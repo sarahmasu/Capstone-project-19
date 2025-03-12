@@ -95,8 +95,6 @@ def menu(username):
         reg_btn = tk.Button(
             frame,
             text="Register a user",
-            variable=var,
-            value=0,
             bg="#333333",
             fg="#ffffff",
             font=("Arial", 12),
@@ -105,8 +103,6 @@ def menu(username):
         add_btn = tk.Button(
             frame,
             text="Add task",
-            variable=var,
-            value=0,
             bg="#333333",
             fg="#ffffff",
             font=("Arial", 12),
@@ -115,8 +111,6 @@ def menu(username):
         va_btn = tk.Button(
             frame,
             text="View all tasks",
-            variable=var,
-            value=0,
             bg="#333333",
             fg="#ffffff",
             font=("Arial", 12),
@@ -125,8 +119,6 @@ def menu(username):
         vm_btn = tk.Button(
             frame,
             text="View my tasks",
-            variable=var,
-            value=0,
             bg="#333333",
             fg="#ffffff",
             font=("Arial", 12),
@@ -135,8 +127,6 @@ def menu(username):
         stats_btn = tk.Button(
             frame,
             text="Statistics",
-            variable=var,
-            value=0,
             bg="#333333",
             fg="#ffffff",
             font=("Arial", 12),
