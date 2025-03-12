@@ -137,15 +137,15 @@ def menu(username):
             font=("Arial", 11),
         )
 
-        '''close_btn = tk.Button(
+        close_btn = tk.Button(
             frame,
             text="Close",
             bg="#333333",
             fg="#ffffff",
             width=15,
             font=("Arial", 11),
-            command= menu_win.destroy(),
-        )'''
+            command= menu_win.destroy,
+        )
 
         # Grids
         title_lbl.grid(row=0, column=0, columnspan=2, pady=25, sticky="news")
@@ -157,7 +157,7 @@ def menu(username):
         vm_btn.grid(row=5, column=0, pady=5, padx=10, sticky="W")
         stats_btn.grid(row=6, column=0, pady=5, padx=10, sticky="W")
 
-        #close_btn.grid(row=7, column=0, pady=20, sticky="news")
+        close_btn.grid(row=7, column=0, pady=20, sticky="news")
 
         frame.pack()
         # Remove in case an error arises
@@ -493,4 +493,7 @@ if __name__ == "__main__":
 
     Changing the size of buttons:
     - https://www.tutorialspoint.com/how-do-i-change-button-size-in-python-tkinter
+
+    Fixed the closing error for the main menu
+    - https://stackoverflow.com/questions/21645716/cannot-invoke-button-command-application-has-been-destroyed
 """
