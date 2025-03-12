@@ -78,7 +78,7 @@ def menu(username):
         text=f"Welcome, {username}",
         bg="#333333",
         fg="#46a094",
-        font=("Arial", 30),
+        font=("Arial", 24),
     )
 
     menu_lbl = tk.Label(
@@ -99,6 +99,7 @@ def menu(username):
             fg="#ffffff",
             width=15,
             font=("Arial", 10),
+            command=lambda: register(),
         )
 
         add_btn = tk.Button(
@@ -144,7 +145,7 @@ def menu(username):
             fg="#ffffff",
             width=15,
             font=("Arial", 11),
-            command= menu_win.destroy,
+            command=menu_win.destroy,
         )
 
         # Grids
@@ -160,50 +161,112 @@ def menu(username):
         close_btn.grid(row=7, column=0, pady=20, sticky="news")
 
         frame.pack()
-        # Remove in case an error arises
+
         menu_win.mainloop()
 
 
-# ====Register Section====
+# ====Register Function====
 
 
 def register():
 
+    # Creates a child window
+    reg_win = tk.Toplevel()
+    reg_win.title("Register")
+    reg_win.config(bg="#333333")
+    frame = tk.Frame(reg_win, bg="#333333")
+
+    reg_label = tk.Label(
+        frame,
+        text="Please enter the following:",
+        bg="#333333",
+        fg="#ffffff",
+        font=("Arial", 12),
+    )
+
     # Request user to enter a user's username and password
-    new_user = input("\nEnter new user's username: ").lower()
-    new_passwd = input("Enter new user's password: ").lower()
+    user_lbl = tk.Label(
+        frame, text="Username: ", bg="#333333", fg="#ffffff", font=("Arial", 12)
+    )
+    passwd_lbl = tk.Label(
+        frame, text="Password: ", bg="#333333", fg="#ffffff", font=("Arial", 12)
+    )
+
+    new_user = tk.Entry(frame, font=("Arial", 12))
+    new_passwd = tk.Entry(frame, show="*", font=("Arial", 12))
 
     # Request the user to re-enter the password
-    confirm_new_passwd = input("Confirm password: ").lower()
+    confirm_lbl = tk.Label(
+        frame, text="Confirm password: ", bg="#333333", fg="#ffffff", font=("Arial", 12)
+    )
+    confirm_new_passwd = tk.Entry(frame, show="*", font=("Arial", 12))
 
-    # Check whether the passwords match
+    # Submits user to user.txt file
+    submit_btn = tk.Button(
+        frame,
+        text="Submit",
+        font=("Arial", 12),
+        command=lambda: submit_user(
+            new_user.get().lower(),
+            new_passwd.get().lower(),
+            confirm_new_passwd.get().lower(),
+        ),
+    )
+
+    # Clears textbox
+    clear_btn = tk.Button(
+        frame,
+        text="Clear",
+        font=("Arial", 12),
+        command=lambda: clear(reg_win),
+    )
+
+    # Method check whether the passwords match
     # If the passwords match append the new user and their password to the user.txt file
-    with open("user.txt", "a", encoding="utf-8") as add_file:
-        if new_passwd == confirm_new_passwd:
-            add_file.writelines(f"\n{new_user}, {confirm_new_passwd}")
-            print("New user and password saved!")
+    def submit_user(new_user, new_passwd, confirm_new_passwd):
+        with open("user.txt", "a", encoding="utf-8") as add_file:
 
-        # Else request the user to re-enter the passwords until they match
-        else:
-            while new_passwd != confirm_new_passwd:
-                print("\nThe passwords do not match, please try again.")
-                new_passwd = input("Enter new user's password: ").lower()
-                confirm_new_passwd = input("Confirm password: ").lower()
+            if new_passwd == confirm_new_passwd:
+                # fix this: does not write to file
+                add_file.writelines(f"\n{new_user}, {confirm_new_passwd}")
+                messagebox.showinfo("Success", "New user successfully saved!")
+                reg_win.destroy()
 
-                if new_passwd == confirm_new_passwd:
-                    add_file.writelines(f"\n{new_user}, {confirm_new_passwd}")
-                    print("New user and password saved!")
-                    break
+            # If the user enters nothing for either password or confirm password textbox
+            # display warning
+            elif (
+                new_passwd == ""
+                or confirm_new_passwd == ""
+                or (new_passwd == "" and confirm_new_passwd == "")
+            ):
+                messagebox.showwarning(
+                    "No Input", "Please enter a password for the new user."
+                )
 
-                elif new_passwd == "":
-                    print(f"\nPlease enter a password for the new user.")
-                    new_passwd = input("Enter new user's password: ").lower()
-                    confirm_new_passwd = input("Confirm password: ").lower()
+            # Else request the user to re-enter the passwords until they match
+            else:
+                messagebox.showerror(
+                    "Error", "The passwords do not match! Please try again!"
+                )
 
-    # user.update({new_user: new_passwd})
+    # Grids
+    frame.grid(row=0, column=0)
+    reg_label.grid(columnspan=2, pady=25)
+
+    user_lbl.grid(row=1, column=0, pady=5)
+    new_user.grid(row=1, column=1, padx=5, pady=10)
+
+    passwd_lbl.grid(row=2, column=0, pady=5)
+    new_passwd.grid(row=2, column=1, padx=5, pady=10)
+
+    confirm_lbl.grid(row=3, column=0, pady=5)
+    confirm_new_passwd.grid(row=3, column=1, padx=5, pady=10)
+
+    submit_btn.grid(row=4, column=0, padx=20, pady=15)
+    clear_btn.grid(row=4, column=1, padx=5, pady=15)
 
 
-# ====Add tasks Section====
+# ====Add tasks Function====
 
 
 def add_task():
@@ -318,12 +381,15 @@ def view_tasks(menu):
 # ====Clear text====
 
 
-def clear():
+def clear(root):
 
     # Clears all entry boxes
-    for widget in frame.winfo_children():
+    for widget in root.winfo_children():
         if isinstance(widget, tk.Entry):
             widget.delete(0, "end")
+        elif not isinstance(widget, tk.Entry):
+            clear(widget)
+
 
 # ===============Main Function===============
 
@@ -366,7 +432,7 @@ if __name__ == "__main__":
     clear_btn = tk.Button(
         frame,
         text="Clear",
-        command=lambda: clear(),
+        command=lambda: clear(root),
         bg="#46a094",
         fg="#ffffff",
         font=("Arial", 14),
@@ -381,8 +447,8 @@ if __name__ == "__main__":
     passwd_lbl.grid(row=2, column=0, pady=5)
     passwd_entry.grid(row=2, column=1, padx=5, pady=10)
 
-    login_btn.grid(row=3, column=0, columnspan=1, padx=15, pady=15)
-    clear_btn.grid(row=3, column=1, columnspan=2, padx=15, pady=15)
+    login_btn.grid(row=3, column=0, columnspan=1, padx=20, pady=15)
+    clear_btn.grid(row=3, column=1, columnspan=2, padx=5, pady=15)
 
     # .pack() is responsive, looks better than grid
     frame.pack()
@@ -496,4 +562,13 @@ if __name__ == "__main__":
 
     Fixed the closing error for the main menu
     - https://stackoverflow.com/questions/21645716/cannot-invoke-button-command-application-has-been-destroyed
+
+    Fixed an error caused by frame and pack
+    - https://stackoverflow.com/questions/23584325/cannot-use-geometry-manager-pack-inside
+
+    Solves the frame issue for TopLevel Widgets
+    - https://stackoverflow.com/questions/52950267/tkinter-frame-in-toplevel-displayed-in-parent
+
+    Solves the issue of clearing all entry window
+    - https://stackoverflow.com/questions/69866188/python-is-there-a-way-to-clear-all-entry-boxes-in-a-tkinter-ui-in-one-line
 """
