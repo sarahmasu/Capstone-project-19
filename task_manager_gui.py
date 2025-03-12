@@ -25,7 +25,7 @@ def read_data():
             split_lines = line.strip().split(", ")
             check_username.append(split_lines[0])
             check_passwd.append(split_lines[1])
-    file.close()
+    
     # Create a dictionary to check the user credentials
     for i, j in zip(check_username, check_passwd):
         user.update({i: j})
@@ -73,17 +73,9 @@ def menu(username):
     menu_win.configure(bg="#333333")
     frame = tk.Frame(bg="#333333")
 
-    menu_option = [
-        "r - register a user",
-        "a - add task",
-        "va - view all tasks",
-        "vm - view my tasks",
-        "s - statistics",
-    ]
-
     if username == "admin":
         title_lbl = tk.Label(
-            menu_win,
+            frame,
             text=f"Welcome, {username}",
             bg="#333333",
             fg="#46a094",
@@ -91,19 +83,17 @@ def menu(username):
         )
 
         menu_lbl = tk.Label(
-            menu_win,
+            frame,
             text="Select one of the following options:",
             bg="#333333",
             fg="#ffffff",
             font=("Arial", 14),
         )
 
-        v = tk.StringVar(menu_win, f"{menu_option[0]}")
-
         var = tk.IntVar()
 
-        reg_rbtn = tk.Radiobutton(
-            menu_win,
+        reg_btn = tk.Button(
+            frame,
             text="Register a user",
             variable=var,
             value=0,
@@ -112,8 +102,8 @@ def menu(username):
             font=("Arial", 12),
         )
 
-        add_rbtn = tk.Radiobutton(
-            menu_win,
+        add_btn = tk.Button(
+            frame,
             text="Add task",
             variable=var,
             value=0,
@@ -122,8 +112,8 @@ def menu(username):
             font=("Arial", 12),
         )
 
-        va_rbtn = tk.Radiobutton(
-            menu_win,
+        va_btn = tk.Button(
+            frame,
             text="View all tasks",
             variable=var,
             value=0,
@@ -132,8 +122,8 @@ def menu(username):
             font=("Arial", 12),
         )
 
-        vm_rbtn = tk.Radiobutton(
-            menu_win,
+        vm_btn = tk.Button(
+            frame,
             text="View my tasks",
             variable=var,
             value=0,
@@ -142,8 +132,8 @@ def menu(username):
             font=("Arial", 12),
         )
 
-        stats_rbtn = tk.Radiobutton(
-            menu_win,
+        stats_btn = tk.Button(
+            frame,
             text="Statistics",
             variable=var,
             value=0,
@@ -156,91 +146,15 @@ def menu(username):
         title_lbl.grid(row=0, column=0, columnspan=2, pady=25, sticky="news")
         menu_lbl.grid(row=1, column=0, pady=5)
 
-        reg_rbtn.grid(row=2, column=0,pady=5, sticky="W")
-        add_rbtn.grid(row=3, column=0,pady=5, sticky="W")
-        va_rbtn.grid(row=4, column=0,pady=5, sticky="W")
-        vm_rbtn.grid(row=5, column=0,pady=5, sticky="W")
-        stats_rbtn.grid(row=6, column=0,pady=5, sticky="W")
+        reg_btn.grid(row=2, column=0,pady=5, sticky="W")
+        add_btn.grid(row=3, column=0,pady=5, sticky="W")
+        va_btn.grid(row=4, column=0,pady=5, sticky="W")
+        vm_btn.grid(row=5, column=0,pady=5, sticky="W")
+        stats_btn.grid(row=6, column=0,pady=5, sticky="W")
 
-    '''while True:
-        # Present the menu to the user and
-        # make sure that the user input is converted to lower case.
-        if username == "admin":
-
-            ''menu = input(
-                """Select one of the following options:
-        r - register a user
-        a - add task
-        va - view all tasks
-        vm - view my tasks
-        s - statistics
-        e - exit
-        : """
-            ).lower()
-
-            if menu == "r":
-                # Allows only user "admin" to add new users
-                if username == "admin":
-                    register()
-                else:
-                    print("Only admins are allowed to register new users.")
-
-            elif menu == "a":
-                add_task()
-
-            elif menu == "va":
-                view_tasks(menu)
-
-            elif menu == "vm":
-                view_tasks(menu)
-
-            elif menu == "s":
-                # Reads the task.txt
-                # Counts the number of tasks
-                # prints the total number of tasks in the file
-                # Reads the user.txt file, counts the number of users
-                # prints end results
-                with open("tasks.txt", "r") as read:
-                    total_tasks = len(read.readlines())
-                    print(f"Total number of tasks: {total_tasks}")
-
-                with open("user.txt", "r") as read:
-                    total_user = len(read.readlines())
-                    print(f"Total number of users: {total_user}")
-
-            elif menu == "e":
-                print("Goodbye!!!")
-                exit()
-
-            else:
-                print("You have made entered an invalid input. Please try again")''
-
-        else:
-            menu = input(
-                """Select one of the following options:
-    a - add task
-    va - view all tasks
-    vm - view my tasks
-    e - exit
-    : """
-            ).lower()
-
-        if menu == "a":
-            add_task()
-
-        elif menu == "va":
-            view_tasks(menu)
-
-        elif menu == "vm":
-            view_tasks(menu)
-
-        elif menu == "e":
-            print("Goodbye!!!")
-            exit()
-
-        else:
-            print("You have made entered an invalid input. Please try again")'''
-
+        frame.pack()
+        # Remove in case an error arises
+        root.mainloop()
 
 # ====Register Section====
 
