@@ -25,7 +25,7 @@ def read_data():
             split_lines = line.strip().split(", ")
             check_username.append(split_lines[0])
             check_passwd.append(split_lines[1])
-    
+
     # Create a dictionary to check the user credentials
     for i, j in zip(check_username, check_passwd):
         user.update({i: j})
@@ -38,6 +38,9 @@ def login(username, passwd):
     # if the username and the password is correct, proceed.
     if username in user and passwd == user[username]:
         messagebox.showinfo(title="Success", message="Access granted!")
+
+        # Closes the Login window
+        root.destroy()
         menu(username)
 
     # If the user doesn't enter any information in the textboxes
@@ -64,40 +67,38 @@ def login(username, passwd):
 
 def menu(username):
 
-    # Closes the Login window
-    root.destroy()
-
     menu_win = tk.Tk()
     menu_win.title("Task Manager")
-    menu_win.geometry("500x400")
+    # menu_win.geometry("500x400")
     menu_win.configure(bg="#333333")
     frame = tk.Frame(bg="#333333")
 
+    title_lbl = tk.Label(
+        frame,
+        text=f"Welcome, {username}",
+        bg="#333333",
+        fg="#46a094",
+        font=("Arial", 30),
+    )
+
+    menu_lbl = tk.Label(
+        frame,
+        text="Select one of the following options:",
+        bg="#333333",
+        fg="#ffffff",
+        font=("Arial", 12),
+    )
+
+    # Options
     if username == "admin":
-        title_lbl = tk.Label(
-            frame,
-            text=f"Welcome, {username}",
-            bg="#333333",
-            fg="#46a094",
-            font=("Arial", 30),
-        )
-
-        menu_lbl = tk.Label(
-            frame,
-            text="Select one of the following options:",
-            bg="#333333",
-            fg="#ffffff",
-            font=("Arial", 14),
-        )
-
-        var = tk.IntVar()
 
         reg_btn = tk.Button(
             frame,
-            text="Register a user",
+            text="Register user",
             bg="#333333",
             fg="#ffffff",
-            font=("Arial", 12),
+            width=15,
+            font=("Arial", 10),
         )
 
         add_btn = tk.Button(
@@ -105,7 +106,8 @@ def menu(username):
             text="Add task",
             bg="#333333",
             fg="#ffffff",
-            font=("Arial", 12),
+            width=15,
+            font=("Arial", 10),
         )
 
         va_btn = tk.Button(
@@ -113,7 +115,8 @@ def menu(username):
             text="View all tasks",
             bg="#333333",
             fg="#ffffff",
-            font=("Arial", 12),
+            width=15,
+            font=("Arial", 10),
         )
 
         vm_btn = tk.Button(
@@ -121,7 +124,8 @@ def menu(username):
             text="View my tasks",
             bg="#333333",
             fg="#ffffff",
-            font=("Arial", 12),
+            width=15,
+            font=("Arial", 11),
         )
 
         stats_btn = tk.Button(
@@ -129,22 +133,36 @@ def menu(username):
             text="Statistics",
             bg="#333333",
             fg="#ffffff",
-            font=("Arial", 12),
+            width=15,
+            font=("Arial", 11),
         )
+
+        '''close_btn = tk.Button(
+            frame,
+            text="Close",
+            bg="#333333",
+            fg="#ffffff",
+            width=15,
+            font=("Arial", 11),
+            command= menu_win.destroy(),
+        )'''
 
         # Grids
         title_lbl.grid(row=0, column=0, columnspan=2, pady=25, sticky="news")
         menu_lbl.grid(row=1, column=0, pady=5)
 
-        reg_btn.grid(row=2, column=0,pady=5, sticky="W")
-        add_btn.grid(row=3, column=0,pady=5, sticky="W")
-        va_btn.grid(row=4, column=0,pady=5, sticky="W")
-        vm_btn.grid(row=5, column=0,pady=5, sticky="W")
-        stats_btn.grid(row=6, column=0,pady=5, sticky="W")
+        reg_btn.grid(row=2, column=0, pady=5, padx=10, sticky="w")
+        add_btn.grid(row=3, column=0, pady=5, padx=10, sticky="W")
+        va_btn.grid(row=4, column=0, pady=5, padx=10, sticky="W")
+        vm_btn.grid(row=5, column=0, pady=5, padx=10, sticky="W")
+        stats_btn.grid(row=6, column=0, pady=5, padx=10, sticky="W")
+
+        #close_btn.grid(row=7, column=0, pady=20, sticky="news")
 
         frame.pack()
         # Remove in case an error arises
-        root.mainloop()
+        menu_win.mainloop()
+
 
 # ====Register Section====
 
@@ -306,7 +324,6 @@ def clear():
     for widget in frame.winfo_children():
         if isinstance(widget, tk.Entry):
             widget.delete(0, "end")
-
 
 # ===============Main Function===============
 
@@ -473,4 +490,7 @@ if __name__ == "__main__":
 
     Closing a window, without a button:
     - https://stackoverflow.com/questions/67295637/closing-current-window-when-opening-a-new-window-in-tkinter-python
+
+    Changing the size of buttons:
+    - https://www.tutorialspoint.com/how-do-i-change-button-size-in-python-tkinter
 """
