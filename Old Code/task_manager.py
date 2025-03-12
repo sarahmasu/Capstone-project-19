@@ -22,7 +22,7 @@ def read_data():
             split_lines = line.strip().split(", ")
             check_username.append(split_lines[0])
             check_passwd.append(split_lines[1])
-    file.close()
+            
     # Create a dictionary to check the user credentials
     for i, j in zip(check_username, check_passwd):
         user.update({i: j})
