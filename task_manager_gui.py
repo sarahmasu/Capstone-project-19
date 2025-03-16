@@ -223,12 +223,14 @@ def register():
 
     # Method check whether the passwords match
     # If the passwords match append the new user and their password to the user.txt file
+
+    # ===Submit User===
     def submit_user(new_user, new_passwd, confirm_new_passwd):
-        with open("user.txt", "a", encoding="utf-8") as add_file:
+        with open("user.txt", "a") as add_line:
 
             if new_passwd == confirm_new_passwd:
                 # fix this: does not write to file
-                add_file.writelines(f"\n{new_user}, {confirm_new_passwd}")
+                add_line.writelines(f"\n{new_user}, {confirm_new_passwd}")
                 messagebox.showinfo("Success", "New user successfully saved!")
                 reg_win.destroy()
 
