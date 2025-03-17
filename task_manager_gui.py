@@ -229,7 +229,7 @@ def register():
         with open("user.txt", "a") as add_line:
 
             if new_passwd == confirm_new_passwd:
-                # fix this: does not write to file
+
                 add_line.writelines(f"\n{new_user}, {confirm_new_passwd}")
                 messagebox.showinfo("Success", "New user successfully saved!")
                 reg_win.destroy()
@@ -272,26 +272,48 @@ def register():
 
 
 def add_task():
-    # Append user input and format the output to task.txt
-    with open("tasks.txt", "a", encoding="utf-8") as file:
-        # Request the user to assign other users tasks, the name of the task,
-        # the description and when it's due
-        user_task = input("\nEnter the user you want to assign a task to: ")
-        task_title = input("Enter the title of the task: ")
-        task_description = input("Enter the description of the task: ")
-        task_due_date = input("Enter the due date of the task (dd Mon YYYY): ")
 
-        # Get current date and format it to dd/MMM/YYYY
-        today = date.today()
-        current_date = today.strftime("%d %b %Y")
+    task_win = tk.Toplevel()
+    task_win.title("Add Task")
+    task_win.config(bg="#333333")
+    frame = tk.Frame(task_win, bg="#333333")
 
-        # The default value of task_complete
-        task_complete = "No"
+    instr_lbl = tk.Label(
+        frame,
+        text="Create a task, assign a user, and give a brief description of the task:",
+        bg="#333333",
+        fg="#ffffff",
+        font=("Arial", 12),
+    )
 
-        # Write to task.txt file
-        file.writelines(
-            f"\n{user_task}, {task_title}, {task_description}, {current_date}, {task_due_date}, {task_complete}"
-        )
+    user_lbl = tk.Label(
+        frame, text="Select a user: ", bg="#333333", fg="#ffffff", font=("Arial", 12)
+    )
+
+    user_cmbo = ttk.Combobox(frame, )
+
+    def submit_tasks(user_task, task_title, task_description, task_due_date):
+
+        # Append user input and format the output to task.txt
+        with open("tasks.txt", "a", encoding="utf-8") as file:
+            # Request the user to assign other users tasks, the name of the task,
+            # the description and when it's due
+            user_task = input("\nEnter the user you want to assign a task to: ")
+            task_title = input("Enter the title of the task: ")
+            task_description = input("Enter the description of the task: ")
+            task_due_date = input("Enter the due date of the task (dd Mon YYYY): ")
+
+            # Get current date and format it to dd/MMM/YYYY
+            today = date.today()
+            current_date = today.strftime("%d %b %Y")
+
+            # The default value of task_complete
+            task_complete = "No"
+
+            # Write to task.txt file
+            file.writelines(
+                f"\n{user_task}, {task_title}, {task_description}, {current_date}, {task_due_date}, {task_complete}"
+            )
 
 
 # ====Display output Section====
