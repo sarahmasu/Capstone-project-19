@@ -3,6 +3,7 @@ from datetime import date
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
+from tkcalendar import *
 
 # ====Dictionaries & Lists====
 # Store the usernames and passwords to be retrieved later on in the code
@@ -109,6 +110,7 @@ def menu(username):
             fg="#ffffff",
             width=15,
             font=("Arial", 10),
+            command=lambda: add_task(),
         )
 
         va_btn = tk.Button(
@@ -264,13 +266,15 @@ def register():
     confirm_lbl.grid(row=3, column=0, pady=5)
     confirm_new_passwd.grid(row=3, column=1, padx=5, pady=10)
 
-    submit_btn.grid(row=4, column=0, padx=20, pady=15)
-    clear_btn.grid(row=4, column=1, padx=5, pady=15)
+    submit_btn.grid(row=4, column=0, padx=15, pady=15)
+    clear_btn.grid(row=4, column=1, pady=15)
 
 
 # ====Add tasks Function====
 
 
+# Request the user to assign other users tasks, the name of the task the description and due date.
+# Saves the input into tasks.txt file.
 def add_task():
 
     task_win = tk.Toplevel()
@@ -278,43 +282,182 @@ def add_task():
     task_win.config(bg="#333333")
     frame = tk.Frame(task_win, bg="#333333")
 
+    # Get current date and format it to dd/MMM/YYYY
+    today = date.today()
+
+    # ----Labels----
     instr_lbl = tk.Label(
         frame,
-        text="Create a task, assign a user, and give a brief description of the task:",
+        text="Please complete the following:",
+        bg="#333333",
+        fg="#ffffff",
+        font=("Arial", 14),
+    )
+
+    user_lbl = tk.Label(
+        frame,
+        text="Select a user: ",
         bg="#333333",
         fg="#ffffff",
         font=("Arial", 12),
     )
 
-    user_lbl = tk.Label(
-        frame, text="Select a user: ", bg="#333333", fg="#ffffff", font=("Arial", 12)
+    title_lbl = tk.Label(
+        frame,
+        text="Task title: ",
+        bg="#333333",
+        fg="#ffffff",
+        font=("Arial", 12),
     )
 
-    user_cmbo = ttk.Combobox(frame, )
+    description_lbl = tk.Label(
+        frame,
+        text="Task description: ",
+        fg="#ffffff",
+        bg="#333333",
+        font=("Arial", 12),
+    )
 
-    def submit_tasks(user_task, task_title, task_description, task_due_date):
+    due_date_lbl = tk.Label(
+        frame,
+        text="Due date (dd Mon YYYY): ",
+        bg="#333333",
+        fg="#ffffff",
+        font=("Arial", 12),
+    )
+
+    current_date_lbl = tk.Label(
+        frame,
+        text="Current date: ",
+        bg="#333333",
+        fg="#ffffff",
+        font=("Arial", 12),
+    )
+
+    current_date = tk.Label(
+        frame,
+        text=f"{today.strftime("%d %b %Y")}",
+        bg="#333333",
+        fg="#ffffff",
+        font=("Arial", 12),
+    )
+
+    status_lbl = tk.Label(
+        frame,
+        text="Completion status: ",
+        bg="#333333",
+        fg="#ffffff",
+        font=("Arial", 12),
+    )
+
+    task_complete = tk.Label(
+        frame,
+        text="Incomplete",
+        bg="#333333",
+        fg="#ffffff",
+        font=("Arial", 12),
+    )
+
+    # ----Combobox----
+    select_user = tk.StringVar()
+
+    user_cmbo = ttk.Combobox(
+        frame, width=18, textvariable=select_user, font=("Arial", 12)
+    )
+
+    user_cmbo["values"] = tuple(check_username)
+
+    user_cmbo["state"] = "readonly"
+
+    user_task = select_user.get()
+
+    # ----Entry boxes----
+    task_title = tk.Entry(frame, width=20, font=("Arial", 12))
+
+    task_description = tk.Entry(frame, width=20, font=("Arial", 12))
+
+    task_due_date = tk.Entry(frame, width=20, font=("Arial", 12))
+
+    # ----Buttons----
+    save_task_btn = tk.Button(
+        frame,
+        text="Submit",
+        width= 10,
+        font=("Arial", 12),
+        command=lambda: submit_tasks(
+            user_task,
+            task_title.get(),
+            task_description.get(),
+            current_date.get(),
+            task_due_date.get(),
+            task_complete.get(),
+        ),
+    )
+
+    clear_btn = tk.Button(
+        frame,
+        text="Clear",
+        width=10,
+        font=("Arial", 12),
+        command=lambda: clear(task_win),
+    )
+
+    close_btn = tk.Button(
+        frame,
+        text="Close",
+        width=15,
+        font=("Arial", 12),
+        command=task_win.destroy,
+    )
+
+    # ----Grid layout---
+
+    frame.grid(row=0, column=0)
+    instr_lbl.grid(row=0, column=0, columnspan=2, pady=25, sticky= "we",)
+
+    user_lbl.grid(row=1, column=0, padx = 5, pady=5, sticky= "w",)
+    user_cmbo.grid(row=1, column=1, pady=5, padx=5, sticky="w",)
+
+    title_lbl.grid(row=2, column=0, padx = 5, pady=5, sticky= "w",)
+    task_title.grid(row=2, column=1, padx=5, pady=5, sticky="w",)
+
+    description_lbl.grid(row=3, column=0, padx = 5, pady=5, sticky= "w",)
+    task_description.grid(row=3, column=1, padx=5, pady=5, sticky="w",)
+
+    due_date_lbl.grid(row=4, column=0, padx = 5, pady=5, sticky= "w",)
+    task_due_date.grid(row=4, column=1, padx=5, pady=5, sticky="w",)
+
+    current_date_lbl.grid(row=5, column=0, padx = 5, pady=5, sticky= "w",)
+    current_date.grid(row=5, column=1, padx=5, pady=5, sticky="w",)
+
+    status_lbl.grid(row=6, column=0, padx = 5, pady=5, sticky= "w",)
+    task_complete.grid(row=6, column=1, padx=5, pady=5, sticky="w",)
+
+    save_task_btn.grid(row=7, column=0, padx=15, pady=5, sticky="we",)
+    clear_btn.grid(row=7, column=1, padx=15, pady=5, sticky="we",)
+    close_btn.grid(row=7, column=2, padx=15, pady=5, sticky="we",)
+
+    # ----Methods----
+
+    def submit_tasks(
+        user_task,
+        task_title,
+        task_description,
+        current_date,
+        task_due_date,
+        task_complete,
+    ):
 
         # Append user input and format the output to task.txt
         with open("tasks.txt", "a", encoding="utf-8") as file:
-            # Request the user to assign other users tasks, the name of the task,
-            # the description and when it's due
-            user_task = input("\nEnter the user you want to assign a task to: ")
-            task_title = input("Enter the title of the task: ")
-            task_description = input("Enter the description of the task: ")
-            task_due_date = input("Enter the due date of the task (dd Mon YYYY): ")
-
-            # Get current date and format it to dd/MMM/YYYY
-            today = date.today()
-            current_date = today.strftime("%d %b %Y")
-
-            # The default value of task_complete
-            task_complete = "No"
 
             # Write to task.txt file
             file.writelines(
                 f"\n{user_task}, {task_title}, {task_description}, {current_date}, {task_due_date}, {task_complete}"
             )
+        messagebox.showinfo(title="Success", text="Successfully saved task.")
 
+    task_win.mainloop()
 
 # ====Display output Section====
 
@@ -446,6 +589,7 @@ if __name__ == "__main__":
     login_btn = tk.Button(
         frame,
         text="Login",
+        width = 10,
         command=lambda: login(username.get().lower(), passwd_entry.get().lower()),
         bg="#46a094",
         fg="#ffffff",
@@ -456,6 +600,7 @@ if __name__ == "__main__":
     clear_btn = tk.Button(
         frame,
         text="Clear",
+        width = 5,
         command=lambda: clear(root),
         bg="#46a094",
         fg="#ffffff",
@@ -465,14 +610,14 @@ if __name__ == "__main__":
     # Grids
     login_lbl.grid(row=0, column=0, columnspan=2, pady=25, sticky="news")
 
-    user_lbl.grid(row=1, column=0, pady=5)
-    username.grid(row=1, column=1, padx=5, pady=10)
+    user_lbl.grid(row=1, column=0, pady=5, sticky="w")
+    username.grid(row=1, column=1, columnspan=2, padx=5, pady=10, sticky="w")
 
-    passwd_lbl.grid(row=2, column=0, pady=5)
-    passwd_entry.grid(row=2, column=1, padx=5, pady=10)
+    passwd_lbl.grid(row=2, column=0, pady=5, sticky="w")
+    passwd_entry.grid(row=2, column=1,columnspan=2, padx=5, pady=10, sticky="w")
 
-    login_btn.grid(row=3, column=0, columnspan=1, padx=20, pady=15)
-    clear_btn.grid(row=3, column=1, columnspan=2, padx=5, pady=15)
+    login_btn.grid(row=3, column=0, padx=5, pady=15,)
+    clear_btn.grid(row=3, column=1, padx=5, pady=15,)
 
     # .pack() is responsive, looks better than grid
     frame.pack()
@@ -595,4 +740,11 @@ if __name__ == "__main__":
 
     Solves the issue of clearing all entry window
     - https://stackoverflow.com/questions/69866188/python-is-there-a-way-to-clear-all-entry-boxes-in-a-tkinter-ui-in-one-line
+
+    Calendar: installation and creation of gui
+    - https://dev.to/zettasoft/how-to-make-a-calendar-using-python-tkinter-4ijj
+    - https://www.geeksforgeeks.org/create-a-date-picker-calendar-tkinter/
+
+    Alignment of widgets
+    - https://stackoverflow.com/questions/74418639/aligning-entries-buttons-with-tkinter
 """
