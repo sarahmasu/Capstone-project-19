@@ -140,7 +140,7 @@ def menu(username):
             fg="#ffffff",
             width=15,
             font=("Arial", 11),
-            command=lambda:stats()
+            command=lambda: stats(),
         )
 
         close_btn = tk.Button(
@@ -566,7 +566,21 @@ def add_task():
 def view_tasks(username, menu):
     view_tasks_win = tk.Toplevel()
     view_tasks_win.config(bg="#333333")
+    view_tasks_win.geometry("300x350")
     frame = tk.Frame(view_tasks_win, bg="#333333")
+
+    txt_bx = tk.Text(frame, width=45, height=15, wrap="word", font=("Arial", 8))
+
+    vert_scroll = ttk.Scrollbar(frame, orient="vertical", command=txt_bx.yview)
+    horizon_scroll = ttk.Scrollbar(frame, orient="horizontal", command=txt_bx.xview)
+
+    close_btn = tk.Button(
+        frame,
+        text="Close",
+        width=15,
+        font=("Arial", 12),
+        command=view_tasks_win.destroy,
+    )
 
     if menu == "View all tasks":
         view_tasks_win.title("View All Tasks")
@@ -578,19 +592,6 @@ def view_tasks(username, menu):
             bg="#333333",
             fg="#ffffff",
             font=("Arial", 12),
-        )
-
-        txt_bx = tk.Text(frame, width=50, wrap="word", font=("Arial", 8))
-
-        vert_scroll = ttk.Scrollbar(frame, orient="vertical", command=txt_bx.yview)
-        horizon_scroll = ttk.Scrollbar(frame, orient="horizontal", command=txt_bx.xview)
-
-        close_btn = tk.Button(
-            frame,
-            text="Close",
-            width=15,
-            font=("Arial", 12),
-            command=view_tasks_win.destroy,
         )
 
         # ---- Read File ----
@@ -629,21 +630,9 @@ def view_tasks(username, menu):
                     tk.END, "_________________________________________________\n"
                 )
 
-        # ---- Scrollbar ----
-        txt_bx["yscrollcommand"] = vert_scroll.set
-        txt_bx["xscrollcommand"] = horizon_scroll.set
-
         # ---- Grid layout ----
-        frame.grid(row=0, column=0)
 
         info_lbl.grid(row=0, column=0, columnspan=2, pady=10, sticky="we")
-
-        txt_bx.grid(row=1, column=0, sticky="news")
-
-        vert_scroll.grid(row=1, column=1, sticky="ns")
-        horizon_scroll.grid(row=2, column=0, sticky="ew")
-
-        close_btn.grid(row=3, column=0, columnspan=2, padx=25, pady=10, sticky="we")
 
     elif menu == "View my tasks":
 
@@ -656,19 +645,6 @@ def view_tasks(username, menu):
             bg="#333333",
             fg="#ffffff",
             font=("Arial", 12),
-        )
-
-        txt_bx = tk.Text(frame, width=55, wrap="word", font=("Arial", 8))
-
-        vert_scroll = ttk.Scrollbar(frame, orient="vertical", command=txt_bx.yview)
-        horizon_scroll = ttk.Scrollbar(frame, orient="horizontal", command=txt_bx.xview)
-
-        close_btn = tk.Button(
-            frame,
-            text="Close",
-            width=15,
-            font=("Arial", 12),
-            command=view_tasks_win.destroy,
         )
 
         # ---- Read File ----
@@ -711,34 +687,80 @@ def view_tasks(username, menu):
                         tk.END, "_________________________________________________\n"
                     )
 
-        # ---- Scrollbar ----
-        txt_bx["yscrollcommand"] = vert_scroll.set
-        txt_bx["xscrollcommand"] = horizon_scroll.set
+        info_lbl.grid(row=0, column=0, columnspan=2, pady=10, sticky="we")   
 
-        # ---- Grid layout ----
-        frame.grid(row=0, column=0)
-        info_lbl.grid(row=0, column=0, columnspan=2, pady=10, sticky="we")
-        txt_bx.grid(row=1, column=0, sticky="news")
-        vert_scroll.grid(row=1, column=1, sticky="ns")
-        horizon_scroll.grid(row=2, column=0, sticky="ew")
-        close_btn.grid(row=3, column=0, columnspan=2, padx=25, pady=10, sticky="we")
+    # ---- Scrollbar ----
+    txt_bx["yscrollcommand"] = vert_scroll.set
+    txt_bx["xscrollcommand"] = horizon_scroll.set
+
+    # ---- Grid layout ----
+    frame.grid(row=0, column=0)
+    
+    txt_bx.grid(row=1, column=0, sticky="news")
+    vert_scroll.grid(row=1, column=1, sticky="ns")
+    horizon_scroll.grid(row=2, column=0, sticky="ew")
+    close_btn.grid(row=3, column=0, columnspan=2, pady=10, sticky="we")
 
 
 # ====Statistics Section====
 
+
 def stats():
+
+    stats_win = tk.Toplevel()
+    stats_win.title("Statistics")
+    stats_win.config(bg="#333333")
+    stats_win.geometry("250x200")
+    frame = tk.Frame(stats_win, bg="#333333")
+
     # Reads the task.txt
     # Counts the number of tasks
     # prints the total number of tasks in the file
     # Reads the user.txt file, counts the number of users
     # prints end results
+
+    # ---- Widgets ----
+    header_lbl = tk.Label(
+        frame, text="Statistics", bg="#333333", fg="#ffffff", font=("Arial", 25)
+    )
+    close_btn = tk.Button(
+        frame,
+        text="Close",
+        width=15,
+        font=("Arial", 12),
+        command=stats_win.destroy,
+    )
+
+    # ---- Read File ----
     with open("tasks.txt", "r") as read:
         total_tasks = len(read.readlines())
-        print(f"Total number of tasks: {total_tasks}")
+        tasks_lbl = tk.Label(
+            frame,
+            text=f"Total number of tasks: {total_tasks}",
+            fg="#ffffff",
+            bg="#333333",
+            font=("Arial", 12),
+        )
 
     with open("user.txt", "r") as read:
         total_user = len(read.readlines())
-        print(f"Total number of users: {total_user}")
+        user_lbl = tk.Label(
+            frame,
+            text=f"Total number of users: {total_user}",
+            fg="#ffffff",
+            bg="#333333",
+            font=("Arial", 12),
+        )
+
+    # ---- Grid ----
+    frame.grid(row=0, column=0)
+    header_lbl.grid(row=0, column=0, columnspan=2, pady=10, sticky="news")
+    tasks_lbl.grid(row=1, column=0, pady=5, sticky="ew")
+    user_lbl.grid(row=2, column=0, padx=5, sticky="ew")
+    close_btn.grid(row=3, column=0, columnspan=2, pady=10, sticky="ew")
+
+    frame.pack()
+
 
 # ====Clear text====
 
