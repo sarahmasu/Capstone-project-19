@@ -120,6 +120,7 @@ def menu(username):
             fg="#ffffff",
             width=15,
             font=("Arial", 10),
+            command=lambda: view_tasks(username, va_btn.cget("text")),
         )
 
         vm_btn = tk.Button(
@@ -129,6 +130,7 @@ def menu(username):
             fg="#ffffff",
             width=15,
             font=("Arial", 11),
+            command=lambda: view_tasks(username, vm_btn.cget("text")),
         )
 
         stats_btn = tk.Button(
@@ -138,6 +140,7 @@ def menu(username):
             fg="#ffffff",
             width=15,
             font=("Arial", 11),
+            command=lambda:stats()
         )
 
         close_btn = tk.Button(
@@ -282,7 +285,6 @@ def add_task():
     task_win.config(bg="#333333")
     frame = tk.Frame(task_win, bg="#333333")
 
-    # Get current date and format it to dd/MMM/YYYY
     today = date.today()
 
     # ----Labels----
@@ -318,6 +320,7 @@ def add_task():
         font=("Arial", 12),
     )
 
+    # Get current date and format it to dd/MMM/YYYY
     due_date_lbl = tk.Label(
         frame,
         text="Due date (dd Mon YYYY): ",
@@ -362,7 +365,10 @@ def add_task():
     select_user = tk.StringVar()
 
     user_cmbo = ttk.Combobox(
-        frame, width=18, textvariable=select_user, font=("Arial", 12)
+        frame,
+        width=18,
+        textvariable=select_user,
+        font=("Arial", 12),
     )
 
     user_cmbo["values"] = tuple(check_username)
@@ -382,7 +388,7 @@ def add_task():
     save_task_btn = tk.Button(
         frame,
         text="Submit",
-        width= 10,
+        width=10,
         font=("Arial", 12),
         command=lambda: submit_tasks(
             user_task,
@@ -413,29 +419,125 @@ def add_task():
     # ----Grid layout---
 
     frame.grid(row=0, column=0)
-    instr_lbl.grid(row=0, column=0, columnspan=2, pady=25, sticky= "we",)
+    instr_lbl.grid(
+        row=0,
+        column=0,
+        columnspan=2,
+        pady=25,
+        sticky="we",
+    )
 
-    user_lbl.grid(row=1, column=0, padx = 5, pady=5, sticky= "w",)
-    user_cmbo.grid(row=1, column=1, pady=5, padx=5, sticky="w",)
+    user_lbl.grid(
+        row=1,
+        column=0,
+        padx=5,
+        pady=5,
+        sticky="w",
+    )
+    user_cmbo.grid(
+        row=1,
+        column=1,
+        pady=5,
+        padx=5,
+        sticky="w",
+    )
 
-    title_lbl.grid(row=2, column=0, padx = 5, pady=5, sticky= "w",)
-    task_title.grid(row=2, column=1, padx=5, pady=5, sticky="w",)
+    title_lbl.grid(
+        row=2,
+        column=0,
+        padx=5,
+        pady=5,
+        sticky="w",
+    )
+    task_title.grid(
+        row=2,
+        column=1,
+        padx=5,
+        pady=5,
+        sticky="w",
+    )
 
-    description_lbl.grid(row=3, column=0, padx = 5, pady=5, sticky= "w",)
-    task_description.grid(row=3, column=1, padx=5, pady=5, sticky="w",)
+    description_lbl.grid(
+        row=3,
+        column=0,
+        padx=5,
+        pady=5,
+        sticky="w",
+    )
+    task_description.grid(
+        row=3,
+        column=1,
+        padx=5,
+        pady=5,
+        sticky="w",
+    )
 
-    due_date_lbl.grid(row=4, column=0, padx = 5, pady=5, sticky= "w",)
-    task_due_date.grid(row=4, column=1, padx=5, pady=5, sticky="w",)
+    due_date_lbl.grid(
+        row=4,
+        column=0,
+        padx=5,
+        pady=5,
+        sticky="w",
+    )
+    task_due_date.grid(
+        row=4,
+        column=1,
+        padx=5,
+        pady=5,
+        sticky="w",
+    )
 
-    current_date_lbl.grid(row=5, column=0, padx = 5, pady=5, sticky= "w",)
-    current_date.grid(row=5, column=1, padx=5, pady=5, sticky="w",)
+    current_date_lbl.grid(
+        row=5,
+        column=0,
+        padx=5,
+        pady=5,
+        sticky="w",
+    )
+    current_date.grid(
+        row=5,
+        column=1,
+        padx=5,
+        pady=5,
+        sticky="w",
+    )
 
-    status_lbl.grid(row=6, column=0, padx = 5, pady=5, sticky= "w",)
-    task_complete.grid(row=6, column=1, padx=5, pady=5, sticky="w",)
+    status_lbl.grid(
+        row=6,
+        column=0,
+        padx=5,
+        pady=5,
+        sticky="w",
+    )
+    task_complete.grid(
+        row=6,
+        column=1,
+        padx=5,
+        pady=5,
+        sticky="w",
+    )
 
-    save_task_btn.grid(row=7, column=0, padx=15, pady=5, sticky="we",)
-    clear_btn.grid(row=7, column=1, padx=15, pady=5, sticky="we",)
-    close_btn.grid(row=7, column=2, padx=15, pady=5, sticky="we",)
+    save_task_btn.grid(
+        row=7,
+        column=0,
+        padx=15,
+        pady=5,
+        sticky="we",
+    )
+    clear_btn.grid(
+        row=7,
+        column=1,
+        padx=15,
+        pady=5,
+        sticky="we",
+    )
+    close_btn.grid(
+        row=7,
+        column=2,
+        padx=15,
+        pady=5,
+        sticky="we",
+    )
 
     # ----Methods----
 
@@ -458,30 +560,40 @@ def add_task():
         messagebox.showinfo(title="Success", text="Successfully saved task.")
 
 
-# ====Display output Section====
-
-
-def display_output(
-    title, assigned_user, assigned_date, due_date, complete_task, description
-):
-    # Print the output similar to output 2
-    print("_________________________________________________\n")
-
-    print(f"Task: \t\t\t{ title :>10}")
-    print(f"Assigned to: \t\t{assigned_user :>6}")
-    print(f"Date assigned: \t\t{assigned_date :>3}")
-    print(f"Date due: \t\t{due_date :>3}")
-    print(f"Task complete? \t\t{complete_task}")
-    print(f"Task description:\n {description}")
-
-    print("_________________________________________________\n")
-
-
 # ====View tasks Section====
 
 
-def view_tasks(menu):
-    if menu == "va":
+def view_tasks(username, menu):
+    view_tasks_win = tk.Toplevel()
+    view_tasks_win.config(bg="#333333")
+    frame = tk.Frame(view_tasks_win, bg="#333333")
+
+    if menu == "View all tasks":
+        view_tasks_win.title("View All Tasks")
+
+        # ---- Widgets ----
+        info_lbl = tk.Label(
+            frame,
+            text="List of all the tasks",
+            bg="#333333",
+            fg="#ffffff",
+            font=("Arial", 12),
+        )
+
+        txt_bx = tk.Text(frame, width=50, wrap="word", font=("Arial", 8))
+
+        vert_scroll = ttk.Scrollbar(frame, orient="vertical", command=txt_bx.yview)
+        horizon_scroll = ttk.Scrollbar(frame, orient="horizontal", command=txt_bx.xview)
+
+        close_btn = tk.Button(
+            frame,
+            text="Close",
+            width=15,
+            font=("Arial", 12),
+            command=view_tasks_win.destroy,
+        )
+
+        # ---- Read File ----
         # Read the task.txt file to display all the task and which user is assign to it
         with open("tasks.txt", "r", encoding="utf-8") as read_all_tasks:
             lines = read_all_tasks.readlines()
@@ -500,16 +612,66 @@ def view_tasks(menu):
                 due_date = split_lines[4]
                 complete_task = split_lines[5]
 
-                display_output(
-                    title,
-                    assigned_user,
-                    assigned_date,
-                    due_date,
-                    complete_task,
-                    description,
+                # ---- Text box ----
+                # Print the output similar to output 2
+                txt_bx.insert(
+                    tk.END, "_________________________________________________\n"
                 )
 
-    elif menu == "vm":
+                txt_bx.insert(tk.END, f"Task: \t\t{title :>10}\n")
+                txt_bx.insert(tk.END, f"Assigned to: \t\t{assigned_user :>6}\n")
+                txt_bx.insert(tk.END, f"Date assigned: \t\t{assigned_date :>3}\n")
+                txt_bx.insert(tk.END, f"Date due: \t\t{due_date :>3}\n")
+                txt_bx.insert(tk.END, f"Task complete? \t\t{complete_task}\n")
+                txt_bx.insert(tk.END, f"Task description:\n {description}\n")
+
+                txt_bx.insert(
+                    tk.END, "_________________________________________________\n"
+                )
+
+        # ---- Scrollbar ----
+        txt_bx["yscrollcommand"] = vert_scroll.set
+        txt_bx["xscrollcommand"] = horizon_scroll.set
+
+        # ---- Grid layout ----
+        frame.grid(row=0, column=0)
+
+        info_lbl.grid(row=0, column=0, columnspan=2, pady=10, sticky="we")
+
+        txt_bx.grid(row=1, column=0, sticky="news")
+
+        vert_scroll.grid(row=1, column=1, sticky="ns")
+        horizon_scroll.grid(row=2, column=0, sticky="ew")
+
+        close_btn.grid(row=3, column=0, columnspan=2, padx=25, pady=10, sticky="we")
+
+    elif menu == "View my tasks":
+
+        view_tasks_win.title("My Tasks")
+
+        # ---- Widgets ----
+        info_lbl = tk.Label(
+            frame,
+            text=f"List of {username}'s tasks",
+            bg="#333333",
+            fg="#ffffff",
+            font=("Arial", 12),
+        )
+
+        txt_bx = tk.Text(frame, width=55, wrap="word", font=("Arial", 8))
+
+        vert_scroll = ttk.Scrollbar(frame, orient="vertical", command=txt_bx.yview)
+        horizon_scroll = ttk.Scrollbar(frame, orient="horizontal", command=txt_bx.xview)
+
+        close_btn = tk.Button(
+            frame,
+            text="Close",
+            width=15,
+            font=("Arial", 12),
+            command=view_tasks_win.destroy,
+        )
+
+        # ---- Read File ----
         # Read the task.txt file
         with open("tasks.txt", "r", encoding="utf-8") as read_my_tasks:
             lines = read_my_tasks.readlines()
@@ -530,19 +692,53 @@ def view_tasks(menu):
                     my_due_date = split_lines[4]
                     my_complete_task = split_lines[5]
 
+                    # ---- Text box ----
                     # Print the output similar to output 2
-                    display_output(
-                        my_title,
-                        my_username,
-                        my_assigned_date,
-                        my_due_date,
-                        my_complete_task,
-                        my_description,
+                    txt_bx.insert(
+                        tk.END, "_________________________________________________\n"
                     )
 
-    else:
-        print("Incorrect option.")
+                    txt_bx.insert(tk.END, f"Task: \t\t{my_title :>10}\n")
+                    txt_bx.insert(tk.END, f"Assigned to: \t\t{my_username :>6}\n")
+                    txt_bx.insert(
+                        tk.END, f"Date assigned: \t\t{my_assigned_date :>3}\n"
+                    )
+                    txt_bx.insert(tk.END, f"Date due: \t\t{my_due_date :>3}\n")
+                    txt_bx.insert(tk.END, f"Task complete? \t\t{my_complete_task}")
+                    txt_bx.insert(tk.END, f"Task description:\n {my_description}\n")
 
+                    txt_bx.insert(
+                        tk.END, "_________________________________________________\n"
+                    )
+
+        # ---- Scrollbar ----
+        txt_bx["yscrollcommand"] = vert_scroll.set
+        txt_bx["xscrollcommand"] = horizon_scroll.set
+
+        # ---- Grid layout ----
+        frame.grid(row=0, column=0)
+        info_lbl.grid(row=0, column=0, columnspan=2, pady=10, sticky="we")
+        txt_bx.grid(row=1, column=0, sticky="news")
+        vert_scroll.grid(row=1, column=1, sticky="ns")
+        horizon_scroll.grid(row=2, column=0, sticky="ew")
+        close_btn.grid(row=3, column=0, columnspan=2, padx=25, pady=10, sticky="we")
+
+
+# ====Statistics Section====
+
+def stats():
+    # Reads the task.txt
+    # Counts the number of tasks
+    # prints the total number of tasks in the file
+    # Reads the user.txt file, counts the number of users
+    # prints end results
+    with open("tasks.txt", "r") as read:
+        total_tasks = len(read.readlines())
+        print(f"Total number of tasks: {total_tasks}")
+
+    with open("user.txt", "r") as read:
+        total_user = len(read.readlines())
+        print(f"Total number of users: {total_user}")
 
 # ====Clear text====
 
@@ -588,7 +784,7 @@ if __name__ == "__main__":
     login_btn = tk.Button(
         frame,
         text="Login",
-        width = 10,
+        width=10,
         command=lambda: login(username.get().lower(), passwd_entry.get().lower()),
         bg="#46a094",
         fg="#ffffff",
@@ -599,7 +795,7 @@ if __name__ == "__main__":
     clear_btn = tk.Button(
         frame,
         text="Clear",
-        width = 10,
+        width=10,
         command=lambda: clear(root),
         bg="#46a094",
         fg="#ffffff",
@@ -613,10 +809,18 @@ if __name__ == "__main__":
     username.grid(row=1, column=1, columnspan=2, padx=5, pady=10, sticky="w")
 
     passwd_lbl.grid(row=2, column=0, pady=5, sticky="w")
-    passwd_entry.grid(row=2, column=1,columnspan=2, padx=5, pady=10, sticky="w")
+    passwd_entry.grid(row=2, column=1, columnspan=2, padx=5, pady=10, sticky="w")
 
-    login_btn.grid(row=3, column=0, pady=10,)
-    clear_btn.grid(row=3, column=1, pady=10,)
+    login_btn.grid(
+        row=3,
+        column=0,
+        pady=10,
+    )
+    clear_btn.grid(
+        row=3,
+        column=1,
+        pady=10,
+    )
 
     # .pack() is responsive, looks better than grid
     frame.pack()
@@ -657,18 +861,7 @@ if __name__ == "__main__":
                 view_tasks(menu)
 
             elif menu == "s":
-                # Reads the task.txt
-                # Counts the number of tasks
-                # prints the total number of tasks in the file
-                # Reads the user.txt file, counts the number of users
-                # prints end results
-                with open("tasks.txt", "r") as read:
-                    total_tasks = len(read.readlines())
-                    print(f"Total number of tasks: {total_tasks}")
-
-                with open("user.txt", "r") as read:
-                    total_user = len(read.readlines())
-                    print(f"Total number of users: {total_user}")
+                
 
             elif menu == "e":
                 print("Goodbye!!!")
@@ -746,4 +939,7 @@ if __name__ == "__main__":
 
     Alignment of widgets
     - https://stackoverflow.com/questions/74418639/aligning-entries-buttons-with-tkinter
+
+    Get the text of the button:
+    - https://stackoverflow.com/questions/26765218/get-the-text-of-a-button-widget
 """
