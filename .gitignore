@@ -1,2 +1,5 @@
 
 .vscode/settings.json
+
+dir_to_ignore/
+Test widgets
