@@ -226,7 +226,7 @@ def register():
     # Method check whether the passwords match
     # If the passwords match append the new user and their password to the user.txt file
 
-    # ===Submit User===
+    # ----Submit User----
     def submit_user(new_user, new_passwd, confirm_new_passwd):
         with open("user.txt", "a") as add_line:
 
@@ -253,7 +253,7 @@ def register():
                     "Error", "The passwords do not match! Please try again!"
                 )
 
-    # Grids
+    # ----Grids----
     frame.grid(row=0, column=0)
     reg_label.grid(columnspan=2, pady=25)
 
@@ -457,7 +457,6 @@ def add_task():
             )
         messagebox.showinfo(title="Success", text="Successfully saved task.")
 
-    task_win.mainloop()
 
 # ====Display output Section====
 
@@ -600,14 +599,14 @@ if __name__ == "__main__":
     clear_btn = tk.Button(
         frame,
         text="Clear",
-        width = 5,
+        width = 10,
         command=lambda: clear(root),
         bg="#46a094",
         fg="#ffffff",
         font=("Arial", 14),
     )
 
-    # Grids
+    # ----Grids----
     login_lbl.grid(row=0, column=0, columnspan=2, pady=25, sticky="news")
 
     user_lbl.grid(row=1, column=0, pady=5, sticky="w")
@@ -616,8 +615,8 @@ if __name__ == "__main__":
     passwd_lbl.grid(row=2, column=0, pady=5, sticky="w")
     passwd_entry.grid(row=2, column=1,columnspan=2, padx=5, pady=10, sticky="w")
 
-    login_btn.grid(row=3, column=0, padx=5, pady=15,)
-    clear_btn.grid(row=3, column=1, padx=5, pady=15,)
+    login_btn.grid(row=3, column=0, pady=10,)
+    clear_btn.grid(row=3, column=1, pady=10,)
 
     # .pack() is responsive, looks better than grid
     frame.pack()
