@@ -157,11 +157,67 @@ def menu(username):
         title_lbl.grid(row=0, column=0, columnspan=2, pady=25, sticky="news")
         menu_lbl.grid(row=1, column=0, pady=5)
 
-        reg_btn.grid(row=2, column=0, pady=5, padx=10, sticky="w")
-        add_btn.grid(row=3, column=0, pady=5, padx=10, sticky="W")
-        va_btn.grid(row=4, column=0, pady=5, padx=10, sticky="W")
-        vm_btn.grid(row=5, column=0, pady=5, padx=10, sticky="W")
-        stats_btn.grid(row=6, column=0, pady=5, padx=10, sticky="W")
+        reg_btn.grid(row=2, column=0, pady=5, padx=10, sticky="Ew")
+        add_btn.grid(row=3, column=0, pady=5, padx=10, sticky="EW")
+        va_btn.grid(row=4, column=0, pady=5, padx=10, sticky="EW")
+        vm_btn.grid(row=5, column=0, pady=5, padx=10, sticky="EW")
+        stats_btn.grid(row=6, column=0, pady=5, padx=10, sticky="EW")
+
+        close_btn.grid(row=7, column=0, pady=20, sticky="news")
+
+        frame.pack()
+
+        menu_win.mainloop()
+
+    else:
+
+        add_btn = tk.Button(
+            frame,
+            text="Add task",
+            bg="#333333",
+            fg="#ffffff",
+            width=15,
+            font=("Arial", 10),
+            command=lambda: add_task(),
+        )
+
+        va_btn = tk.Button(
+            frame,
+            text="View all tasks",
+            bg="#333333",
+            fg="#ffffff",
+            width=15,
+            font=("Arial", 10),
+            command=lambda: view_tasks(username, va_btn.cget("text")),
+        )
+
+        vm_btn = tk.Button(
+            frame,
+            text="View my tasks",
+            bg="#333333",
+            fg="#ffffff",
+            width=15,
+            font=("Arial", 11),
+            command=lambda: view_tasks(username, vm_btn.cget("text")),
+        )
+
+        close_btn = tk.Button(
+            frame,
+            text="Close",
+            bg="#333333",
+            fg="#ffffff",
+            width=15,
+            font=("Arial", 11),
+            command=menu_win.destroy,
+        )
+
+        # Grids
+        title_lbl.grid(row=0, column=0, columnspan=2, pady=25, sticky="news")
+        menu_lbl.grid(row=1, column=0, pady=5)
+
+        add_btn.grid(row=3, column=0, pady=5, padx=10, sticky="EW")
+        va_btn.grid(row=4, column=0, pady=5, padx=10, sticky="EW")
+        vm_btn.grid(row=5, column=0, pady=5, padx=10, sticky="EW")
 
         close_btn.grid(row=7, column=0, pady=20, sticky="news")
 
@@ -233,28 +289,35 @@ def register():
     def submit_user(new_user, new_passwd, confirm_new_passwd):
         with open("user.txt", "a") as add_line:
 
-            if new_passwd == confirm_new_passwd:
-
-                add_line.writelines(f"\n{new_user}, {confirm_new_passwd}")
-                messagebox.showinfo("Success", "New user successfully saved!")
-                reg_win.destroy()
-
-            # If the user enters nothing for either password or confirm password textbox
-            # display warning
-            elif (
-                new_passwd == ""
-                or confirm_new_passwd == ""
-                or (new_passwd == "" and confirm_new_passwd == "")
-            ):
+            if new_user in user:
                 messagebox.showwarning(
-                    "No Input", "Please enter a password for the new user."
+                    "Warning",
+                    f"The username '{new_user}', already exists! Please enter a new user name.",
                 )
-
-            # Else request the user to re-enter the passwords until they match
             else:
-                messagebox.showerror(
-                    "Error", "The passwords do not match! Please try again!"
-                )
+                if new_passwd == confirm_new_passwd:
+
+                    add_line.writelines(f"\n{new_user}, {confirm_new_passwd}")
+                    messagebox.showinfo("Success", "New user successfully saved!")
+                    reg_win.destroy()
+
+                # If the user enters nothing for either password or confirm password textbox
+                # display warning
+                elif (
+                    new_passwd == ""
+                    or confirm_new_passwd == ""
+                    or (new_passwd == "" and confirm_new_passwd == "")
+                ):
+                    messagebox.showwarning(
+                        "Warning",
+                        "No, input. Please enter a password for the new user.",
+                    )
+
+                # Else request the user to re-enter the passwords until they match
+                else:
+                    messagebox.showerror(
+                        "Error", "The passwords do not match! Please try again!"
+                    )
 
     # ----Grids----
     frame.grid(row=0, column=0)
@@ -687,7 +750,12 @@ def view_tasks(username, menu):
                         tk.END, "_________________________________________________\n"
                     )
 
-        info_lbl.grid(row=0, column=0, columnspan=2, pady=10, sticky="we")   
+                else:
+                    messagebox.showerror(
+                        title="Error", text=f"No task was assigned to {username}."
+                    )
+
+        info_lbl.grid(row=0, column=0, columnspan=2, pady=10, sticky="we")
 
     # ---- Scrollbar ----
     txt_bx["yscrollcommand"] = vert_scroll.set
@@ -695,7 +763,7 @@ def view_tasks(username, menu):
 
     # ---- Grid layout ----
     frame.grid(row=0, column=0)
-    
+
     txt_bx.grid(row=1, column=0, sticky="news")
     vert_scroll.grid(row=1, column=1, sticky="ns")
     horizon_scroll.grid(row=2, column=0, sticky="ew")
@@ -847,76 +915,6 @@ if __name__ == "__main__":
     # .pack() is responsive, looks better than grid
     frame.pack()
     root.mainloop()
-
-    # ====Menu Window====
-    '''print(f"Welcome, {username.get().lower()}")
-
-    while True:
-        # Present the menu to the user and
-        # make sure that the user input is converted to lower case.
-        if username == "admin":
-            menu = input(
-                """Select one of the following options:
-        r - register a user
-        a - add task
-        va - view all tasks
-        vm - view my tasks
-        s - statistics
-        e - exit
-        : """
-            ).lower()
-
-            if menu == "r":
-                # Allows only user "admin" to add new users
-                if username == "admin":
-                    register()
-                else:
-                    print("Only admins are allowed to register new users.")
-
-            elif menu == "a":
-                add_task()
-
-            elif menu == "va":
-                view_tasks(menu)
-
-            elif menu == "vm":
-                view_tasks(menu)
-
-            elif menu == "s":
-                
-
-            elif menu == "e":
-                print("Goodbye!!!")
-                exit()
-
-            else:
-                print("You have made entered an invalid input. Please try again")
-
-        else:
-            menu = input(
-                """Select one of the following options:
-    a - add task
-    va - view all tasks
-    vm - view my tasks
-    e - exit
-    : """
-            ).lower()
-
-        if menu == "a":
-            add_task()
-
-        elif menu == "va":
-            view_tasks(menu)
-
-        elif menu == "vm":
-            view_tasks(menu)
-
-        elif menu == "e":
-            print("Goodbye!!!")
-            exit()
-
-        else:
-            print("You have made entered an invalid input. Please try again")'''
 
 # ====References====
 """
