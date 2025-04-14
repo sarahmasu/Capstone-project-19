@@ -129,7 +129,7 @@ def menu(username):
             bg="#333333",
             fg="#ffffff",
             width=15,
-            font=("Arial", 11),
+            font=("Arial", 10),
             command=lambda: view_tasks(username, vm_btn.cget("text")),
         )
 
@@ -321,19 +321,19 @@ def register():
 
     # ----Grids----
     frame.grid(row=0, column=0)
-    reg_label.grid(columnspan=2, pady=25)
+    reg_label.grid(columnspan=2, pady=25, sticky="w")
 
-    user_lbl.grid(row=1, column=0, pady=5)
-    new_user.grid(row=1, column=1, padx=5, pady=10)
+    user_lbl.grid(row=1, column=0, pady=5, sticky="w")
+    new_user.grid(row=1, column=1, padx=5, pady=10, sticky="w")
 
-    passwd_lbl.grid(row=2, column=0, pady=5)
-    new_passwd.grid(row=2, column=1, padx=5, pady=10)
+    passwd_lbl.grid(row=2, column=0, pady=5, sticky="w")
+    new_passwd.grid(row=2, column=1, padx=5, pady=10, sticky="w")
 
-    confirm_lbl.grid(row=3, column=0, pady=5)
-    confirm_new_passwd.grid(row=3, column=1, padx=5, pady=10)
+    confirm_lbl.grid(row=3, column=0, pady=5, sticky="w")
+    confirm_new_passwd.grid(row=3, column=1, padx=5, pady=10, sticky="w")
 
-    submit_btn.grid(row=4, column=0, padx=15, pady=15)
-    clear_btn.grid(row=4, column=1, pady=15)
+    submit_btn.grid(row=4, column=0, padx=15, pady=15, sticky="ew")
+    clear_btn.grid(row=4, column=1, padx=15, pady=15, sticky="ew")
 
 
 # ====Add tasks Function====
@@ -646,116 +646,119 @@ def view_tasks(username, menu):
     )
 
     if menu == "View all tasks":
-        view_tasks_win.title("View All Tasks")
+        try:
+            view_tasks_win.title("View All Tasks")
 
-        # ---- Widgets ----
-        info_lbl = tk.Label(
-            frame,
-            text="List of all the tasks",
-            bg="#333333",
-            fg="#ffffff",
-            font=("Arial", 12),
-        )
+            # ---- Widgets ----
+            info_lbl = tk.Label(
+                frame,
+                text="List of all the tasks",
+                bg="#333333",
+                fg="#ffffff",
+                font=("Arial", 12),
+            )
 
-        # ---- Read File ----
-        # Read the task.txt file to display all the task and which user is assign to it
-        with open("tasks.txt", "r", encoding="utf-8") as read_all_tasks:
-            lines = read_all_tasks.readlines()
+            # ---- Read File ----
+            # Read the task.txt file to display all the task and which user is assign to it
+            with open("tasks.txt", "r", encoding="utf-8") as read_all_tasks:
+                lines = read_all_tasks.readlines()
 
-            # Iterate through task.txt file
-            for line in lines:
-                # Split the lines where there is a comma and a space
-                split_lines = line.split(",")
+                # Iterate through task.txt file
+                for line in lines:
+                    # Split the lines where there is a comma and a space
+                    split_lines = line.split(",")
 
-                # The variables will be stored in assigned_user, title, description, assigned_date,
-                # due_date, and task_complete
-                assigned_user = split_lines[0]
-                title = split_lines[1]
-                description = split_lines[2]
-                assigned_date = split_lines[3]
-                due_date = split_lines[4]
-                complete_task = split_lines[5]
-
-                # ---- Text box ----
-                # Print the output similar to output 2
-                txt_bx.insert(
-                    tk.END, "_________________________________________________\n"
-                )
-
-                txt_bx.insert(tk.END, f"Task: \t\t{title :>10}\n")
-                txt_bx.insert(tk.END, f"Assigned to: \t\t{assigned_user :>6}\n")
-                txt_bx.insert(tk.END, f"Date assigned: \t\t{assigned_date :>3}\n")
-                txt_bx.insert(tk.END, f"Date due: \t\t{due_date :>3}\n")
-                txt_bx.insert(tk.END, f"Task complete? \t\t{complete_task}\n")
-                txt_bx.insert(tk.END, f"Task description:\n {description}\n")
-
-                txt_bx.insert(
-                    tk.END, "_________________________________________________\n"
-                )
-
-        # ---- Grid layout ----
-
-        info_lbl.grid(row=0, column=0, columnspan=2, pady=10, sticky="we")
-
-    elif menu == "View my tasks":
-
-        view_tasks_win.title("My Tasks")
-
-        # ---- Widgets ----
-        info_lbl = tk.Label(
-            frame,
-            text=f"List of {username}'s tasks",
-            bg="#333333",
-            fg="#ffffff",
-            font=("Arial", 12),
-        )
-
-        # ---- Read File ----
-        # Read the task.txt file
-        with open("tasks.txt", "r", encoding="utf-8") as read_my_tasks:
-            lines = read_my_tasks.readlines()
-
-            # Iterate through task.txt file
-            for line in lines:
-                # Split the lines where there is a comma and a space
-                split_lines = line.split(",")
-
-                # Check if user is assigned a task
-                if username in split_lines[0]:
-                    # The variables will be stored in my_username, my_title, my_description,
-                    # my_assigned_date, my_due_date, and my_complete_task
-                    my_username = split_lines[0]
-                    my_title = split_lines[1]
-                    my_description = split_lines[2]
-                    my_assigned_date = split_lines[3]
-                    my_due_date = split_lines[4]
-                    my_complete_task = split_lines[5]
+                    # The variables will be stored in assigned_user, title, description, assigned_date,
+                    # due_date, and task_complete
+                    assigned_user = split_lines[0]
+                    title = split_lines[1]
+                    description = split_lines[2]
+                    assigned_date = split_lines[3]
+                    due_date = split_lines[4]
+                    complete_task = split_lines[5]
 
                     # ---- Text box ----
                     # Print the output similar to output 2
                     txt_bx.insert(
-                        tk.END, "_________________________________________________\n"
+                        tk.END, "_______________________________________________\n"
                     )
 
-                    txt_bx.insert(tk.END, f"Task: \t\t{my_title :>10}\n")
-                    txt_bx.insert(tk.END, f"Assigned to: \t\t{my_username :>6}\n")
-                    txt_bx.insert(
-                        tk.END, f"Date assigned: \t\t{my_assigned_date :>3}\n"
-                    )
-                    txt_bx.insert(tk.END, f"Date due: \t\t{my_due_date :>3}\n")
-                    txt_bx.insert(tk.END, f"Task complete? \t\t{my_complete_task}")
-                    txt_bx.insert(tk.END, f"Task description:\n {my_description}\n")
+                    txt_bx.insert(tk.END, f"Task: \t\t{title :>10}\n")
+                    txt_bx.insert(tk.END, f"Assigned to: \t\t{assigned_user :>6}\n")
+                    txt_bx.insert(tk.END, f"Date assigned: \t\t{assigned_date :>3}\n")
+                    txt_bx.insert(tk.END, f"Date due: \t\t{due_date :>3}\n")
+                    txt_bx.insert(tk.END, f"Task complete? \t\t{complete_task}\n")
+                    txt_bx.insert(tk.END, f"Task description:\n {description}\n")
 
                     txt_bx.insert(
-                        tk.END, "_________________________________________________\n"
+                        tk.END, "_______________________________________________\n"
                     )
 
-                else:
-                    messagebox.showerror(
-                        title="Error", text=f"No task was assigned to {username}."
-                    )
+            # ---- Grid layout ----
 
-        info_lbl.grid(row=0, column=0, columnspan=2, pady=10, sticky="we")
+            info_lbl.grid(row=0, column=0, columnspan=2, pady=10, sticky="we")
+            
+        except:
+            messagebox.showerror(title="Error", text=f"There are no tasks given to any user")
+
+    elif menu == "View my tasks":
+
+        try:
+            view_tasks_win.title("My Tasks")
+
+            # ---- Widgets ----
+            info_lbl = tk.Label(
+                frame,
+                text=f"List of {username}'s tasks",
+                bg="#333333",
+                fg="#ffffff",
+                font=("Arial", 12),
+            )
+
+            # ---- Read File ----
+            # Read the task.txt file
+            with open("tasks.txt", "r", encoding="utf-8") as read_my_tasks:
+                lines = read_my_tasks.readlines()
+
+                # Iterate through task.txt file
+                for line in lines:
+                    # Split the lines where there is a comma and a space
+                    split_lines = line.split(",")
+
+                    # Check if user is assigned a task
+                    if username in split_lines[0]:
+                        # The variables will be stored in my_username, my_title, my_description,
+                        # my_assigned_date, my_due_date, and my_complete_task
+                        my_username = split_lines[0]
+                        my_title = split_lines[1]
+                        my_description = split_lines[2]
+                        my_assigned_date = split_lines[3]
+                        my_due_date = split_lines[4]
+                        my_complete_task = split_lines[5]
+
+                        # ---- Text box ----
+                        # Print the output similar to output 2
+                        txt_bx.insert(
+                            tk.END, "_______________________________________________\n"
+                        )
+
+                        txt_bx.insert(tk.END, f"Task: \t\t{my_title :>10}\n")
+                        txt_bx.insert(tk.END, f"Assigned to: \t\t{my_username :>6}\n")
+                        txt_bx.insert(
+                            tk.END, f"Date assigned: \t\t{my_assigned_date :>3}\n"
+                        )
+                        txt_bx.insert(tk.END, f"Date due: \t\t{my_due_date :>3}\n")
+                        txt_bx.insert(tk.END, f"Task complete? \t\t{my_complete_task}")
+                        txt_bx.insert(tk.END, f"Task description:\n {my_description}\n")
+
+                        txt_bx.insert(
+                            tk.END, "_______________________________________________\n"
+                        )
+
+            info_lbl.grid(row=0, column=0, columnspan=2, pady=10, sticky="ew")
+
+        except:
+            messagebox.showerror(title="Error", text=f"No task was assigned to {username}.")
 
     # ---- Scrollbar ----
     txt_bx["yscrollcommand"] = vert_scroll.set
@@ -901,16 +904,8 @@ if __name__ == "__main__":
     passwd_lbl.grid(row=2, column=0, pady=5, sticky="w")
     passwd_entry.grid(row=2, column=1, columnspan=2, padx=5, pady=10, sticky="w")
 
-    login_btn.grid(
-        row=3,
-        column=0,
-        pady=10,
-    )
-    clear_btn.grid(
-        row=3,
-        column=1,
-        pady=10,
-    )
+    login_btn.grid(row=3, column=0, pady=10, sticky="e")
+    clear_btn.grid(row=3, column=1, pady=10, sticky="w")
 
     # .pack() is responsive, looks better than grid
     frame.pack()
