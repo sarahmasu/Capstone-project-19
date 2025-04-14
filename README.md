@@ -49,12 +49,12 @@ View all assigned tasks reads all the tasks from the tasks.txt file, and view my
 
 ![Screenshot of View all tasks window](/Images/View_all_tasks_menu.PNG)
 
-![Screenshot of View my tasks window](/Images/View_my_tasks.PNG)
+![Screenshot of View my tasks window](/Images/View_my_tasks_menu.PNG)
 
 ### 2.4. Statistics <a name="view_stats"></a>
 This function can only available to admin only. Reads all the information in both tasks.txt and user.txt files. The function counts the total number of users and tasks from both text files and outputs the results.
 
-![Screenshot of Statistics window](/Images/Statistics.PNG)
+![Screenshot of Statistics window](/Images/Statistics_menu.PNG)
 
 ## 3. References <a name="references"></a>
 HyperionDev - Software Engineering Bootcamp: Level 1 Capstone Project 19
