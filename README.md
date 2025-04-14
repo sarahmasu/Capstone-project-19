@@ -26,7 +26,7 @@ The focus of this project was to add functionality to a task manager program. Th
 ## 2. Project Description <a name="project-description"></a>
 When you run the code, you will be prompted to enter a username and password. Once the correct username and password are given, a menu will appear:
 
-![Screenshot of Login window](/Images/Login,PNG)
+![Screenshot of Login window](/Images/Login.PNG)
 
 The options are to register new users, add new tasks, view all available tasks, view all tasks of the current user, and view statistics. Registering new users and viewing statistics are reserved for the admin.
 
