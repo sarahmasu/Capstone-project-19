@@ -4,6 +4,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 from tkcalendar import *
+import os.path
 
 # ====Dictionaries & Lists====
 # Store the usernames and passwords to be retrieved later on in the code
@@ -15,21 +16,25 @@ user = {}
 
 
 def read_data():
-    # Open the user.txt file and read the lines
-    with open("user.txt", "r", encoding="utf-8") as file:
-        lines = file.readlines()
+    try:
+        # Open the user.txt file and read the lines
+        with open("user.txt", "r", encoding="utf-8") as file:
+            lines = file.readlines()
 
-        # Traverse through the file'
-        for line in lines:
-            # Strip the string of the newline character \n
-            # Split the string by the comma and the space ","
-            split_lines = line.strip().split(", ")
-            check_username.append(split_lines[0])
-            check_passwd.append(split_lines[1])
+            # Traverse through the file'
+            for line in lines:
+                # Strip the string of the newline character \n
+                # Split the string by the comma and the space ","
+                split_lines = line.strip().split(", ")
+                check_username.append(split_lines[0])
+                check_passwd.append(split_lines[1])
 
-    # Create a dictionary to check the user credentials
-    for i, j in zip(check_username, check_passwd):
-        user.update({i: j})
+        # Create a dictionary to check the user credentials
+        for i, j in zip(check_username, check_passwd):
+            user.update({i: j})
+
+    except FileExistsError as error:
+        print(f"An error occurred: {error}")
 
 
 # ====Login Section====
@@ -287,37 +292,41 @@ def register():
 
     # ----Submit User----
     def submit_user(new_user, new_passwd, confirm_new_passwd):
-        with open("user.txt", "a") as add_line:
+        try:
+            with open("user.txt", "a") as add_line:
 
-            if new_user in user:
-                messagebox.showwarning(
-                    "Warning",
-                    f"The username '{new_user}', already exists! Please enter a new user name.",
-                )
-            else:
-                if new_passwd == confirm_new_passwd:
-
-                    add_line.writelines(f"\n{new_user}, {confirm_new_passwd}")
-                    messagebox.showinfo("Success", "New user successfully saved!")
-                    reg_win.destroy()
-
-                # If the user enters nothing for either password or confirm password textbox
-                # display warning
-                elif (
-                    new_passwd == ""
-                    or confirm_new_passwd == ""
-                    or (new_passwd == "" and confirm_new_passwd == "")
-                ):
+                if new_user in user:
                     messagebox.showwarning(
                         "Warning",
-                        "No, input. Please enter a password for the new user.",
+                        f"The username '{new_user}', already exists! Please enter a new user name.",
                     )
-
-                # Else request the user to re-enter the passwords until they match
                 else:
-                    messagebox.showerror(
-                        "Error", "The passwords do not match! Please try again!"
-                    )
+                    if new_passwd == confirm_new_passwd:
+
+                        add_line.writelines(f"\n{new_user}, {confirm_new_passwd}")
+                        messagebox.showinfo("Success", "New user successfully saved!")
+                        reg_win.destroy()
+
+                    # If the user enters nothing for either password or confirm password textbox
+                    # display warning
+                    elif (
+                        new_passwd == ""
+                        or confirm_new_passwd == ""
+                        or (new_passwd == "" and confirm_new_passwd == "")
+                    ):
+                        messagebox.showwarning(
+                            "Warning",
+                            "No, input. Please enter a password for the new user.",
+                        )
+
+                    # Else request the user to re-enter the passwords until they match
+                    else:
+                        messagebox.showerror(
+                            "Error", "The passwords do not match! Please try again!"
+                        )
+
+        except Exception as error:
+            messagebox.showerror("Error", f"An error has occurred: {error}")
 
     # ----Grids----
     frame.grid(row=0, column=0)
@@ -383,7 +392,6 @@ def add_task():
         font=("Arial", 12),
     )
 
-    # Get current date and format it to dd/MMM/YYYY
     due_date_lbl = tk.Label(
         frame,
         text="Due date (dd Mon YYYY): ",
@@ -445,6 +453,7 @@ def add_task():
 
     task_description = tk.Entry(frame, width=20, font=("Arial", 12))
 
+    # Get current date and format it to dd/MMM/YYYY
     task_due_date = tk.Entry(frame, width=20, font=("Arial", 12))
 
     # ----Buttons----
@@ -612,15 +621,23 @@ def add_task():
         task_due_date,
         task_complete,
     ):
+        check_file = os.path.isfile("task.txt")
 
-        # Append user input and format the output to task.txt
-        with open("tasks.txt", "a", encoding="utf-8") as file:
+        if check_file == True:
 
-            # Write to task.txt file
-            file.writelines(
-                f"\n{user_task}, {task_title}, {task_description}, {current_date}, {task_due_date}, {task_complete}"
+            # Append user input and format the output to task.txt
+            with open("tasks.txt", "a", encoding="utf-8") as file:
+
+                # Write to task.txt file
+                file.writelines(
+                    f"\n{user_task}, {task_title}, {task_description}, {current_date}, {task_due_date}, {task_complete}"
+                )
+            messagebox.showinfo(title="Success", text="Successfully saved task.")
+
+        else:
+            raise FileExistsError(
+                messagebox.showerror(title="Error", text="File does not exist!")
             )
-        messagebox.showinfo(title="Success", text="Successfully saved task.")
 
 
 # ====View tasks Section====
@@ -645,7 +662,10 @@ def view_tasks(username, menu):
         command=view_tasks_win.destroy,
     )
 
+    check_file = os.path.exists("tasks.txt")
+
     if menu == "View all tasks":
+
         try:
             view_tasks_win.title("View All Tasks")
 
@@ -660,81 +680,24 @@ def view_tasks(username, menu):
 
             # ---- Read File ----
             # Read the task.txt file to display all the task and which user is assign to it
-            with open("tasks.txt", "r", encoding="utf-8") as read_all_tasks:
-                lines = read_all_tasks.readlines()
 
-                # Iterate through task.txt file
-                for line in lines:
-                    # Split the lines where there is a comma and a space
-                    split_lines = line.split(",")
+            if check_file == True:
+                with open("tasks.txt", "r", encoding="utf-8") as read_all_tasks:
+                    lines = read_all_tasks.readlines()
 
-                    # The variables will be stored in assigned_user, title, description, assigned_date,
-                    # due_date, and task_complete
-                    assigned_user = split_lines[0]
-                    title = split_lines[1]
-                    description = split_lines[2]
-                    assigned_date = split_lines[3]
-                    due_date = split_lines[4]
-                    complete_task = split_lines[5]
+                    # Iterate through task.txt file
+                    for line in lines:
+                        # Split the lines where there is a comma and a space
+                        split_lines = line.split(",")
 
-                    # ---- Text box ----
-                    # Print the output similar to output 2
-                    txt_bx.insert(
-                        tk.END, "_______________________________________________\n"
-                    )
-
-                    txt_bx.insert(tk.END, f"Task: \t\t{title :>10}\n")
-                    txt_bx.insert(tk.END, f"Assigned to: \t\t{assigned_user :>6}\n")
-                    txt_bx.insert(tk.END, f"Date assigned: \t\t{assigned_date :>3}\n")
-                    txt_bx.insert(tk.END, f"Date due: \t\t{due_date :>3}\n")
-                    txt_bx.insert(tk.END, f"Task complete? \t\t{complete_task}\n")
-                    txt_bx.insert(tk.END, f"Task description:\n {description}\n")
-
-                    txt_bx.insert(
-                        tk.END, "_______________________________________________\n"
-                    )
-
-            # ---- Grid layout ----
-
-            info_lbl.grid(row=0, column=0, columnspan=2, pady=10, sticky="we")
-            
-        except:
-            messagebox.showerror(title="Error", text=f"There are no tasks given to any user")
-
-    elif menu == "View my tasks":
-
-        try:
-            view_tasks_win.title("My Tasks")
-
-            # ---- Widgets ----
-            info_lbl = tk.Label(
-                frame,
-                text=f"List of {username}'s tasks",
-                bg="#333333",
-                fg="#ffffff",
-                font=("Arial", 12),
-            )
-
-            # ---- Read File ----
-            # Read the task.txt file
-            with open("tasks.txt", "r", encoding="utf-8") as read_my_tasks:
-                lines = read_my_tasks.readlines()
-
-                # Iterate through task.txt file
-                for line in lines:
-                    # Split the lines where there is a comma and a space
-                    split_lines = line.split(",")
-
-                    # Check if user is assigned a task
-                    if username in split_lines[0]:
-                        # The variables will be stored in my_username, my_title, my_description,
-                        # my_assigned_date, my_due_date, and my_complete_task
-                        my_username = split_lines[0]
-                        my_title = split_lines[1]
-                        my_description = split_lines[2]
-                        my_assigned_date = split_lines[3]
-                        my_due_date = split_lines[4]
-                        my_complete_task = split_lines[5]
+                        # The variables will be stored in assigned_user, title, description, assigned_date,
+                        # due_date, and task_complete
+                        assigned_user = split_lines[0]
+                        title = split_lines[1]
+                        description = split_lines[2]
+                        assigned_date = split_lines[3]
+                        due_date = split_lines[4]
+                        complete_task = split_lines[5]
 
                         # ---- Text box ----
                         # Print the output similar to output 2
@@ -742,23 +705,108 @@ def view_tasks(username, menu):
                             tk.END, "_______________________________________________\n"
                         )
 
-                        txt_bx.insert(tk.END, f"Task: \t\t{my_title :>10}\n")
-                        txt_bx.insert(tk.END, f"Assigned to: \t\t{my_username :>6}\n")
+                        txt_bx.insert(tk.END, f"Task: \t\t{title :>10}\n")
+                        txt_bx.insert(tk.END, f"Assigned to: \t\t{assigned_user :>6}\n")
                         txt_bx.insert(
-                            tk.END, f"Date assigned: \t\t{my_assigned_date :>3}\n"
+                            tk.END, f"Date assigned: \t\t{assigned_date :>3}\n"
                         )
-                        txt_bx.insert(tk.END, f"Date due: \t\t{my_due_date :>3}\n")
-                        txt_bx.insert(tk.END, f"Task complete? \t\t{my_complete_task}")
-                        txt_bx.insert(tk.END, f"Task description:\n {my_description}\n")
+                        txt_bx.insert(tk.END, f"Date due: \t\t{due_date :>3}\n")
+                        txt_bx.insert(tk.END, f"Task complete? \t\t{complete_task}\n")
+                        txt_bx.insert(tk.END, f"Task description:\n {description}\n")
 
                         txt_bx.insert(
                             tk.END, "_______________________________________________\n"
                         )
+            else:
+                raise FileExistsError(
+                    messagebox.showerror(
+                        title="Error", text="An error occurred: File does not exist."
+                    )
+                )
+            # ---- Grid layout ----
 
-            info_lbl.grid(row=0, column=0, columnspan=2, pady=10, sticky="ew")
+            info_lbl.grid(row=0, column=0, columnspan=2, pady=10, sticky="we")
 
         except:
-            messagebox.showerror(title="Error", text=f"No task was assigned to {username}.")
+            messagebox.showerror(
+                title="Error", text=f"There are no tasks given to any user"
+            )
+
+    elif menu == "View my tasks":
+
+        if check_file == True:
+            try:
+                view_tasks_win.title("My Tasks")
+
+                # ---- Widgets ----
+                info_lbl = tk.Label(
+                    frame,
+                    text=f"List of {username}'s tasks",
+                    bg="#333333",
+                    fg="#ffffff",
+                    font=("Arial", 12),
+                )
+
+                # ---- Read File ----
+                # Read the task.txt file
+                with open("tasks.txt", "r", encoding="utf-8") as read_my_tasks:
+                    lines = read_my_tasks.readlines()
+
+                    # Iterate through task.txt file
+                    for line in lines:
+                        # Split the lines where there is a comma and a space
+                        split_lines = line.split(",")
+
+                        # Check if user is assigned a task
+                        if username in split_lines[0]:
+                            # The variables will be stored in my_username, my_title, my_description,
+                            # my_assigned_date, my_due_date, and my_complete_task
+                            my_username = split_lines[0]
+                            my_title = split_lines[1]
+                            my_description = split_lines[2]
+                            my_assigned_date = split_lines[3]
+                            my_due_date = split_lines[4]
+                            my_complete_task = split_lines[5]
+
+                            # ---- Text box ----
+                            # Print the output similar to output 2
+                            txt_bx.insert(
+                                tk.END,
+                                "_______________________________________________\n",
+                            )
+
+                            txt_bx.insert(tk.END, f"Task: \t\t{my_title :>10}\n")
+                            txt_bx.insert(
+                                tk.END, f"Assigned to: \t\t{my_username :>6}\n"
+                            )
+                            txt_bx.insert(
+                                tk.END, f"Date assigned: \t\t{my_assigned_date :>3}\n"
+                            )
+                            txt_bx.insert(tk.END, f"Date due: \t\t{my_due_date :>3}\n")
+                            txt_bx.insert(
+                                tk.END, f"Task complete? \t\t{my_complete_task}"
+                            )
+                            txt_bx.insert(
+                                tk.END, f"Task description:\n {my_description}\n"
+                            )
+
+                            txt_bx.insert(
+                                tk.END,
+                                "_______________________________________________\n",
+                            )
+
+                info_lbl.grid(row=0, column=0, columnspan=2, pady=10, sticky="ew")
+
+            except:
+                messagebox.showerror(
+                    title="Error", text=f"No task was assigned to {username}."
+                )
+        else:
+            raise FileExistsError(
+                messagebox.showerror(
+                    title="Error", text="An error occurred: File does not exist."
+                )
+            )
 
     # ---- Scrollbar ----
     txt_bx["yscrollcommand"] = vert_scroll.set
@@ -801,27 +849,30 @@ def stats():
         font=("Arial", 12),
         command=stats_win.destroy,
     )
+    try:
+        # ---- Read File ----
+        with open("tasks.txt", "r") as read:
+            total_tasks = len(read.readlines())
+            tasks_lbl = tk.Label(
+                frame,
+                text=f"Total number of tasks: {total_tasks}",
+                fg="#ffffff",
+                bg="#333333",
+                font=("Arial", 12),
+            )
 
-    # ---- Read File ----
-    with open("tasks.txt", "r") as read:
-        total_tasks = len(read.readlines())
-        tasks_lbl = tk.Label(
-            frame,
-            text=f"Total number of tasks: {total_tasks}",
-            fg="#ffffff",
-            bg="#333333",
-            font=("Arial", 12),
-        )
+        with open("user.txt", "r") as read:
+            total_user = len(read.readlines())
+            user_lbl = tk.Label(
+                frame,
+                text=f"Total number of users: {total_user}",
+                fg="#ffffff",
+                bg="#333333",
+                font=("Arial", 12),
+            )
 
-    with open("user.txt", "r") as read:
-        total_user = len(read.readlines())
-        user_lbl = tk.Label(
-            frame,
-            text=f"Total number of users: {total_user}",
-            fg="#ffffff",
-            bg="#333333",
-            font=("Arial", 12),
-        )
+    except FileExistsError as error:
+        messagebox.showerror(title="Error", text=f"An error occurred: {error}")
 
     # ---- Grid ----
     frame.grid(row=0, column=0)
