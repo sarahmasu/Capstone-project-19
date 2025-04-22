@@ -390,7 +390,7 @@ def add_task():
         text="Please complete the following:",
         bg="#333333",
         fg="#ffffff",
-        font=("Arial", 14),
+        font=("Arial", 18),
     )
 
     user_lbl = tk.Label(
@@ -504,12 +504,12 @@ def add_task():
     save_task_btn = tk.Button(
         frame,
         text="Submit",
-        width=10,
+        width=15,
         font=("Arial", 12),
         command=lambda: submit_tasks(
             select_user.get(),
             task_title_txt.get(),
-            task_description_txt.get(),
+            task_description_txt.get("1.0",'end-1c'),
             current_date_lbl2.cget("text"),
             formatted_date,
             task_complete_lbl.cget("text"),
@@ -521,7 +521,7 @@ def add_task():
     clear_btn = tk.Button(
         frame,
         text="Clear",
-        width=10,
+        width=15,
         font=("Arial", 12),
         command=lambda: clear(task_win),
         bg="#46a094",
@@ -531,7 +531,7 @@ def add_task():
     close_btn = tk.Button(
         frame,
         text="Close",
-        width=10,
+        width=15,
         font=("Arial", 12),
         command=task_win.destroy,
         bg="#46a094",
@@ -540,12 +540,12 @@ def add_task():
 
     # ----Grid layout---
 
-    frame.grid(row=0, column=0)
-
     # ++Labels++
     instr_lbl.grid(
         row=0,
-        column=1,
+        column=0,
+        columnspan=3,
+        padx=10,
         pady=25,
         sticky="we",
     )
@@ -662,7 +662,6 @@ def add_task():
         column=1,
         padx=5,
         pady=5,
-        sticky="ew",
     )
 
     close_btn.grid(
@@ -670,8 +669,10 @@ def add_task():
         column=2,
         padx=5,
         pady=5,
-        sticky="w",
+        sticky="w"
     )
+
+    frame.pack()
 
     # ----Methods----
 
