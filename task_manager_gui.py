@@ -438,7 +438,7 @@ def add_task():
 
     user_cmbo = ttk.Combobox(
         frame,
-        width=18,
+        width=23,
         textvariable=select_user,
         font=("Arial", 12),
     )
@@ -447,10 +447,10 @@ def add_task():
 
     user_cmbo["state"] = "readonly"
 
-    # ----Entry boxes----
-    task_title = tk.Entry(frame, width=20, font=("Arial", 12))
+    # ----Entry and Text boxes----
+    task_title = tk.Entry(frame, width=25, font=("Arial", 12))
 
-    task_description = tk.Entry(frame, width=20, font=("Arial", 12))
+    task_description = tk.Text(frame, width=25, height=3, font=("Arial", 12))
 
     # ----Calendar Widget----
     task_due_date = Calendar(
@@ -638,7 +638,7 @@ def add_task():
         check_file = os.path.isfile("tasks.txt")
 
         if check_file == True:
-            
+
             # Append user input and format the output to task.txt
             with open("tasks.txt", "a", encoding="utf-8") as file:
 
@@ -650,7 +650,6 @@ def add_task():
             task_win.destroy()
         else:
             messagebox.showerror(title="Error", text="File does not exist!")
-
 
 
 # ====View tasks Section====
