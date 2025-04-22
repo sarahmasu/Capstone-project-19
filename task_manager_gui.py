@@ -888,6 +888,8 @@ def stats():
         width=15,
         font=("Arial", 12),
         command=stats_win.destroy,
+        bg="#46a094",
+        fg="#ffffff",
     )
 
     try:
@@ -916,11 +918,10 @@ def stats():
         messagebox.showerror(title="Error", message=f"An error occurred: {error}")
 
     # ---- Grid ----
-    frame.grid(row=0, column=0)
     header_lbl.grid(row=0, column=0, columnspan=2, pady=10, sticky="news")
-    tasks_lbl.grid(row=1, column=0, pady=5, sticky="ew")
-    user_lbl.grid(row=2, column=0, padx=5, sticky="ew")
-    close_btn.grid(row=3, column=0, columnspan=2, pady=10, sticky="ew")
+    tasks_lbl.grid(row=1, column=0, pady=5, sticky="w")
+    user_lbl.grid(row=2, column=0, pady=5, sticky="w")
+    close_btn.grid(row=3, column=0, columnspan=2, pady=10, sticky="we")
 
     frame.pack()
 
