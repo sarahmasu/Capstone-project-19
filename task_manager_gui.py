@@ -179,7 +179,7 @@ def menu(username):
         title_lbl.grid(row=0, column=0, columnspan=2, pady=25, sticky="news")
         menu_lbl.grid(row=1, column=0, pady=5)
 
-        reg_btn.grid(row=2, column=0, pady=5, padx=10, sticky="Ew")
+        reg_btn.grid(row=2, column=0, pady=5, padx=10, sticky="EW")
         add_btn.grid(row=3, column=0, pady=5, padx=10, sticky="EW")
         va_btn.grid(row=4, column=0, pady=5, padx=10, sticky="EW")
         vm_btn.grid(row=5, column=0, pady=5, padx=10, sticky="EW")
@@ -289,6 +289,7 @@ def register():
         frame,
         text="Submit",
         font=("Arial", 12),
+        width = 10,
         command=lambda: submit_user(
             new_user.get().lower(),
             new_passwd.get().lower(),
@@ -301,6 +302,7 @@ def register():
         frame,
         text="Clear",
         font=("Arial", 12),
+        width = 10,
         command=lambda: clear(reg_win),
     )
 
@@ -347,7 +349,7 @@ def register():
 
     # ----Grids----
     frame.grid(row=0, column=0)
-    reg_label.grid(columnspan=2, pady=25, sticky="w")
+    reg_label.grid(columnspan=2, pady=25, sticky="ew")
 
     user_lbl.grid(row=1, column=0, pady=5, sticky="w")
     new_user.grid(row=1, column=1, padx=5, pady=10, sticky="w")
@@ -358,8 +360,8 @@ def register():
     confirm_lbl.grid(row=3, column=0, pady=5, sticky="w")
     confirm_new_passwd.grid(row=3, column=1, padx=5, pady=10, sticky="w")
 
-    submit_btn.grid(row=4, column=0, padx=15, pady=15, sticky="ew")
-    clear_btn.grid(row=4, column=1, padx=15, pady=15, sticky="ew")
+    submit_btn.grid(row=4, column=0, padx=15, pady=15, sticky="e")
+    clear_btn.grid(row=4, column=1, padx=15, pady=15, sticky="w")
 
 
 # ====Add tasks Function====
@@ -425,7 +427,7 @@ def add_task():
         font=("Arial", 12),
     )
 
-    current_date = tk.Label(
+    current_date_lbl2 = tk.Label(
         frame,
         text=f"{today.strftime("%d %b %Y")}",
         bg="#333333",
@@ -441,7 +443,7 @@ def add_task():
         font=("Arial", 12),
     )
 
-    task_complete = tk.Label(
+    task_complete_lbl = tk.Label(
         frame,
         text="No",
         bg="#333333",
@@ -454,7 +456,7 @@ def add_task():
 
     user_cmbo = ttk.Combobox(
         frame,
-        width=23,
+        width=25,
         textvariable=select_user,
         font=("Arial", 12),
     )
@@ -464,9 +466,9 @@ def add_task():
     user_cmbo["state"] = "readonly"
 
     # ----Entry and Text boxes----
-    task_title = tk.Entry(frame, width=25, font=("Arial", 12))
+    task_title_txt = tk.Entry(frame, width=27, font=("Arial", 12))
 
-    task_description = tk.Text(frame, width=25, height=3, font=("Arial", 12))
+    task_description_txt = tk.Text(frame, width=27, height=3, font=("Arial", 12))
 
     # ----Calendar Widget----
     task_due_date = Calendar(
@@ -476,6 +478,12 @@ def add_task():
         month=today.month,
         day=today.day,
         date_pattern="dd mm y",
+        background ="#333333",
+        foreground = "#ffffff",
+        selectbackground = "#46a094",
+        selectforeground= "#ffffff",
+        headersbackground = "#46a094",
+        headersforeground= "#ffffff",
     )
 
     # Convert date: 22 04 2025 -> 22 Apr 2025
@@ -494,12 +502,14 @@ def add_task():
         font=("Arial", 12),
         command=lambda: submit_tasks(
             select_user.get(),
-            task_title.get(),
-            task_description.get(),
-            current_date.cget("text"),
+            task_title_txt.get(),
+            task_description_txt.get(),
+            current_date_lbl2.cget("text"),
             formatted_date,
-            task_complete.cget("text"),
+            task_complete_lbl.cget("text"),
         ),
+        bg="#46a094",
+        fg="#ffffff",
     )
 
     clear_btn = tk.Button(
@@ -508,23 +518,28 @@ def add_task():
         width=10,
         font=("Arial", 12),
         command=lambda: clear(task_win),
+        bg="#46a094",
+        fg="#ffffff",
     )
 
     close_btn = tk.Button(
         frame,
         text="Close",
-        width=15,
+        width=10,
         font=("Arial", 12),
         command=task_win.destroy,
+        bg="#46a094",
+        fg="#ffffff",
     )
 
     # ----Grid layout---
 
     frame.grid(row=0, column=0)
+
+    # ++Labels++
     instr_lbl.grid(
         row=0,
-        column=0,
-        columnspan=2,
+        column=1,
         pady=25,
         sticky="we",
     )
@@ -536,24 +551,10 @@ def add_task():
         pady=5,
         sticky="w",
     )
-    user_cmbo.grid(
-        row=1,
-        column=1,
-        pady=5,
-        padx=5,
-        sticky="w",
-    )
 
     title_lbl.grid(
         row=2,
         column=0,
-        padx=5,
-        pady=5,
-        sticky="w",
-    )
-    task_title.grid(
-        row=2,
-        column=1,
         padx=5,
         pady=5,
         sticky="w",
@@ -566,24 +567,10 @@ def add_task():
         pady=5,
         sticky="w",
     )
-    task_description.grid(
-        row=3,
-        column=1,
-        padx=5,
-        pady=5,
-        sticky="w",
-    )
-
+    
     due_date_lbl.grid(
         row=4,
         column=0,
-        padx=5,
-        pady=5,
-        sticky="w",
-    )
-    task_due_date.grid(
-        row=4,
-        column=1,
         padx=5,
         pady=5,
         sticky="w",
@@ -596,7 +583,8 @@ def add_task():
         pady=5,
         sticky="w",
     )
-    current_date.grid(
+
+    current_date_lbl2.grid(
         row=5,
         column=1,
         padx=5,
@@ -611,7 +599,7 @@ def add_task():
         pady=5,
         sticky="w",
     )
-    task_complete.grid(
+    task_complete_lbl.grid(
         row=6,
         column=1,
         padx=5,
@@ -619,26 +607,64 @@ def add_task():
         sticky="w",
     )
 
+    # ++Text and Entry++
+    task_title_txt.grid(
+        row=2,
+        column=1,
+        padx=5,
+        pady=5,
+        sticky="w",
+    )
+
+    task_description_txt.grid(
+        row=3,
+        column=1,
+        padx=5,
+        pady=5,
+        sticky="w",
+    )
+
+    # ++Calendar++
+    task_due_date.grid(
+        row=4,
+        column=1,
+        padx=5,
+        pady=5,
+        sticky="w",
+    )
+
+    # ++Combobox++
+    user_cmbo.grid(
+        row=1,
+        column=1,
+        pady=5,
+        padx=5,
+        sticky="w",
+    )
+
+    # ++buttons++
     save_task_btn.grid(
         row=7,
         column=0,
-        padx=15,
+        padx=5,
         pady=5,
-        sticky="we",
+        sticky="e",
     )
+
     clear_btn.grid(
         row=7,
         column=1,
-        padx=15,
+        padx=5,
         pady=5,
-        sticky="we",
+        sticky="ew",
     )
+
     close_btn.grid(
         row=7,
         column=2,
-        padx=15,
+        padx=5,
         pady=5,
-        sticky="we",
+        sticky="w",
     )
 
     # ----Methods----
@@ -937,7 +963,7 @@ if __name__ == "__main__":
     login_btn = tk.Button(
         frame,
         text="Login",
-        width=10,
+        width=8,
         command=lambda: login(username.get().lower(), passwd_entry.get().lower()),
         bg="#46a094",
         fg="#ffffff",
@@ -948,7 +974,7 @@ if __name__ == "__main__":
     clear_btn = tk.Button(
         frame,
         text="Clear",
-        width=10,
+        width=8,
         command=lambda: clear(root),
         bg="#46a094",
         fg="#ffffff",
@@ -956,7 +982,7 @@ if __name__ == "__main__":
     )
 
     # ----Grids----
-    login_lbl.grid(row=0, column=0, columnspan=2, pady=25, sticky="news")
+    login_lbl.grid(row=0, column=0, columnspan=3, pady=25, sticky="news")
 
     user_lbl.grid(row=1, column=0, pady=5, sticky="w")
     username.grid(row=1, column=1, columnspan=2, padx=5, pady=10, sticky="w")
@@ -964,8 +990,8 @@ if __name__ == "__main__":
     passwd_lbl.grid(row=2, column=0, pady=5, sticky="w")
     passwd_entry.grid(row=2, column=1, columnspan=2, padx=5, pady=10, sticky="w")
 
-    login_btn.grid(row=3, column=0, pady=10, sticky="e")
-    clear_btn.grid(row=3, column=1, pady=10, sticky="w")
+    login_btn.grid(row=3, column=1,  pady=10, sticky="ew")
+    clear_btn.grid(row=3, column=2, pady=10, sticky="ew")
 
     # .pack() is responsive, looks better than grid
     frame.pack()
