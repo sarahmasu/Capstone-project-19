@@ -353,7 +353,7 @@ def register():
 
     # ----Grids----
 
-    reg_label.grid(row = 0, column=0, columnspan=2, padx=5, pady=25, sticky="ew")
+    reg_label.grid(row=0, column=0, columnspan=2, padx=5, pady=25, sticky="ew")
 
     user_lbl.grid(row=1, column=0, pady=5, sticky="w")
     new_user.grid(row=1, column=1, padx=5, pady=5, sticky="w")
@@ -706,10 +706,10 @@ def add_task():
 def view_tasks(username, menu):
     view_tasks_win = tk.Toplevel()
     view_tasks_win.config(bg="#333333")
-    view_tasks_win.geometry("300x350")
+    view_tasks_win.resizable(True, True)
     frame = tk.Frame(view_tasks_win, bg="#333333")
 
-    txt_bx = tk.Text(frame, width=50, height=15, wrap="word", font=("Arial", 8))
+    txt_bx = tk.Text(frame, width=48, height=15, wrap="word", font=("Arial", 11))
 
     vert_scroll = ttk.Scrollbar(frame, orient="vertical", command=txt_bx.yview)
     horizon_scroll = ttk.Scrollbar(frame, orient="horizontal", command=txt_bx.xview)
@@ -720,6 +720,8 @@ def view_tasks(username, menu):
         width=15,
         font=("Arial", 12),
         command=view_tasks_win.destroy,
+        bg="#46a094",
+        fg="#ffffff",
     )
 
     if menu == "View all tasks":
@@ -732,7 +734,7 @@ def view_tasks(username, menu):
             text="List of all the tasks",
             bg="#333333",
             fg="#ffffff",
-            font=("Arial", 12),
+            font=("Arial", 20),
         )
 
         # ---- Read File ----
@@ -793,7 +795,7 @@ def view_tasks(username, menu):
             text=f"List of {username}'s tasks",
             bg="#333333",
             fg="#ffffff",
-            font=("Arial", 12),
+            font=("Arial", 20),
         )
 
         try:
@@ -849,13 +851,13 @@ def view_tasks(username, menu):
     txt_bx["xscrollcommand"] = horizon_scroll.set
 
     # ---- Grid layout ----
-    frame.grid(row=0, column=0)
 
     info_lbl.grid(row=0, column=0, columnspan=2, pady=10, sticky="ew")
-    txt_bx.grid(row=1, column=0, sticky="news")
-    vert_scroll.grid(row=1, column=1, sticky="ns")
-    horizon_scroll.grid(row=2, column=0, sticky="ew")
-    close_btn.grid(row=3, column=0, columnspan=2, pady=10, sticky="we")
+    txt_bx.grid(row=1, column=1, sticky="ew")
+    vert_scroll.grid(row=1, column=2, sticky="ns")
+    horizon_scroll.grid(row=2, column=1, sticky="ew")
+    close_btn.grid(row=3, column=0, columnspan=2, padx=10, pady=10, sticky="we")
+    frame.pack()
 
 
 # ====Statistics Section====
