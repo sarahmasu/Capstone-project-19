@@ -1,5 +1,6 @@
 # ====Import Libraries====
 from datetime import date
+from datetime import datetime
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
@@ -95,7 +96,7 @@ def menu(username):
         font=("Arial", 12),
     )
 
-    # Options
+    # Options for "admin" and other users
     if username == "admin":
 
         reg_btn = tk.Button(
@@ -394,7 +395,7 @@ def add_task():
 
     due_date_lbl = tk.Label(
         frame,
-        text="Due date (dd Mon YYYY): ",
+        text="Select due date: ",
         bg="#333333",
         fg="#ffffff",
         font=("Arial", 12),
@@ -418,7 +419,7 @@ def add_task():
 
     status_lbl = tk.Label(
         frame,
-        text="Completion status: ",
+        text="Task complete: ",
         bg="#333333",
         fg="#ffffff",
         font=("Arial", 12),
@@ -426,7 +427,7 @@ def add_task():
 
     task_complete = tk.Label(
         frame,
-        text="Incomplete",
+        text="No",
         bg="#333333",
         fg="#ffffff",
         font=("Arial", 12),
@@ -446,15 +447,28 @@ def add_task():
 
     user_cmbo["state"] = "readonly"
 
-    user_task = select_user.get()
-
     # ----Entry boxes----
     task_title = tk.Entry(frame, width=20, font=("Arial", 12))
 
     task_description = tk.Entry(frame, width=20, font=("Arial", 12))
 
-    # Get current date and format it to dd/MMM/YYYY
-    task_due_date = tk.Entry(frame, width=20, font=("Arial", 12))
+    # ----Calendar Widget----
+    task_due_date = Calendar(
+        frame,
+        selectmode="day",
+        year=today.year,
+        month=today.month,
+        day=today.day,
+        date_pattern="dd mm y",
+    )
+
+    # Convert date: 22 04 2025 -> 22 Apr 2025
+    due_date = task_due_date.get_date()
+    format_date = "%d %m %Y"
+
+    # Remember first strip then convert: striptime then strftime
+    convert_date = datetime.strptime(due_date, format_date)
+    formatted_date = convert_date.strftime("%d %b %Y")
 
     # ----Buttons----
     save_task_btn = tk.Button(
@@ -463,12 +477,12 @@ def add_task():
         width=10,
         font=("Arial", 12),
         command=lambda: submit_tasks(
-            user_task,
+            select_user.get(),
             task_title.get(),
             task_description.get(),
-            current_date.get(),
-            task_due_date.get(),
-            task_complete.get(),
+            current_date.cget("text"),
+            formatted_date,
+            task_complete.cget("text"),
         ),
     )
 
@@ -621,10 +635,10 @@ def add_task():
         task_due_date,
         task_complete,
     ):
-        check_file = os.path.isfile("task.txt")
+        check_file = os.path.isfile("tasks.txt")
 
         if check_file == True:
-
+            
             # Append user input and format the output to task.txt
             with open("tasks.txt", "a", encoding="utf-8") as file:
 
@@ -632,12 +646,11 @@ def add_task():
                 file.writelines(
                     f"\n{user_task}, {task_title}, {task_description}, {current_date}, {task_due_date}, {task_complete}"
                 )
-            messagebox.showinfo(title="Success", text="Successfully saved task.")
-
+            messagebox.showinfo(title="Success", message="New task saved.")
+            task_win.destroy()
         else:
-            raise FileExistsError(
-                messagebox.showerror(title="Error", text="File does not exist!")
-            )
+            messagebox.showerror(title="Error", text="File does not exist!")
+
 
 
 # ====View tasks Section====
@@ -1008,4 +1021,7 @@ if __name__ == "__main__":
 
     Get the text of the button:
     - https://stackoverflow.com/questions/26765218/get-the-text-of-a-button-widget
+
+    Fixed line 465 - TypeError: descriptor 'strftime' for 'datetime.date' objects doesn't apply to a 'str' object:
+    - https://stackoverflow.com/questions/30112357/typeerror-descriptor-strftime-requires-a-datetime-date-object-but-received
 """
