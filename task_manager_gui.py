@@ -13,6 +13,22 @@ check_username = []
 check_passwd = []
 user = {}
 
+# ====Check_file Section====
+
+
+def check_file():
+    task_file = os.path.isfile("tasks.txt")
+    user_file = os.path.isfile("user.txt")
+
+    if user_file == True and task_file == True:
+        read_data()
+    else:
+        print(
+            "The files for the program does not exist. Download the files from the repo, then run the program again."
+        )
+        exit()
+
+
 # ====Read_data Section====
 
 
@@ -34,7 +50,7 @@ def read_data():
         for i, j in zip(check_username, check_passwd):
             user.update({i: j})
 
-    except FileExistsError as error:
+    except FileNotFoundError as error:
         print(f"An error occurred: {error}")
 
 
@@ -635,9 +651,8 @@ def add_task():
         task_due_date,
         task_complete,
     ):
-        check_file = os.path.isfile("tasks.txt")
 
-        if check_file == True:
+        try:
 
             # Append user input and format the output to task.txt
             with open("tasks.txt", "a", encoding="utf-8") as file:
@@ -646,10 +661,11 @@ def add_task():
                 file.writelines(
                     f"\n{user_task}, {task_title}, {task_description}, {current_date}, {task_due_date}, {task_complete}"
                 )
-            messagebox.showinfo(title="Success", message="New task saved.")
+            messagebox.showinfo(title="Success", message="New task saved!")
             task_win.destroy()
-        else:
-            messagebox.showerror(title="Error", text="File does not exist!")
+
+        except FileNotFoundError:
+            messagebox.showerror(title="Error", message="File not found!")
 
 
 # ====View tasks Section====
@@ -674,26 +690,25 @@ def view_tasks(username, menu):
         command=view_tasks_win.destroy,
     )
 
-    check_file = os.path.exists("tasks.txt")
-
     if menu == "View all tasks":
 
+        view_tasks_win.title("View All Tasks")
+
+        # ---- Widgets ----
+        info_lbl = tk.Label(
+            frame,
+            text="List of all the tasks",
+            bg="#333333",
+            fg="#ffffff",
+            font=("Arial", 12),
+        )
+
+        # ---- Read File ----
+        # Read the task.txt file to display all the task and which user is assign to it
+        file_size = os.path.getsize("tasks.txt")
+
         try:
-            view_tasks_win.title("View All Tasks")
-
-            # ---- Widgets ----
-            info_lbl = tk.Label(
-                frame,
-                text="List of all the tasks",
-                bg="#333333",
-                fg="#ffffff",
-                font=("Arial", 12),
-            )
-
-            # ---- Read File ----
-            # Read the task.txt file to display all the task and which user is assign to it
-
-            if check_file == True:
+            if file_size != 0:
                 with open("tasks.txt", "r", encoding="utf-8") as read_all_tasks:
                     lines = read_all_tasks.readlines()
 
@@ -729,96 +744,76 @@ def view_tasks(username, menu):
                         txt_bx.insert(
                             tk.END, "_______________________________________________\n"
                         )
+                # ---- Grid layout ----
+
+                info_lbl.grid(row=0, column=0, columnspan=2, pady=10, sticky="we")
             else:
-                raise FileExistsError(
-                    messagebox.showerror(
-                        title="Error", text="An error occurred: File does not exist."
-                    )
+                messagebox.showwarning(
+                    title="Warning", message="File empty. Ask admin to populate file."
                 )
-            # ---- Grid layout ----
-
-            info_lbl.grid(row=0, column=0, columnspan=2, pady=10, sticky="we")
-
-        except:
-            messagebox.showerror(
-                title="Error", text=f"There are no tasks given to any user"
-            )
+        except FileNotFoundError:
+            messagebox.showerror(title="Error", message="File not found!")
 
     elif menu == "View my tasks":
 
-        if check_file == True:
-            try:
-                view_tasks_win.title("My Tasks")
+        view_tasks_win.title("My Tasks")
 
-                # ---- Widgets ----
-                info_lbl = tk.Label(
-                    frame,
-                    text=f"List of {username}'s tasks",
-                    bg="#333333",
-                    fg="#ffffff",
-                    font=("Arial", 12),
-                )
+        # ---- Widgets ----
+        info_lbl = tk.Label(
+            frame,
+            text=f"List of {username}'s tasks",
+            bg="#333333",
+            fg="#ffffff",
+            font=("Arial", 12),
+        )
 
-                # ---- Read File ----
-                # Read the task.txt file
-                with open("tasks.txt", "r", encoding="utf-8") as read_my_tasks:
-                    lines = read_my_tasks.readlines()
+        try:
 
-                    # Iterate through task.txt file
-                    for line in lines:
-                        # Split the lines where there is a comma and a space
-                        split_lines = line.split(",")
+            # ---- Read File ----
+            # Read the task.txt file
 
-                        # Check if user is assigned a task
-                        if username in split_lines[0]:
-                            # The variables will be stored in my_username, my_title, my_description,
-                            # my_assigned_date, my_due_date, and my_complete_task
-                            my_username = split_lines[0]
-                            my_title = split_lines[1]
-                            my_description = split_lines[2]
-                            my_assigned_date = split_lines[3]
-                            my_due_date = split_lines[4]
-                            my_complete_task = split_lines[5]
+            with open("tasks.txt", "r", encoding="utf-8") as read_my_tasks:
+                lines = read_my_tasks.readlines()
 
-                            # ---- Text box ----
-                            # Print the output similar to output 2
-                            txt_bx.insert(
-                                tk.END,
-                                "_______________________________________________\n",
-                            )
+                # Iterate through task.txt file
+                for line in lines:
+                    # Split the lines where there is a comma and a space
+                    split_lines = line.split(",")
 
-                            txt_bx.insert(tk.END, f"Task: \t\t{my_title :>10}\n")
-                            txt_bx.insert(
-                                tk.END, f"Assigned to: \t\t{my_username :>6}\n"
-                            )
-                            txt_bx.insert(
-                                tk.END, f"Date assigned: \t\t{my_assigned_date :>3}\n"
-                            )
-                            txt_bx.insert(tk.END, f"Date due: \t\t{my_due_date :>3}\n")
-                            txt_bx.insert(
-                                tk.END, f"Task complete? \t\t{my_complete_task}"
-                            )
-                            txt_bx.insert(
-                                tk.END, f"Task description:\n {my_description}\n"
-                            )
+                    # Check if user is assigned a task
+                    if username in split_lines[0]:
+                        # The variables will be stored in my_username, my_title, my_description,
+                        # my_assigned_date, my_due_date, and my_complete_task
+                        my_username = split_lines[0]
+                        my_title = split_lines[1]
+                        my_description = split_lines[2]
+                        my_assigned_date = split_lines[3]
+                        my_due_date = split_lines[4]
+                        my_complete_task = split_lines[5]
 
-                            txt_bx.insert(
-                                tk.END,
-                                "_______________________________________________\n",
-                            )
+                        # ---- Text box ----
+                        # Print the output similar to output 2
+                        txt_bx.insert(
+                            tk.END,
+                            "_______________________________________________\n",
+                        )
 
-                info_lbl.grid(row=0, column=0, columnspan=2, pady=10, sticky="ew")
+                        txt_bx.insert(tk.END, f"Task: \t\t{my_title :>10}\n")
+                        txt_bx.insert(tk.END, f"Assigned to: \t\t{my_username :>6}\n")
+                        txt_bx.insert(
+                            tk.END, f"Date assigned: \t\t{my_assigned_date :>3}\n"
+                        )
+                        txt_bx.insert(tk.END, f"Date due: \t\t{my_due_date :>3}\n")
+                        txt_bx.insert(tk.END, f"Task complete? \t\t{my_complete_task}")
+                        txt_bx.insert(tk.END, f"Task description:\n {my_description}\n")
 
-            except:
-                messagebox.showerror(
-                    title="Error", text=f"No task was assigned to {username}."
-                )
-        else:
-            raise FileExistsError(
-                messagebox.showerror(
-                    title="Error", text="An error occurred: File does not exist."
-                )
-            )
+                        txt_bx.insert(
+                            tk.END,
+                            "_______________________________________________\n",
+                        )
+       
+        except FileNotFoundError:
+            messagebox.showerror(title="Error", message=f"File not found!")
 
     # ---- Scrollbar ----
     txt_bx["yscrollcommand"] = vert_scroll.set
@@ -827,6 +822,7 @@ def view_tasks(username, menu):
     # ---- Grid layout ----
     frame.grid(row=0, column=0)
 
+    info_lbl.grid(row=0, column=0, columnspan=2, pady=10, sticky="ew")
     txt_bx.grid(row=1, column=0, sticky="news")
     vert_scroll.grid(row=1, column=1, sticky="ns")
     horizon_scroll.grid(row=2, column=0, sticky="ew")
@@ -861,6 +857,7 @@ def stats():
         font=("Arial", 12),
         command=stats_win.destroy,
     )
+
     try:
         # ---- Read File ----
         with open("tasks.txt", "r") as read:
@@ -883,8 +880,8 @@ def stats():
                 font=("Arial", 12),
             )
 
-    except FileExistsError as error:
-        messagebox.showerror(title="Error", text=f"An error occurred: {error}")
+    except FileNotFoundError as error:
+        messagebox.showerror(title="Error", message=f"An error occurred: {error}")
 
     # ---- Grid ----
     frame.grid(row=0, column=0)
@@ -912,7 +909,7 @@ def clear(root):
 # ===============Main Function===============
 
 if __name__ == "__main__":
-    read_data()
+    check_file()
 
     # =====GUI Configuration=====
     root = tk.Tk()
