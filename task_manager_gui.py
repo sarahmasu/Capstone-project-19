@@ -109,7 +109,7 @@ def menu(username):
         text="Select one of the following options:",
         bg="#333333",
         fg="#ffffff",
-        font=("Arial", 12),
+        font=("Arial", 15),
     )
 
     # Options for "admin" and other users
@@ -161,7 +161,7 @@ def menu(username):
             bg="#333333",
             fg="#ffffff",
             width=15,
-            font=("Arial", 11),
+            font=("Arial", 10),
             command=lambda: stats(),
         )
 
@@ -171,7 +171,7 @@ def menu(username):
             bg="#333333",
             fg="#ffffff",
             width=15,
-            font=("Arial", 11),
+            font=("Arial", 10),
             command=menu_win.destroy,
         )
 
@@ -179,13 +179,13 @@ def menu(username):
         title_lbl.grid(row=0, column=0, columnspan=2, pady=25, sticky="news")
         menu_lbl.grid(row=1, column=0, pady=5)
 
-        reg_btn.grid(row=2, column=0, pady=5, padx=10, sticky="Ew")
+        reg_btn.grid(row=2, column=0, pady=5, padx=10, sticky="EW")
         add_btn.grid(row=3, column=0, pady=5, padx=10, sticky="EW")
         va_btn.grid(row=4, column=0, pady=5, padx=10, sticky="EW")
         vm_btn.grid(row=5, column=0, pady=5, padx=10, sticky="EW")
         stats_btn.grid(row=6, column=0, pady=5, padx=10, sticky="EW")
 
-        close_btn.grid(row=7, column=0, pady=20, sticky="news")
+        close_btn.grid(row=7, column=0, pady=20, sticky="ew")
 
         frame.pack()
 
@@ -219,7 +219,7 @@ def menu(username):
             bg="#333333",
             fg="#ffffff",
             width=15,
-            font=("Arial", 11),
+            font=("Arial", 10),
             command=lambda: view_tasks(username, vm_btn.cget("text")),
         )
 
@@ -229,7 +229,7 @@ def menu(username):
             bg="#333333",
             fg="#ffffff",
             width=15,
-            font=("Arial", 11),
+            font=("Arial", 10),
             command=menu_win.destroy,
         )
 
@@ -241,7 +241,7 @@ def menu(username):
         va_btn.grid(row=4, column=0, pady=5, padx=10, sticky="EW")
         vm_btn.grid(row=5, column=0, pady=5, padx=10, sticky="EW")
 
-        close_btn.grid(row=7, column=0, pady=20, sticky="news")
+        close_btn.grid(row=7, column=0, pady=20, sticky="ew")
 
         frame.pack()
 
@@ -264,7 +264,7 @@ def register():
         text="Please enter the following:",
         bg="#333333",
         fg="#ffffff",
-        font=("Arial", 12),
+        font=("Arial", 16),
     )
 
     # Request user to enter a user's username and password
@@ -275,25 +275,28 @@ def register():
         frame, text="Password: ", bg="#333333", fg="#ffffff", font=("Arial", 12)
     )
 
-    new_user = tk.Entry(frame, font=("Arial", 12))
-    new_passwd = tk.Entry(frame, show="*", font=("Arial", 12))
+    new_user = tk.Entry(frame, width=20, font=("Arial", 12))
+    new_passwd = tk.Entry(frame, width=20, show="*", font=("Arial", 12))
 
     # Request the user to re-enter the password
     confirm_lbl = tk.Label(
         frame, text="Confirm password: ", bg="#333333", fg="#ffffff", font=("Arial", 12)
     )
-    confirm_new_passwd = tk.Entry(frame, show="*", font=("Arial", 12))
+    confirm_new_passwd = tk.Entry(frame, show="*", width=20, font=("Arial", 12))
 
     # Submits user to user.txt file
     submit_btn = tk.Button(
         frame,
         text="Submit",
         font=("Arial", 12),
+        width=10,
         command=lambda: submit_user(
             new_user.get().lower(),
             new_passwd.get().lower(),
             confirm_new_passwd.get().lower(),
         ),
+        bg="#46a094",
+        fg="#ffffff",
     )
 
     # Clears textbox
@@ -301,7 +304,10 @@ def register():
         frame,
         text="Clear",
         font=("Arial", 12),
+        width=10,
         command=lambda: clear(reg_win),
+        bg="#46a094",
+        fg="#ffffff",
     )
 
     # Method check whether the passwords match
@@ -346,20 +352,22 @@ def register():
             messagebox.showerror("Error", f"An error has occurred: {error}")
 
     # ----Grids----
-    frame.grid(row=0, column=0)
-    reg_label.grid(columnspan=2, pady=25, sticky="w")
+
+    reg_label.grid(row=0, column=0, columnspan=2, padx=5, pady=25, sticky="ew")
 
     user_lbl.grid(row=1, column=0, pady=5, sticky="w")
-    new_user.grid(row=1, column=1, padx=5, pady=10, sticky="w")
+    new_user.grid(row=1, column=1, padx=5, pady=5, sticky="w")
 
     passwd_lbl.grid(row=2, column=0, pady=5, sticky="w")
-    new_passwd.grid(row=2, column=1, padx=5, pady=10, sticky="w")
+    new_passwd.grid(row=2, column=1, padx=5, pady=5, sticky="w")
 
     confirm_lbl.grid(row=3, column=0, pady=5, sticky="w")
-    confirm_new_passwd.grid(row=3, column=1, padx=5, pady=10, sticky="w")
+    confirm_new_passwd.grid(row=3, column=1, padx=5, pady=5, sticky="w")
 
-    submit_btn.grid(row=4, column=0, padx=15, pady=15, sticky="ew")
-    clear_btn.grid(row=4, column=1, padx=15, pady=15, sticky="ew")
+    submit_btn.grid(row=4, column=0, padx=5, pady=5, sticky="e")
+    clear_btn.grid(row=4, column=1, padx=5, pady=5, sticky="w")
+
+    frame.pack()
 
 
 # ====Add tasks Function====
@@ -382,7 +390,7 @@ def add_task():
         text="Please complete the following:",
         bg="#333333",
         fg="#ffffff",
-        font=("Arial", 14),
+        font=("Arial", 18),
     )
 
     user_lbl = tk.Label(
@@ -425,7 +433,7 @@ def add_task():
         font=("Arial", 12),
     )
 
-    current_date = tk.Label(
+    current_date_lbl2 = tk.Label(
         frame,
         text=f"{today.strftime("%d %b %Y")}",
         bg="#333333",
@@ -441,7 +449,7 @@ def add_task():
         font=("Arial", 12),
     )
 
-    task_complete = tk.Label(
+    task_complete_lbl = tk.Label(
         frame,
         text="No",
         bg="#333333",
@@ -454,7 +462,7 @@ def add_task():
 
     user_cmbo = ttk.Combobox(
         frame,
-        width=23,
+        width=25,
         textvariable=select_user,
         font=("Arial", 12),
     )
@@ -464,9 +472,9 @@ def add_task():
     user_cmbo["state"] = "readonly"
 
     # ----Entry and Text boxes----
-    task_title = tk.Entry(frame, width=25, font=("Arial", 12))
+    task_title_txt = tk.Entry(frame, width=27, font=("Arial", 12))
 
-    task_description = tk.Text(frame, width=25, height=3, font=("Arial", 12))
+    task_description_txt = tk.Text(frame, width=27, height=3, font=("Arial", 12))
 
     # ----Calendar Widget----
     task_due_date = Calendar(
@@ -476,6 +484,12 @@ def add_task():
         month=today.month,
         day=today.day,
         date_pattern="dd mm y",
+        background="#333333",
+        foreground="#ffffff",
+        selectbackground="#46a094",
+        selectforeground="#ffffff",
+        headersbackground="#46a094",
+        headersforeground="#ffffff",
     )
 
     # Convert date: 22 04 2025 -> 22 Apr 2025
@@ -490,24 +504,28 @@ def add_task():
     save_task_btn = tk.Button(
         frame,
         text="Submit",
-        width=10,
+        width=15,
         font=("Arial", 12),
         command=lambda: submit_tasks(
             select_user.get(),
-            task_title.get(),
-            task_description.get(),
-            current_date.cget("text"),
+            task_title_txt.get(),
+            task_description_txt.get("1.0",'end-1c'),
+            current_date_lbl2.cget("text"),
             formatted_date,
-            task_complete.cget("text"),
+            task_complete_lbl.cget("text"),
         ),
+        bg="#46a094",
+        fg="#ffffff",
     )
 
     clear_btn = tk.Button(
         frame,
         text="Clear",
-        width=10,
+        width=15,
         font=("Arial", 12),
         command=lambda: clear(task_win),
+        bg="#46a094",
+        fg="#ffffff",
     )
 
     close_btn = tk.Button(
@@ -516,15 +534,18 @@ def add_task():
         width=15,
         font=("Arial", 12),
         command=task_win.destroy,
+        bg="#46a094",
+        fg="#ffffff",
     )
 
     # ----Grid layout---
 
-    frame.grid(row=0, column=0)
+    # ++Labels++
     instr_lbl.grid(
         row=0,
         column=0,
-        columnspan=2,
+        columnspan=3,
+        padx=10,
         pady=25,
         sticky="we",
     )
@@ -536,24 +557,10 @@ def add_task():
         pady=5,
         sticky="w",
     )
-    user_cmbo.grid(
-        row=1,
-        column=1,
-        pady=5,
-        padx=5,
-        sticky="w",
-    )
 
     title_lbl.grid(
         row=2,
         column=0,
-        padx=5,
-        pady=5,
-        sticky="w",
-    )
-    task_title.grid(
-        row=2,
-        column=1,
         padx=5,
         pady=5,
         sticky="w",
@@ -566,24 +573,10 @@ def add_task():
         pady=5,
         sticky="w",
     )
-    task_description.grid(
-        row=3,
-        column=1,
-        padx=5,
-        pady=5,
-        sticky="w",
-    )
 
     due_date_lbl.grid(
         row=4,
         column=0,
-        padx=5,
-        pady=5,
-        sticky="w",
-    )
-    task_due_date.grid(
-        row=4,
-        column=1,
         padx=5,
         pady=5,
         sticky="w",
@@ -596,7 +589,8 @@ def add_task():
         pady=5,
         sticky="w",
     )
-    current_date.grid(
+
+    current_date_lbl2.grid(
         row=5,
         column=1,
         padx=5,
@@ -611,7 +605,7 @@ def add_task():
         pady=5,
         sticky="w",
     )
-    task_complete.grid(
+    task_complete_lbl.grid(
         row=6,
         column=1,
         padx=5,
@@ -619,27 +613,66 @@ def add_task():
         sticky="w",
     )
 
+    # ++Text and Entry++
+    task_title_txt.grid(
+        row=2,
+        column=1,
+        padx=5,
+        pady=5,
+        sticky="w",
+    )
+
+    task_description_txt.grid(
+        row=3,
+        column=1,
+        padx=5,
+        pady=5,
+        sticky="w",
+    )
+
+    # ++Calendar++
+    task_due_date.grid(
+        row=4,
+        column=1,
+        padx=5,
+        pady=5,
+        sticky="w",
+    )
+
+    # ++Combobox++
+    user_cmbo.grid(
+        row=1,
+        column=1,
+        pady=5,
+        padx=5,
+        sticky="w",
+    )
+
+    # ++buttons++
     save_task_btn.grid(
         row=7,
         column=0,
-        padx=15,
+        padx=5,
         pady=5,
-        sticky="we",
+        sticky="e",
     )
+
     clear_btn.grid(
         row=7,
         column=1,
-        padx=15,
+        padx=5,
         pady=5,
-        sticky="we",
     )
+
     close_btn.grid(
         row=7,
         column=2,
-        padx=15,
+        padx=5,
         pady=5,
-        sticky="we",
+        sticky="w"
     )
+
+    frame.pack()
 
     # ----Methods----
 
@@ -674,10 +707,10 @@ def add_task():
 def view_tasks(username, menu):
     view_tasks_win = tk.Toplevel()
     view_tasks_win.config(bg="#333333")
-    view_tasks_win.geometry("300x350")
+    view_tasks_win.resizable(True, True)
     frame = tk.Frame(view_tasks_win, bg="#333333")
 
-    txt_bx = tk.Text(frame, width=45, height=15, wrap="word", font=("Arial", 8))
+    txt_bx = tk.Text(frame, width=48, height=15, wrap="word", font=("Arial", 11))
 
     vert_scroll = ttk.Scrollbar(frame, orient="vertical", command=txt_bx.yview)
     horizon_scroll = ttk.Scrollbar(frame, orient="horizontal", command=txt_bx.xview)
@@ -688,6 +721,8 @@ def view_tasks(username, menu):
         width=15,
         font=("Arial", 12),
         command=view_tasks_win.destroy,
+        bg="#46a094",
+        fg="#ffffff",
     )
 
     if menu == "View all tasks":
@@ -700,7 +735,7 @@ def view_tasks(username, menu):
             text="List of all the tasks",
             bg="#333333",
             fg="#ffffff",
-            font=("Arial", 12),
+            font=("Arial", 20),
         )
 
         # ---- Read File ----
@@ -744,9 +779,6 @@ def view_tasks(username, menu):
                         txt_bx.insert(
                             tk.END, "_______________________________________________\n"
                         )
-                # ---- Grid layout ----
-
-                info_lbl.grid(row=0, column=0, columnspan=2, pady=10, sticky="we")
             else:
                 messagebox.showwarning(
                     title="Warning", message="File empty. Ask admin to populate file."
@@ -764,7 +796,7 @@ def view_tasks(username, menu):
             text=f"List of {username}'s tasks",
             bg="#333333",
             fg="#ffffff",
-            font=("Arial", 12),
+            font=("Arial", 20),
         )
 
         try:
@@ -811,7 +843,7 @@ def view_tasks(username, menu):
                             tk.END,
                             "_______________________________________________\n",
                         )
-       
+
         except FileNotFoundError:
             messagebox.showerror(title="Error", message=f"File not found!")
 
@@ -820,13 +852,13 @@ def view_tasks(username, menu):
     txt_bx["xscrollcommand"] = horizon_scroll.set
 
     # ---- Grid layout ----
-    frame.grid(row=0, column=0)
 
     info_lbl.grid(row=0, column=0, columnspan=2, pady=10, sticky="ew")
-    txt_bx.grid(row=1, column=0, sticky="news")
-    vert_scroll.grid(row=1, column=1, sticky="ns")
-    horizon_scroll.grid(row=2, column=0, sticky="ew")
-    close_btn.grid(row=3, column=0, columnspan=2, pady=10, sticky="we")
+    txt_bx.grid(row=1, column=1, sticky="ew")
+    vert_scroll.grid(row=1, column=2, sticky="ns")
+    horizon_scroll.grid(row=2, column=1, sticky="ew")
+    close_btn.grid(row=3, column=0, columnspan=2, padx=10, pady=10, sticky="we")
+    frame.pack()
 
 
 # ====Statistics Section====
@@ -856,6 +888,8 @@ def stats():
         width=15,
         font=("Arial", 12),
         command=stats_win.destroy,
+        bg="#46a094",
+        fg="#ffffff",
     )
 
     try:
@@ -884,11 +918,10 @@ def stats():
         messagebox.showerror(title="Error", message=f"An error occurred: {error}")
 
     # ---- Grid ----
-    frame.grid(row=0, column=0)
     header_lbl.grid(row=0, column=0, columnspan=2, pady=10, sticky="news")
-    tasks_lbl.grid(row=1, column=0, pady=5, sticky="ew")
-    user_lbl.grid(row=2, column=0, padx=5, sticky="ew")
-    close_btn.grid(row=3, column=0, columnspan=2, pady=10, sticky="ew")
+    tasks_lbl.grid(row=1, column=0, pady=5, sticky="w")
+    user_lbl.grid(row=2, column=0, pady=5, sticky="w")
+    close_btn.grid(row=3, column=0, columnspan=2, pady=10, sticky="we")
 
     frame.pack()
 
@@ -914,7 +947,7 @@ if __name__ == "__main__":
     # =====GUI Configuration=====
     root = tk.Tk()
     root.title("Login")
-    root.geometry("440x340")  # width x height
+    root.geometry("440x320")  # width x height
     root.configure(bg="#333333")
     frame = tk.Frame(bg="#333333")
 
@@ -937,7 +970,7 @@ if __name__ == "__main__":
     login_btn = tk.Button(
         frame,
         text="Login",
-        width=10,
+        width=8,
         command=lambda: login(username.get().lower(), passwd_entry.get().lower()),
         bg="#46a094",
         fg="#ffffff",
@@ -948,7 +981,7 @@ if __name__ == "__main__":
     clear_btn = tk.Button(
         frame,
         text="Clear",
-        width=10,
+        width=8,
         command=lambda: clear(root),
         bg="#46a094",
         fg="#ffffff",
@@ -956,7 +989,7 @@ if __name__ == "__main__":
     )
 
     # ----Grids----
-    login_lbl.grid(row=0, column=0, columnspan=2, pady=25, sticky="news")
+    login_lbl.grid(row=0, column=0, columnspan=3, pady=25, sticky="news")
 
     user_lbl.grid(row=1, column=0, pady=5, sticky="w")
     username.grid(row=1, column=1, columnspan=2, padx=5, pady=10, sticky="w")
@@ -964,8 +997,8 @@ if __name__ == "__main__":
     passwd_lbl.grid(row=2, column=0, pady=5, sticky="w")
     passwd_entry.grid(row=2, column=1, columnspan=2, padx=5, pady=10, sticky="w")
 
-    login_btn.grid(row=3, column=0, pady=10, sticky="e")
-    clear_btn.grid(row=3, column=1, pady=10, sticky="w")
+    login_btn.grid(row=3, column=1, pady=10, sticky="ew")
+    clear_btn.grid(row=3, column=2, pady=10, sticky="ew")
 
     # .pack() is responsive, looks better than grid
     frame.pack()
