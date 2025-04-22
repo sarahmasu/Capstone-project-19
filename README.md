@@ -21,10 +21,10 @@ This was a bootcamp capstone project I wanted to revisit. I've added the old cod
 
 ## 1. Introduction <a name="introduction"></a>
 
-The focus of this project was to add functionality to a task manager program. The code originally had the menu and I was tasked to make the menu options functional.
+The focus of this project was to add functionality to a task manager program. The code originally had the menu, and I was tasked to make the menu options functional.
 
 ## 2. Project Description <a name="project-description"></a>
-When you run the code, you will be prompted to enter a username and password. Once the correct username and password are given, a menu will appear:
+You will be prompted to enter a username and password when you run the code. Once the correct username and password are given, a menu will appear:
 
 ![Screenshot of Login window](/Images/Login.PNG)
 
@@ -33,12 +33,12 @@ The options are to register new users, add new tasks, view all available tasks, 
 ![Screenshot of Menu window](/Images/Menu.PNG)
 
 ### 2.1. Registering new users <a name="reg_users"></a>
-This function is only available to admin only. When you choose to register a new user, you will prompted to enter the new user's username and password. Once you confirmed their password, the program will open the user.txt file and write the new user and the password to the file, otherwise it will loop until admin ensures the password and the confirm password is the same. The same applies if admin enters nothing when prompted to enter a password.
+This function is available only to admins. When you choose to register a new user, you will be prompted to enter the new user's username and password. Once you confirm their password, the program will open the user.txt file and write the new user and the password to it. Otherwise, it will loop until the admin ensures that the password and the confirmation password are the same. The same applies if the admin enters nothing when prompted to enter a password.
 
 ![Screenshot of Register window](/Images/Register_menu.PNG)
 
 ### 2.2. Adding a task <a name="add_tasks"></a>
-When you choose to add a task, the program will open the tasks.txt file, then prompt the user to enter the title of the task, the task description, when the task is due,and  who they wish to assign the task to. The date the task was added will be the current date, and the task will be defaulted to incomplete. All the information will be written to the file.
+When you choose to add a task, the program will open the tasks.txt file, then prompt the user to enter the title of the task, the task description, when the task is due, and  who they wish to assign the task to. The date the task was added will be the current date, and the task will be defaulted to incomplete. All the information will be written to the file.
 
 ![Screenshot of Add task window](/Images/Add_task_menu.PNG)
 
