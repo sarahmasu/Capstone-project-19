@@ -2,29 +2,26 @@
 
 <sub>A bootcamp project</sub>
 
-## Table of Contents
+### Table of Contents                            
 
 1. [Introduction](#introduction)
 2. [Project Description](#project-description)
 
-    2.1. [Registering Users](#reg_users)
-
-    2.2. [Adding Tasks](#add_tasks)
-
-    2.3. [Viewing Tasks](#view_tasks)
-
-    2.4. [Statistics](#view_stats)
-
-3. [References](#references)
-
-This was a bootcamp capstone project I wanted to revisit. I've added the old code, updated code, and the GUI using Tkinter.
+   2.1. [Registering Users](#reg_users)
+  
+   2.2. [Adding Tasks](#add_tasks)
+  
+   2.3. [Viewing Tasks](#view_tasks)
+  
+   2.4. [Statistics](#view_stats)
+4. [References](#references)
 
 ## 1. Introduction <a name="introduction"></a>
 
-The focus of this project was to add functionality to a task manager program. The code originally had the menu, and I was tasked to make the menu options functional.
+The focus of this project was to add functionality to a task manager program. The code originally had the menu, and I was tasked with making the menu options functional. This was a boot camp capstone project I wanted to revisit. I've added the old code, updated code, and the GUI using Tkinter.
 
 ## 2. Project Description <a name="project-description"></a>
-You will be prompted to enter a username and password when you run the code. Once the correct username and password are given, a menu will appear:
+When you run the code, you will be prompted to enter a username and password. Once the correct username and password are given, a menu will appear:
 <p align="center">
     <img src="/Images/Login.PNG" alt="Screenshot of Login window">
 </p>
