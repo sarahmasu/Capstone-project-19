@@ -5,7 +5,7 @@
 ### Table of Contents                            
 
 1. [Introduction](#introduction)
-2. [Project Description](#project-description)
+2. [How does it work?](#project-description)
 
    2.1. [Registering Users](#reg_users)
   
@@ -18,18 +18,39 @@
 
 ## 1. Introduction <a name="introduction"></a>
 
-The focus of this project was to add functionality to a task manager program. The code originally had the menu, and I was tasked with making the menu options functional. This was a boot camp capstone project I wanted to revisit. I've added the old code, updated code, and the GUI using Tkinter.
+This project was originally a bootcamp task that ran on console. I wanted to create a GUI, using Tkinter, so I would not have to use the console. The objective of the task was to create a task manager program for small business to help them manage tasks of their employees. 
 
-## 2. Project Description <a name="project-description"></a>
-When you run the code, you will be prompted to enter a username and password. Once the correct username and password are given, a menu will appear:
+They gave us two files, user.txt and tasks.txt. The user.txt files contains the username and passwords of the users, one username and password per line. The format of the contents is as follows: username, password.
+
+The tasks.txt file contains a list of tasks assigned to their employees. Each tasks, in the tasks.txt file, consists of the following:
+* The person assigned to the tasks (username).
+* The title of the task.
+* The description of the task.
+* The date the task was given to the user.
+* The date the task is due.
+* The completion status of the task, 'Yes' - complete and 'No' - incomplete.
+
+## 2. How does it work? <a name="project-description"></a>
+When you run the program, it will first check if the both the tasks.txt and user.txt exists. If the files exists the program will read the user.txt file import all the data into a dictionary, i.e., username: password. Once the list of usernames and passwords are stored in a dictionary, the Login window will display, enter the username and password to proceed then you will see the main menu.
 <p align="center">
     <img src="/Images/Login.PNG" alt="Screenshot of Login window">
 </p>
 
-The options are to register new users, add new tasks, view all available tasks, view all tasks of the current user, and view statistics. Registering new users and viewing statistics are reserved for the admin.
+Once you have logged in, there are two menus, one for admin and one for the other users. The windows share the following functions:
+* Add tasks
+* View all tasks
+* View my tasks
 
-<p align="center">
-    <img src="/Images/Menu.PNG" alt="Screenshot of Menu window">
+There is two functions exclusive to admin which are:
+* Statistics
+* Register user
+
+<p align="left">
+    <img src="/Images/Main_menu_admin.PNG" alt="Screenshot of Menu window for admin">
+</p>
+
+<p align="right">
+    <img src="/Images/Main_menu_users.PNG" alt="Screenshot of Menu window for users">
 </p>
 
 ### 2.1. Registering new users <a name="reg_users"></a>
@@ -51,11 +72,11 @@ There are two options when it comes to viewing tasks: view all assigned tasks an
 
 View all assigned tasks reads all the tasks from the tasks.txt file, and view my tasks views all the tasks assigned to the current user.
 
-<p align="center">
+<p align="left">
     <img src="/Images/View_all_tasks_menu.PNG" alt="Screenshot of View all tasks window">
 </p>
 
-<p align="center">
+<p align="right">
     <img src="/Images/View_my_tasks_menu.PNG" alt="Screenshot of View my tasks window">
 </p>
 
