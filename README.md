@@ -47,9 +47,6 @@ There is two functions exclusive to admin which are:
 
 <p align="left">
     <img src="/Images/Main_menu_admin.PNG" alt="Screenshot of Menu window for admin">
-</p>
-
-<p align="right">
     <img src="/Images/Main_menu_users.PNG" alt="Screenshot of Menu window for users">
 </p>
 
@@ -72,11 +69,8 @@ There are two options when it comes to viewing tasks: view all assigned tasks an
 
 View all assigned tasks reads all the tasks from the tasks.txt file, and view my tasks views all the tasks assigned to the current user.
 
-<p align="left">
+<p align="center">
     <img src="/Images/View_all_tasks_menu.PNG" alt="Screenshot of View all tasks window">
-</p>
-
-<p align="right">
     <img src="/Images/View_my_tasks_menu.PNG" alt="Screenshot of View my tasks window">
 </p>
 
