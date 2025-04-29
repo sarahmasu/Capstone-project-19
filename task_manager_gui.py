@@ -492,13 +492,6 @@ def add_task():
         headersforeground="#ffffff",
     )
 
-    # Convert date: 22 04 2025 -> 22 Apr 2025
-    due_date = task_due_date.get_date()
-    format_date = "%d %m %Y"
-
-    # Remember first strip then convert: striptime then strftime
-    convert_date = datetime.strptime(due_date, format_date)
-    formatted_date = convert_date.strftime("%d %b %Y")
 
     # ----Buttons----
     save_task_btn = tk.Button(
@@ -509,9 +502,9 @@ def add_task():
         command=lambda: submit_tasks(
             select_user.get(),
             task_title_txt.get(),
-            task_description_txt.get("1.0",'end-1c'),
+            task_description_txt.get("1.0", "end-1c"),
             current_date_lbl2.cget("text"),
-            formatted_date,
+            task_due_date.selection_get().strftime("%d %b %Y"),
             task_complete_lbl.cget("text"),
         ),
         bg="#46a094",
@@ -664,13 +657,7 @@ def add_task():
         pady=5,
     )
 
-    close_btn.grid(
-        row=7,
-        column=2,
-        padx=5,
-        pady=5,
-        sticky="w"
-    )
+    close_btn.grid(row=7, column=2, padx=5, pady=5, sticky="w")
 
     frame.pack()
 
@@ -699,7 +686,6 @@ def add_task():
 
         except FileNotFoundError:
             messagebox.showerror(title="Error", message="File not found!")
-
 
 # ====View tasks Section====
 
@@ -954,13 +940,25 @@ if __name__ == "__main__":
     # ====Login Window====
     # Request the user to enter the username
     login_lbl = tk.Label(
-        frame, text="Login", bg="#333333", fg="#46a094", font=("Arial", 30)
+        frame,
+        text="Login",
+        bg="#333333",
+        fg="#46a094",
+        font=("Arial", 30),
     )
     user_lbl = tk.Label(
-        frame, text="Username:", bg="#333333", fg="#ffffff", font=("Arial", 14)
+        frame,
+        text="Username:",
+        bg="#333333",
+        fg="#ffffff",
+        font=("Arial", 14),
     )
     passwd_lbl = tk.Label(
-        frame, text="Password:", bg="#333333", fg="#ffffff", font=("Arial", 14)
+        frame,
+        text="Password:",
+        bg="#333333",
+        fg="#ffffff",
+        font=("Arial", 14),
     )
 
     username = tk.Entry(frame, font=("Arial", 14))
