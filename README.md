@@ -49,14 +49,14 @@ Once you have logged in, there are two menus, one for the admin and one for the 
 - View all tasks
 - View my tasks
 
-There are two functions exclusive to the admin which are:
+There are two functions exclusive to the admin, which are:
 
 - Statistics
 - Register user
 
 <p align="center">
-    <img src="/Images/Main_menu_admin.PNG" alt="Screenshot of Menu window for admin" height = "500" width="450">
-    <img src="/Images/Main_menu_users.PNG" alt="Screenshot of Menu window for users" height="500" width="450">
+    <img src="/Images/Main_menu_admin.PNG" alt="Screenshot of Menu window for admin" height = "400" width="350">
+    <img src="/Images/Main_menu_users.PNG" alt="Screenshot of Menu window for users" height="400" width="350">
 </p>
 <p align="center">
     <em>Main menu windows for admin (left) and other users (right).</em>
@@ -64,7 +64,7 @@ There are two functions exclusive to the admin which are:
 
 ### 2.1. Registering new users <a name="reg_users"></a>
 
-This function is available only to admins. When you choose to register a new user, you will be prompted to enter the new user's username and password. Once you confirm their password, the program will open the user.txt file and write the new user and password. Otherwise, it will loop until the admin ensures that the password and the confirmation password are the same. The same applies if the admin enters nothing when prompted to enter a password.
+This function is available only to admins. When you register a new user, you will be prompted to enter the new user's username and password. Once you confirm their password, the program will open the user.txt file and write the new user and password. Otherwise, it will loop until the admin ensures that the password and the confirmation password are the same. The same applies if the admin enters nothing when prompted to enter a password.
 
 <p align="center">
     <img src="/Images/Register_menu.PNG" alt="Screenshot of Register window" title="Register window.">
@@ -91,8 +91,8 @@ There are two options when it comes to viewing tasks: view all assigned tasks an
 View all assigned tasks reads all the tasks from the tasks.txt file, and view my tasks views all the tasks assigned to the current user.
 
 <p align="center">
-    <img src="/Images/View_all_tasks_menu.PNG" alt="Screenshot of View all tasks window" width="500" height="650">
-    <img src="/Images/View_my_tasks_menu.PNG" alt="Screenshot of View my tasks window" width="500" height="650">
+    <img src="/Images/View_all_tasks_menu.PNG" alt="Screenshot of View all tasks window" width="400" height="550">
+    <img src="/Images/View_my_tasks_menu.PNG" alt="Screenshot of View my tasks window" width="400" height="550">
 </p>
 <p align="center">
     <em>View tasks window for all tasks(left) and current user(right)</em>
