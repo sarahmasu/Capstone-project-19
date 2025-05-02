@@ -91,8 +91,8 @@ There are two options when it comes to viewing tasks: view all assigned tasks an
 View all assigned tasks reads all the tasks from the tasks.txt file, and view my tasks views all the tasks assigned to the current user.
 
 <p align="left">
-    <img src="/Images/View_all_tasks_menu.PNG" alt="Screenshot of View all tasks window" width="500" height="650">
-    <img src="/Images/View_my_tasks_menu.PNG" alt="Screenshot of View my tasks window" width="500" height="650">
+    <img src="/Images/View_all_tasks_menu.PNG" alt="Screenshot of View all tasks window" width="300" height="450">
+    <img src="/Images/View_my_tasks_menu.PNG" alt="Screenshot of View my tasks window" width="300" height="450">
 </p>
 <p align="center">
     <em>View tasks window for all tasks(left) and current user(right)</em>
