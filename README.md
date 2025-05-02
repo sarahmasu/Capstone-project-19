@@ -19,11 +19,11 @@
 
 ## 1. Introduction <a name="introduction"></a>
 
-This project was originally a bootcamp task that ran on console. I wanted to create a GUI, using Tkinter, so I would not have to use the console. The objective of the task was to create a task manager program for small business to help them manage tasks of their employees.
+This project was originally a bootcamp task that ran on the console. I wanted to create a GUI, using Tkinter, so I would not have to use the console. The objective of the task was to create a task manager program for a small business to help them manage the tasks of their employees.
 
-They gave us two files, user.txt and tasks.txt. The user.txt files contains the username and passwords of the users, one username and password per line. The format of the contents is as follows: username, password.
+They gave us two files, user.txt and tasks.txt. The user.txt file contains the usernames and passwords of the users, one username and password per line. The format of the contents is as follows: username, password.
 
-The tasks.txt file contains a list of tasks assigned to their employees. Each tasks, in the tasks.txt file, consists of the following:
+The tasks.txt file contains a list of tasks assigned to their employees. Each task, in the tasks.txt file, consists of the following:
 
 - The person assigned to the tasks (username).
 - The title of the task.
@@ -34,7 +34,7 @@ The tasks.txt file contains a list of tasks assigned to their employees. Each ta
 
 ## 2. How does it work? <a name="project-description"></a>
 
-When you run the program, it will first check if the both the tasks.txt and user.txt exists. If the files exists the program will read the user.txt file import all the data into a dictionary, i.e., username: password. Once the list of usernames and passwords are stored in a dictionary, the Login window will display, enter the username and password to proceed then you will see the main menu.
+When you run the program, it will first check if both the tasks.txt and user.txt exist. If the files exist, the program will read the user.txt file and import all the data into a dictionary, i.e., username: password. Once the list of usernames and passwords is stored in a dictionary, the Login window will display. Enter the username and password to proceed, then you will see the main menu.
 
 <p align="center">
     <img src="/Images/Login.PNG" alt="Screenshot of Login window">
@@ -43,20 +43,20 @@ When you run the program, it will first check if the both the tasks.txt and user
     <em>Login window</em>
 </p>
 
-Once you have logged in, there are two menus, one for admin and one for the other users. The windows share the following functions:
+Once you have logged in, there are two menus, one for the admin and one for the other users. The windows share the following functions:
 
 - Add tasks
 - View all tasks
 - View my tasks
 
-There is two functions exclusive to admin which are:
+There are two functions exclusive to the admin which are:
 
 - Statistics
 - Register user
 
 <p align="center">
-    <img src="/Images/Main_menu_admin.PNG" alt="Screenshot of Menu window for admin" height = "300" width="450">
-    <img src="/Images/Main_menu_users.PNG" alt="Screenshot of Menu window for users" height="300" width="450">
+    <img src="/Images/Main_menu_admin.PNG" alt="Screenshot of Menu window for admin" height = "500" width="450">
+    <img src="/Images/Main_menu_users.PNG" alt="Screenshot of Menu window for users" height="500" width="450">
 </p>
 <p align="center">
     <em>Main menu windows for admin (left) and other users (right).</em>
@@ -64,7 +64,7 @@ There is two functions exclusive to admin which are:
 
 ### 2.1. Registering new users <a name="reg_users"></a>
 
-This function is available only to admins. When you choose to register a new user, you will be prompted to enter the new user's username and password. Once you confirm their password, the program will open the user.txt file and write the new user and the password to it. Otherwise, it will loop until the admin ensures that the password and the confirmation password are the same. The same applies if the admin enters nothing when prompted to enter a password.
+This function is available only to admins. When you choose to register a new user, you will be prompted to enter the new user's username and password. Once you confirm their password, the program will open the user.txt file and write the new user and password. Otherwise, it will loop until the admin ensures that the password and the confirmation password are the same. The same applies if the admin enters nothing when prompted to enter a password.
 
 <p align="center">
     <img src="/Images/Register_menu.PNG" alt="Screenshot of Register window" title="Register window.">
@@ -111,4 +111,5 @@ This function can only available to admin only. Reads all the information in bot
 
 ## 3. References <a name="references"></a>
 
-HyperionDev - Software Engineering Bootcamp: Level 1 Capstone Project 19
+* HyperionDev - Software Engineering Bootcamp: Level 1 Capstone Project 19
+* [Adding captions to images](https://stackoverflow.com/questions/19331362/using-an-image-caption-in-markdown-jekyll)
