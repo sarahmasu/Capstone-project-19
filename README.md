@@ -34,6 +34,8 @@ The tasks.txt file contains a list of tasks assigned to their employees. Each ta
 When you run the program, it will first check if the both the tasks.txt and user.txt exists. If the files exists the program will read the user.txt file import all the data into a dictionary, i.e., username: password. Once the list of usernames and passwords are stored in a dictionary, the Login window will display, enter the username and password to proceed then you will see the main menu.
 <p align="center">
     <img src="/Images/Login.PNG" alt="Screenshot of Login window">
+</p>
+<p align="center">
     <em>Login window</em>
 </p>
 
@@ -71,15 +73,15 @@ There are two options when it comes to viewing tasks: view all assigned tasks an
 View all assigned tasks reads all the tasks from the tasks.txt file, and view my tasks views all the tasks assigned to the current user.
 
 <p align="left">
-    <img src="/Images/View_all_tasks_menu.PNG" alt="Screenshot of View all tasks window" title="View All Tasks window.">
-    <img src="/Images/View_my_tasks_menu.PNG" alt="Screenshot of View my tasks window" title="View My Task window.">
+    <img src="/Images/View_all_tasks_menu.PNG" alt="Screenshot of View all tasks window" width="100" height="250">
+    <img src="/Images/View_my_tasks_menu.PNG" alt="Screenshot of View my tasks window" width="100" height="250">
 </p>
 
 ### 2.4. Statistics <a name="view_stats"></a>
 This function can only available to admin only. Reads all the information in both tasks.txt and user.txt files. The function counts the total number of users and tasks from both text files and outputs the results.
 
 <p align="center">
-    <img src="/Images/Statistics_menu.PNG" alt="Screenshot of Statistics window" title= "Statistics window.">
+    <img src="/Images/Statistics_menu.PNG" alt="Screenshot of Statistics window">
 </p>
 
 ## 3. References <a name="references"></a>
