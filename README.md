@@ -54,9 +54,9 @@ There is two functions exclusive to admin which are:
 - Statistics
 - Register user
 
-<p align="left">
-    <img src="/Images/Main_menu_admin.PNG" alt="Screenshot of Menu window for admin" title="Main menu for admin.">
-    <img src="/Images/Main_menu_users.PNG" alt="Screenshot of Menu window for users" title = "Main menu for other users.">
+<p align="center">
+    <img src="/Images/Main_menu_admin.PNG" alt="Screenshot of Menu window for admin" height = "300" width="450">
+    <img src="/Images/Main_menu_users.PNG" alt="Screenshot of Menu window for users" height="300" width="450">
 </p>
 <p align="center">
     <em>Main menu windows for admin (left) and other users (right).</em>
@@ -90,7 +90,7 @@ There are two options when it comes to viewing tasks: view all assigned tasks an
 
 View all assigned tasks reads all the tasks from the tasks.txt file, and view my tasks views all the tasks assigned to the current user.
 
-<p align="left">
+<p align="centerS">
     <img src="/Images/View_all_tasks_menu.PNG" alt="Screenshot of View all tasks window" width="300" height="450">
     <img src="/Images/View_my_tasks_menu.PNG" alt="Screenshot of View my tasks window" width="300" height="450">
 </p>
