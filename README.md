@@ -34,6 +34,7 @@ The tasks.txt file contains a list of tasks assigned to their employees. Each ta
 When you run the program, it will first check if the both the tasks.txt and user.txt exists. If the files exists the program will read the user.txt file import all the data into a dictionary, i.e., username: password. Once the list of usernames and passwords are stored in a dictionary, the Login window will display, enter the username and password to proceed then you will see the main menu.
 <p align="center">
     <img src="/Images/Login.PNG" alt="Screenshot of Login window">
+    <em>Login window</em>
 </p>
 
 Once you have logged in, there are two menus, one for admin and one for the other users. The windows share the following functions:
@@ -46,22 +47,22 @@ There is two functions exclusive to admin which are:
 * Register user
 
 <p align="left">
-    <img src="/Images/Main_menu_admin.PNG" alt="Screenshot of Menu window for admin">
-    <img src="/Images/Main_menu_users.PNG" alt="Screenshot of Menu window for users">
+    <img src="/Images/Main_menu_admin.PNG" alt="Screenshot of Menu window for admin" title="Main menu for admin.">
+    <img src="/Images/Main_menu_users.PNG" alt="Screenshot of Menu window for users" title = "Main menu for other users.">
 </p>
 
 ### 2.1. Registering new users <a name="reg_users"></a>
 This function is available only to admins. When you choose to register a new user, you will be prompted to enter the new user's username and password. Once you confirm their password, the program will open the user.txt file and write the new user and the password to it. Otherwise, it will loop until the admin ensures that the password and the confirmation password are the same. The same applies if the admin enters nothing when prompted to enter a password.
 
 <p align="center">
-    <img src="/Images/Register_menu.PNG" alt="Screenshot of Register window">
+    <img src="/Images/Register_menu.PNG" alt="Screenshot of Register window" title="Register window.">
 </p>
 
 ### 2.2. Adding a task <a name="add_tasks"></a>
 When you choose to add a task, the program will open the tasks.txt file, then prompt the user to enter the title of the task, the task description, when the task is due, and  who they wish to assign the task to. The date the task was added will be the current date, and the task will be defaulted to incomplete. All the information will be written to the file.
 
 <p align="center">
-    <img src="/Images/Add_task_menu.PNG" alt="Screenshot of Add task window">
+    <img src="/Images/Add_task_menu.PNG" alt="Screenshot of Add task window" title="Add Task window.">
 </p>
 
 ### 2.3. Viewing tasks <a name="view_tasks"></a>
@@ -69,16 +70,16 @@ There are two options when it comes to viewing tasks: view all assigned tasks an
 
 View all assigned tasks reads all the tasks from the tasks.txt file, and view my tasks views all the tasks assigned to the current user.
 
-<p align="center">
-    <img src="/Images/View_all_tasks_menu.PNG" alt="Screenshot of View all tasks window">
-    <img src="/Images/View_my_tasks_menu.PNG" alt="Screenshot of View my tasks window">
+<p align="left">
+    <img src="/Images/View_all_tasks_menu.PNG" alt="Screenshot of View all tasks window" title="View All Tasks window.">
+    <img src="/Images/View_my_tasks_menu.PNG" alt="Screenshot of View my tasks window" title="View My Task window.">
 </p>
 
 ### 2.4. Statistics <a name="view_stats"></a>
 This function can only available to admin only. Reads all the information in both tasks.txt and user.txt files. The function counts the total number of users and tasks from both text files and outputs the results.
 
 <p align="center">
-    <img src="/Images/Statistics_menu.PNG" alt="Screenshot of Statistics window">
+    <img src="/Images/Statistics_menu.PNG" alt="Screenshot of Statistics window" title= "Statistics window.">
 </p>
 
 ## 3. References <a name="references"></a>
