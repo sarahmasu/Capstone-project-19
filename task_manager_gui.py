@@ -1,5 +1,6 @@
 # ====Import Libraries====
 from datetime import date
+from datetime import datetime
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
@@ -10,7 +11,10 @@ import os.path
 
 check_username = []
 check_passwd = []
+current_user = []
 user = {}
+
+today = date.today()
 
 # =============GUI Section=============
 
@@ -342,8 +346,6 @@ def add_task():
     task_win.config(bg="#333333")
     frame = tk.Frame(task_win, bg="#333333")
 
-    today = date.today()
-
     # ----Labels----
     instr_lbl = tk.Label(
         frame,
@@ -631,10 +633,19 @@ def view_tasks(username, menu):
     view_tasks_win.resizable(True, True)
     frame = tk.Frame(view_tasks_win, bg="#333333")
 
-    txt_bx = tk.Text(frame, width=48, height=15, wrap="word", font=("Arial", 11))
+    txt_bx = tk.Text(frame, width=48, height=25, wrap="word", font=("Arial", 11))
 
     vert_scroll = ttk.Scrollbar(frame, orient="vertical", command=txt_bx.yview)
     horizon_scroll = ttk.Scrollbar(frame, orient="horizontal", command=txt_bx.xview)
+
+    update_btn = tk.Button(
+        frame,
+        text="Update",
+        width=15,
+        font=("Arial", 12),
+        bg="#46a094",
+        fg="#ffffff",
+    )
 
     close_btn = tk.Button(
         frame,
@@ -660,6 +671,7 @@ def view_tasks(username, menu):
         )
 
         # ---- Read File ----
+
         # Read the task.txt file to display all the task and which user is assign to it
         file_size = os.path.getsize("tasks.txt")
 
@@ -669,7 +681,7 @@ def view_tasks(username, menu):
                     lines = read_all_tasks.readlines()
 
                     # Iterate through task.txt file
-                    for line in lines:
+                    for count, line in enumerate(lines, start=1):
 
                         # Split the lines where there is a comma and a space
                         split_lines = line.split(",")
@@ -685,6 +697,7 @@ def view_tasks(username, menu):
 
                         display_tasks(
                             txt_bx,
+                            count,
                             title,
                             assigned_user,
                             assigned_date,
@@ -702,26 +715,18 @@ def view_tasks(username, menu):
     elif menu == "View my tasks":
 
         view_tasks_win.title("My Tasks")
-
-        # ---- Widgets ----
-        info_lbl = tk.Label(
-            frame,
-            text=f"List of {username}'s tasks",
-            bg="#333333",
-            fg="#ffffff",
-            font=("Arial", 20),
-        )
+        current_user.clear()
 
         try:
 
             # ---- Read File ----
-            # Read the task.txt file
 
+            # Read the task.txt file
             with open("tasks.txt", "r", encoding="utf-8") as read_my_tasks:
                 lines = read_my_tasks.readlines()
 
                 # Iterate through task.txt file
-                for line in lines:
+                for count, line in enumerate(lines, start=1):
                     # Split the lines where there is a comma and a space
                     split_lines = line.split(",")
 
@@ -739,6 +744,7 @@ def view_tasks(username, menu):
 
                         display_tasks(
                             txt_bx,
+                            count,
                             my_title,
                             my_username,
                             my_assigned_date,
@@ -746,6 +752,115 @@ def view_tasks(username, menu):
                             my_complete_task,
                             my_description,
                         )
+
+                        # Add key-pair values to a list
+                        current_user.append(
+                            (
+                                {
+                                    "No": f"{count}",
+                                    "username": f"{my_username}",
+                                    "title": f"{my_title}",
+                                    "description": f"{my_description}",
+                                    "assigned date": f"{my_assigned_date}",
+                                    "due date": f"{my_due_date}",
+                                    "complete task": f"{my_complete_task}",
+                                }
+                            )
+                        )
+
+            # ---- Widgets ----
+            # ++Labels++
+            info_lbl = tk.Label(
+                frame,
+                text=f"List of {username}'s tasks",
+                bg="#333333",
+                fg="#ffffff",
+                font=("Arial", 20),
+            )
+
+            task_num_lbl = tk.Label(
+                frame,
+                text="Select task number:",
+                bg="#333333",
+                fg="#ffffff",
+                font=("Arial", 12),
+            )
+
+            chg_title_lbl = tk.Label(
+                frame,
+                text="Change task title:",
+                bg="#333333",
+                fg="#ffffff",
+                font=("Arial", 12),
+            )
+
+            chg_status_lbl = tk.Label(
+                frame,
+                text="Change task status:",
+                bg="#333333",
+                fg="#ffffff",
+                font=("Arial", 12),
+            )
+
+            chg_user_lbl = tk.Label(
+                frame,
+                text="Change assigned user:",
+                bg="#333333",
+                fg="#ffffff",
+                font=("Arial", 12),
+            )
+
+            chg_due_date_lbl = tk.Label(
+                frame,
+                text="Change due date:",
+                bg="#333333",
+                fg="#ffffff",
+                font=("Arial", 12),
+            )
+
+            chg_descript_lbl = tk.Label(
+                frame,
+                text="Change task description:",
+                bg="#333333",
+                fg="#ffffff",
+                font=("Arial", 12),
+            )
+
+            # ++Text and entry++
+            chg_status = tk.Entry(frame, width=27, font=("Arial", 12))
+            chg_descript = tk.Text(frame, width=27, height=3, font=("Arial", 12))
+            chg_title = tk.Entry(frame, width=27, font=("Arial", 12))
+
+            # ++Calendar++
+            chg_due_date_cal = Calendar(
+                frame,
+                selectmode="day",
+                year=today.year,
+                month=today.month,
+                day=today.day,
+                date_pattern="dd mm y",
+                background="#333333",
+                foreground="#ffffff",
+                selectbackground="#46a094",
+                selectforeground="#ffffff",
+                headersbackground="#46a094",
+                headersforeground="#ffffff",
+            )
+
+            # ++Combo boxes++
+            select_user = tk.StringVar()
+
+            chg_user_cmbo = ttk.Combobox(
+                frame,
+                width=25,
+                font=("Arial", 12),
+            )
+
+            chg_task_num_cmbo = ttk.Combobox(
+                frame,
+                width=25,
+                font=("Arial", 12),
+            )
 
         except FileNotFoundError:
             messagebox.showerror(title="Error", message=f"File not found!")
@@ -756,11 +871,29 @@ def view_tasks(username, menu):
 
     # ---- Grid layout ----
 
-    info_lbl.grid(row=0, column=0, columnspan=2, pady=10, sticky="ew")
-    txt_bx.grid(row=1, column=1, sticky="ew")
-    vert_scroll.grid(row=1, column=2, sticky="ns")
-    horizon_scroll.grid(row=2, column=1, sticky="ew")
-    close_btn.grid(row=3, column=0, columnspan=2, padx=10, pady=10, sticky="we")
+    info_lbl.grid(row=0, column=0, columnspan=4, pady=10, sticky="ew")
+
+    task_num_lbl.grid(row=1, column=0, pady=5, padx=5, sticky="w")
+    chg_user_lbl.grid(row=2, column=0, pady=5, padx=5, sticky="w")
+    chg_title_lbl.grid(row=3, column=0, pady=5, padx=5, sticky="w")
+    chg_descript_lbl.grid(row=4, column=0, pady=5, padx=5, sticky="w")
+    chg_status_lbl.grid(row=5, column=0, pady=5, padx=5, sticky="w")
+    chg_due_date_lbl.grid(row=6, column=0, pady=5, padx=5, sticky="w")
+
+    chg_task_num_cmbo.grid(row=1, column=1, padx=5, pady=5, sticky="w")
+    chg_user_cmbo.grid(row=2, column=1, padx=5, pady=5, sticky="w")
+    chg_title.grid(row=3, column=1, pady=5, padx=5, sticky="w")
+    chg_descript.grid(row=4, column=1, pady=5, padx=5, sticky="w")
+    chg_status.grid(row=5, column=1, pady=5, padx=5, sticky="w")
+    chg_due_date_cal.grid(row=6, column=1, pady=5, padx=5, sticky="w")
+
+    txt_bx.grid(row=1, column=2, rowspan=8, columnspan=2, sticky="ew")
+    vert_scroll.grid(row=1, column=4, rowspan=6, sticky="ns")
+    horizon_scroll.grid(row=8, column=2, columnspan=2, sticky="ew")
+
+    update_btn.grid(row=9, column=1, pady=10, sticky="ew")
+    close_btn.grid(row=9, column=2, pady=10, sticky="ew")
+
     frame.pack()
 
 
@@ -878,6 +1011,7 @@ def submit_tasks(
 
 def display_tasks(
     txt_bx,
+    count,
     title,
     assigned_user,
     assigned_date,
@@ -890,6 +1024,7 @@ def display_tasks(
     """
     Example of the format:
     _________________________________________________
+    No.:                      1
     Task:                     Assign initial tasks
     Assigned to:              admin
     Date assigned:            10 Oct 2019
@@ -903,7 +1038,8 @@ def display_tasks(
 
     txt_bx.insert(tk.END, "_______________________________________________\n")
 
-    txt_bx.insert(tk.END, f"Task: \t\t{title :>10}\n")
+    txt_bx.insert(tk.END, f"No.: \t\t{count:>2}\n")
+    txt_bx.insert(tk.END, f"Task: \t\t{title :>8}\n")
     txt_bx.insert(tk.END, f"Assigned to: \t\t{assigned_user :>6}\n")
     txt_bx.insert(tk.END, f"Date assigned: \t\t{assigned_date :>3}\n")
     txt_bx.insert(tk.END, f"Date due: \t\t{due_date :>3}\n")
