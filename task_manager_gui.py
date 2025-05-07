@@ -1,6 +1,5 @@
 # ====Import Libraries====
 from datetime import date
-from datetime import datetime
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
@@ -8,53 +7,14 @@ from tkcalendar import *
 import os.path
 
 # ====Dictionaries & Lists====
-# Store the usernames and passwords to be retrieved later on in the code
+
 check_username = []
 check_passwd = []
 user = {}
 
-# ====Check_file Section====
+# =============GUI Section=============
 
-
-def check_file():
-    task_file = os.path.isfile("tasks.txt")
-    user_file = os.path.isfile("user.txt")
-
-    if user_file == True and task_file == True:
-        read_data()
-    else:
-        print(
-            "The files for the program does not exist. Download the files from the repo, then run the program again."
-        )
-        exit()
-
-
-# ====Read_data Section====
-
-
-def read_data():
-    try:
-        # Open the user.txt file and read the lines
-        with open("user.txt", "r", encoding="utf-8") as file:
-            lines = file.readlines()
-
-            # Traverse through the file'
-            for line in lines:
-                # Strip the string of the newline character \n
-                # Split the string by the comma and the space ","
-                split_lines = line.strip().split(", ")
-                check_username.append(split_lines[0])
-                check_passwd.append(split_lines[1])
-
-        # Create a dictionary to check the user credentials
-        for i, j in zip(check_username, check_passwd):
-            user.update({i: j})
-
-    except FileNotFoundError as error:
-        print(f"An error occurred: {error}")
-
-
-# ====Login Section====
+# ----Login Section----
 
 
 def login(username, passwd):
@@ -85,7 +45,7 @@ def login(username, passwd):
             )
 
 
-# ====Menu Section====
+# ----Menu Section----
 
 
 def menu(username):
@@ -248,7 +208,7 @@ def menu(username):
         menu_win.mainloop()
 
 
-# ====Register Function====
+# ----Register Function----
 
 
 def register():
@@ -370,7 +330,7 @@ def register():
     frame.pack()
 
 
-# ====Add tasks Function====
+# ----Add tasks Function----
 
 
 # Request the user to assign other users tasks, the name of the task the description and due date.
@@ -492,7 +452,6 @@ def add_task():
         headersforeground="#ffffff",
     )
 
-
     # ----Buttons----
     save_task_btn = tk.Button(
         frame,
@@ -506,6 +465,7 @@ def add_task():
             current_date_lbl2.cget("text"),
             task_due_date.selection_get().strftime("%d %b %Y"),
             task_complete_lbl.cget("text"),
+            task_win,
         ),
         bg="#46a094",
         fg="#ffffff",
@@ -661,33 +621,8 @@ def add_task():
 
     frame.pack()
 
-    # ----Methods----
 
-    def submit_tasks(
-        user_task,
-        task_title,
-        task_description,
-        current_date,
-        task_due_date,
-        task_complete,
-    ):
-
-        try:
-
-            # Append user input and format the output to task.txt
-            with open("tasks.txt", "a", encoding="utf-8") as file:
-
-                # Write to task.txt file
-                file.writelines(
-                    f"\n{user_task}, {task_title}, {task_description}, {current_date}, {task_due_date}, {task_complete}"
-                )
-            messagebox.showinfo(title="Success", message="New task saved!")
-            task_win.destroy()
-
-        except FileNotFoundError:
-            messagebox.showerror(title="Error", message="File not found!")
-
-# ====View tasks Section====
+# ----View tasks Section----
 
 
 def view_tasks(username, menu):
@@ -735,6 +670,7 @@ def view_tasks(username, menu):
 
                     # Iterate through task.txt file
                     for line in lines:
+
                         # Split the lines where there is a comma and a space
                         split_lines = line.split(",")
 
@@ -747,23 +683,14 @@ def view_tasks(username, menu):
                         due_date = split_lines[4]
                         complete_task = split_lines[5]
 
-                        # ---- Text box ----
-                        # Print the output similar to output 2
-                        txt_bx.insert(
-                            tk.END, "_______________________________________________\n"
-                        )
-
-                        txt_bx.insert(tk.END, f"Task: \t\t{title :>10}\n")
-                        txt_bx.insert(tk.END, f"Assigned to: \t\t{assigned_user :>6}\n")
-                        txt_bx.insert(
-                            tk.END, f"Date assigned: \t\t{assigned_date :>3}\n"
-                        )
-                        txt_bx.insert(tk.END, f"Date due: \t\t{due_date :>3}\n")
-                        txt_bx.insert(tk.END, f"Task complete? \t\t{complete_task}\n")
-                        txt_bx.insert(tk.END, f"Task description:\n {description}\n")
-
-                        txt_bx.insert(
-                            tk.END, "_______________________________________________\n"
+                        display_tasks(
+                            txt_bx,
+                            title,
+                            assigned_user,
+                            assigned_date,
+                            due_date,
+                            complete_task,
+                            description,
                         )
             else:
                 messagebox.showwarning(
@@ -800,6 +727,7 @@ def view_tasks(username, menu):
 
                     # Check if user is assigned a task
                     if username in split_lines[0]:
+
                         # The variables will be stored in my_username, my_title, my_description,
                         # my_assigned_date, my_due_date, and my_complete_task
                         my_username = split_lines[0]
@@ -809,25 +737,14 @@ def view_tasks(username, menu):
                         my_due_date = split_lines[4]
                         my_complete_task = split_lines[5]
 
-                        # ---- Text box ----
-                        # Print the output similar to output 2
-                        txt_bx.insert(
-                            tk.END,
-                            "_______________________________________________\n",
-                        )
-
-                        txt_bx.insert(tk.END, f"Task: \t\t{my_title :>10}\n")
-                        txt_bx.insert(tk.END, f"Assigned to: \t\t{my_username :>6}\n")
-                        txt_bx.insert(
-                            tk.END, f"Date assigned: \t\t{my_assigned_date :>3}\n"
-                        )
-                        txt_bx.insert(tk.END, f"Date due: \t\t{my_due_date :>3}\n")
-                        txt_bx.insert(tk.END, f"Task complete? \t\t{my_complete_task}")
-                        txt_bx.insert(tk.END, f"Task description:\n {my_description}\n")
-
-                        txt_bx.insert(
-                            tk.END,
-                            "_______________________________________________\n",
+                        display_tasks(
+                            txt_bx,
+                            my_title,
+                            my_username,
+                            my_assigned_date,
+                            my_due_date,
+                            my_complete_task,
+                            my_description,
                         )
 
         except FileNotFoundError:
@@ -847,7 +764,7 @@ def view_tasks(username, menu):
     frame.pack()
 
 
-# ====Statistics Section====
+# ----Statistics Section----
 
 
 def stats():
@@ -912,7 +829,9 @@ def stats():
     frame.pack()
 
 
-# ====Clear text====
+# =============Other Functions=============
+
+# ----Clear text----
 
 
 def clear(root):
@@ -923,6 +842,116 @@ def clear(root):
             widget.delete(0, "end")
         elif not isinstance(widget, tk.Entry):
             clear(widget)
+
+
+# ----Submit Tasks----
+
+
+def submit_tasks(
+    user_task,
+    task_title,
+    task_description,
+    current_date,
+    task_due_date,
+    task_complete,
+    root,
+):
+
+    try:
+
+        # Append user input and format the output to task.txt
+        with open("tasks.txt", "a", encoding="utf-8") as file:
+
+            # Write to task.txt file
+            file.writelines(
+                f"\n{user_task}, {task_title}, {task_description}, {current_date}, {task_due_date}, {task_complete}"
+            )
+        messagebox.showinfo(title="Success", message="New task saved!")
+        root.destroy()
+
+    except FileNotFoundError:
+        messagebox.showerror(title="Error", message="File not found!")
+
+
+# ----View Tasks---
+
+
+def display_tasks(
+    txt_bx,
+    title,
+    assigned_user,
+    assigned_date,
+    due_date,
+    complete_task,
+    description,
+):
+    # ---- Text box ----
+    # Print input to the format below
+    """
+    Example of the format:
+    _________________________________________________
+    Task:                     Assign initial tasks
+    Assigned to:              admin
+    Date assigned:            10 Oct 2019
+    Date due:                 25 oct 2019
+    Task complete?            No
+
+    Task description:
+        Use task_manager.py to assign each team member with appropriate tasks
+    _________________________________________________
+    """
+
+    txt_bx.insert(tk.END, "_______________________________________________\n")
+
+    txt_bx.insert(tk.END, f"Task: \t\t{title :>10}\n")
+    txt_bx.insert(tk.END, f"Assigned to: \t\t{assigned_user :>6}\n")
+    txt_bx.insert(tk.END, f"Date assigned: \t\t{assigned_date :>3}\n")
+    txt_bx.insert(tk.END, f"Date due: \t\t{due_date :>3}\n")
+    txt_bx.insert(tk.END, f"Task complete? \t\t{complete_task}\n")
+    txt_bx.insert(tk.END, f"Task description:\n {description}\n")
+
+    txt_bx.insert(tk.END, "_______________________________________________\n")
+
+
+# ----Check_file Section-----
+
+
+def check_file():
+    task_file = os.path.isfile("tasks.txt")
+    user_file = os.path.isfile("user.txt")
+
+    if user_file == True and task_file == True:
+        read_data()
+    else:
+        print(
+            "The files for the program does not exist. Download the files from the repo, then run the program again."
+        )
+        exit()
+
+
+# ----Read_data Section----
+
+
+def read_data():
+    try:
+        # Open the user.txt file and read the lines
+        with open("user.txt", "r", encoding="utf-8") as file:
+            lines = file.readlines()
+
+            # Traverse through the file'
+            for line in lines:
+                # Strip the string of the newline character \n
+                # Split the string by the comma and the space ","
+                split_lines = line.strip().split(", ")
+                check_username.append(split_lines[0])
+                check_passwd.append(split_lines[1])
+
+        # Create a dictionary to check the user credentials
+        for i, j in zip(check_username, check_passwd):
+            user.update({i: j})
+
+    except FileNotFoundError as error:
+        print(f"An error occurred: {error}")
 
 
 # ===============Main Function===============
