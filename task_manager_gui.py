@@ -12,6 +12,7 @@ import os.path
 check_username = []
 check_passwd = []
 current_user = []
+task_num_list = []
 user = {}
 
 today = date.today()
@@ -638,15 +639,6 @@ def view_tasks(username, menu):
     vert_scroll = ttk.Scrollbar(frame, orient="vertical", command=txt_bx.yview)
     horizon_scroll = ttk.Scrollbar(frame, orient="horizontal", command=txt_bx.xview)
 
-    update_btn = tk.Button(
-        frame,
-        text="Update",
-        width=15,
-        font=("Arial", 12),
-        bg="#46a094",
-        fg="#ffffff",
-    )
-
     close_btn = tk.Button(
         frame,
         text="Close",
@@ -716,154 +708,135 @@ def view_tasks(username, menu):
 
         view_tasks_win.title("My Tasks")
         current_user.clear()
+        task_num_list.clear()
 
         try:
 
-            # ---- Read File ----
-
-            # Read the task.txt file
-            with open("tasks.txt", "r", encoding="utf-8") as read_my_tasks:
-                lines = read_my_tasks.readlines()
-
-                # Iterate through task.txt file
-                for count, line in enumerate(lines, start=1):
-                    # Split the lines where there is a comma and a space
-                    split_lines = line.split(",")
-
-                    # Check if user is assigned a task
-                    if username in split_lines[0]:
-
-                        # The variables will be stored in my_username, my_title, my_description,
-                        # my_assigned_date, my_due_date, and my_complete_task
-                        my_username = split_lines[0]
-                        my_title = split_lines[1]
-                        my_description = split_lines[2]
-                        my_assigned_date = split_lines[3]
-                        my_due_date = split_lines[4]
-                        my_complete_task = split_lines[5]
-
-                        display_tasks(
-                            txt_bx,
-                            count,
-                            my_title,
-                            my_username,
-                            my_assigned_date,
-                            my_due_date,
-                            my_complete_task,
-                            my_description,
-                        )
-
-                        # Add key-pair values to a list
-                        current_user.append(
-                            (
-                                {
-                                    "No": f"{count}",
-                                    "username": f"{my_username}",
-                                    "title": f"{my_title}",
-                                    "description": f"{my_description}",
-                                    "assigned date": f"{my_assigned_date}",
-                                    "due date": f"{my_due_date}",
-                                    "complete task": f"{my_complete_task}",
-                                }
-                            )
-                        )
-
-            # ---- Widgets ----
-            # ++Labels++
-            info_lbl = tk.Label(
-                frame,
-                text=f"List of {username}'s tasks",
-                bg="#333333",
-                fg="#ffffff",
-                font=("Arial", 20),
-            )
-
-            task_num_lbl = tk.Label(
-                frame,
-                text="Select task number:",
-                bg="#333333",
-                fg="#ffffff",
-                font=("Arial", 12),
-            )
-
-            chg_title_lbl = tk.Label(
-                frame,
-                text="Change task title:",
-                bg="#333333",
-                fg="#ffffff",
-                font=("Arial", 12),
-            )
-
-            chg_status_lbl = tk.Label(
-                frame,
-                text="Change task status:",
-                bg="#333333",
-                fg="#ffffff",
-                font=("Arial", 12),
-            )
-
-            chg_user_lbl = tk.Label(
-                frame,
-                text="Change assigned user:",
-                bg="#333333",
-                fg="#ffffff",
-                font=("Arial", 12),
-            )
-
-            chg_due_date_lbl = tk.Label(
-                frame,
-                text="Change due date:",
-                bg="#333333",
-                fg="#ffffff",
-                font=("Arial", 12),
-            )
-
-            chg_descript_lbl = tk.Label(
-                frame,
-                text="Change task description:",
-                bg="#333333",
-                fg="#ffffff",
-                font=("Arial", 12),
-            )
-
-            # ++Text and entry++
-            chg_status = tk.Entry(frame, width=27, font=("Arial", 12))
-            chg_descript = tk.Text(frame, width=27, height=3, font=("Arial", 12))
-            chg_title = tk.Entry(frame, width=27, font=("Arial", 12))
-
-            # ++Calendar++
-            chg_due_date_cal = Calendar(
-                frame,
-                selectmode="day",
-                year=today.year,
-                month=today.month,
-                day=today.day,
-                date_pattern="dd mm y",
-                background="#333333",
-                foreground="#ffffff",
-                selectbackground="#46a094",
-                selectforeground="#ffffff",
-                headersbackground="#46a094",
-                headersforeground="#ffffff",
-            )
-
-            # ++Combo boxes++
-            select_user = tk.StringVar()
-
-            chg_user_cmbo = ttk.Combobox(
-                frame,
-                width=25,
-                font=("Arial", 12),
-            )
-
-            chg_task_num_cmbo = ttk.Combobox(
-                frame,
-                width=25,
-                font=("Arial", 12),
-            )
+            read_my_tasks(username, txt_bx)
 
         except FileNotFoundError:
             messagebox.showerror(title="Error", message=f"File not found!")
+
+        # ---- Widgets ----
+        #    ++Labels++
+        info_lbl = tk.Label(
+            frame,
+            text=f"List of {username}'s tasks",
+            bg="#333333",
+            fg="#ffffff",
+            font=("Arial", 20),
+        )
+
+        task_num_lbl = tk.Label(
+            frame,
+            text="Select task number:",
+            bg="#333333",
+            fg="#ffffff",
+            font=("Arial", 12),
+        )
+
+        chg_title_lbl = tk.Label(
+            frame,
+            text="Change task title:",
+            bg="#333333",
+            fg="#ffffff",
+            font=("Arial", 12),
+        )
+
+        chg_status_lbl = tk.Label(
+            frame,
+            text="Change task status:",
+            bg="#333333",
+            fg="#ffffff",
+            font=("Arial", 12),
+        )
+
+        chg_user_lbl = tk.Label(
+            frame,
+            text="Change assigned user:",
+            bg="#333333",
+            fg="#ffffff",
+            font=("Arial", 12),
+        )
+
+        chg_due_date_lbl = tk.Label(
+            frame,
+            text="Change due date:",
+            bg="#333333",
+            fg="#ffffff",
+            font=("Arial", 12),
+        )
+
+        chg_descript_lbl = tk.Label(
+            frame,
+            text="Change task description:",
+            bg="#333333",
+            fg="#ffffff",
+            font=("Arial", 12),
+        )
+
+        #   ++Text and entry++
+        chg_status = tk.Entry(frame, width=27, font=("Arial", 12))
+        chg_descript = tk.Text(
+            frame, width=27, height=3, font=("Arial", 12), wrap=tk.WORD
+        )
+        chg_title = tk.Text(frame, width=27, height=2, font=("Arial", 12), wrap= tk.WORD)
+
+        #     ++Calendar++
+        chg_due_date_cal = Calendar(
+            frame,
+            selectmode="day",
+            year=today.year,
+            month=today.month,
+            day=today.day,
+            date_pattern="dd mm y",
+            background="#333333",
+            foreground="#ffffff",
+            selectbackground="#46a094",
+            selectforeground="#ffffff",
+            headersbackground="#46a094",
+            headersforeground="#ffffff",
+        )
+
+        #     ++Combo boxes++
+        select_task = tk.StringVar()
+        select_user = tk.StringVar()
+        #  Tasks
+        chg_task_num_cmbo = ttk.Combobox(
+            frame,
+            width=25,
+            textvariable=select_task,
+            font=("Arial", 12),
+        )
+
+        for task_num in current_user:
+            task_num_list.append(task_num["No"])
+
+        chg_task_num_cmbo["values"] = tuple(task_num_list)
+
+        chg_task_num_cmbo["state"] = "readonly"
+
+        # Users
+        chg_user_cmbo = ttk.Combobox(
+            frame,
+            width=25,
+            textvariable=select_user,
+            font=("Arial", 12),
+        )
+
+        chg_user_cmbo["values"] = tuple(check_username)
+
+        chg_user_cmbo["state"] = "readonly"
+
+        # ++Buttons++
+        update_btn = tk.Button(
+            frame,
+            text="Update",
+            width=15,
+            font=("Arial", 12),
+            bg="#46a094",
+            fg="#ffffff",
+        )
 
     # ---- Scrollbar ----
     txt_bx["yscrollcommand"] = vert_scroll.set
@@ -891,8 +864,24 @@ def view_tasks(username, menu):
     vert_scroll.grid(row=1, column=4, rowspan=6, sticky="ns")
     horizon_scroll.grid(row=8, column=2, columnspan=2, sticky="ew")
 
-    update_btn.grid(row=9, column=1, pady=10, sticky="ew")
-    close_btn.grid(row=9, column=2, pady=10, sticky="ew")
+    update_btn.grid(row=9, column=2, pady=10, sticky="ew")
+    close_btn.grid(row=9, column=3, pady=10, sticky="ew")
+
+    # ---- Bindings ----
+    chg_task_num_cmbo.bind(
+        "<<ComboboxSelected>>",
+        lambda event: search_list_event(
+            event,
+            frame,
+            chg_task_num_cmbo,
+            chg_title,
+            chg_user_cmbo,
+            chg_descript,
+            chg_status,
+            chg_due_date_cal,
+            txt_bx,
+        ),
+    )
 
     frame.pack()
 
@@ -969,12 +958,18 @@ def stats():
 
 def clear(root):
 
-    # Clears all entry boxes
     for widget in root.winfo_children():
+        # Clears all Entry Widgets
         if isinstance(widget, tk.Entry):
-            widget.delete(0, "end")
+            widget.delete(0, tk.END)
         elif not isinstance(widget, tk.Entry):
             clear(widget)
+
+        # Clears all Text Widgets
+        '''if isinstance(widget, tk.Text):
+            widget.delete("1.0", tk.END)
+        elif not isinstance(widget, tk.Text):
+            clear(widget)'''
 
 
 # ----Submit Tasks----
@@ -1057,7 +1052,7 @@ def check_file():
     user_file = os.path.isfile("user.txt")
 
     if user_file == True and task_file == True:
-        read_data()
+        read_users()
     else:
         print(
             "The files for the program does not exist. Download the files from the repo, then run the program again."
@@ -1068,7 +1063,8 @@ def check_file():
 # ----Read_data Section----
 
 
-def read_data():
+# +++user.txt+++
+def read_users():
     try:
         # Open the user.txt file and read the lines
         with open("user.txt", "r", encoding="utf-8") as file:
@@ -1088,6 +1084,139 @@ def read_data():
 
     except FileNotFoundError as error:
         print(f"An error occurred: {error}")
+
+
+# +++tasks.txt for current user+++
+def read_my_tasks(username, txt_bx):
+
+    # ---- Read File ----
+
+    # Read the task.txt file
+    with open("tasks.txt", "r", encoding="utf-8") as read_my_tasks:
+        lines = read_my_tasks.readlines()
+
+        # Iterate through task.txt file
+        for count, line in enumerate(lines, start=1):
+            # Split the lines where there is a comma and a space
+            split_lines = line.split(",")
+
+            # Check if user is assigned a task
+            if username in split_lines[0]:
+
+                # The variables will be stored in my_username, my_title, my_description,
+                # my_assigned_date, my_due_date, and my_complete_task
+                my_username = split_lines[0]
+                my_title = split_lines[1]
+                my_description = split_lines[2]
+                my_assigned_date = split_lines[3]
+                my_due_date = split_lines[4]
+                my_complete_task = split_lines[5]
+
+                display_tasks(
+                    txt_bx,
+                    count,
+                    my_title,
+                    my_username,
+                    my_assigned_date,
+                    my_due_date,
+                    my_complete_task,
+                    my_description,
+                )
+
+                # Add key-pair values to a list
+                current_user.append(
+                    (
+                        {
+                            "No": f"{count}",
+                            "username": f"{my_username}",
+                            "title": f"{my_title}",
+                            "description": f"{my_description}",
+                            "assigned date": f"{my_assigned_date}",
+                            "due date": f"{my_due_date}",
+                            "complete task": f"{my_complete_task}",
+                        }
+                    )
+                )
+
+
+# ----Update data Section----
+
+
+# ----Search list Section----
+
+
+#  +++ Binding Event
+def search_list_event(
+    event,
+    frame,
+    chg_task_num_cmbo,
+    chg_title,
+    chg_user_cmbo,
+    chg_descript,
+    chg_status,
+    chg_due_date_cal,
+    txt_bx,
+):
+    
+    # Clear all entry widgets everytime the button is clicked.
+    clear(frame)
+    chg_descript.delete("1.0", tk.END)
+
+    # Search through a list of dictionaries.
+    for task in current_user:
+
+        display_tasks(
+            txt_bx,
+            task["No"],
+            task["title"],
+            task["username"],
+            task["assigned date"],
+            task["due date"],
+            task["complete task"],
+            task["description"],
+        )
+
+        # If task is incomplete set the values in the correct widget.
+        if task["No"] == chg_task_num_cmbo.get():
+            chg_task_num_cmbo.set(f"{task['No']}")
+            chg_user_cmbo.set(f"{task['username']}")
+            chg_title.insert(tk.END, f"{task['title'].lstrip()}")
+            chg_descript.insert(tk.END, f"{task['description'].lstrip()}")
+            chg_status.insert(tk.END, task["complete task"].lstrip())
+            convert_date = datetime.strptime(task["due date"].lstrip(), "%d %b %Y")
+            chg_due_date_cal.selection_set(convert_date)
+
+
+#   +++ Button Event +++
+def search_list(
+    frame,
+    chg_task_num_cmbo,
+    chg_title,
+    chg_user_cmbo,
+    chg_descript,
+    chg_status,
+    chg_due_date_cal,
+):
+    # Clear all entry widgets everytime the button is clicked.
+    clear(frame)
+    chg_descript.delete("1.0", tk.END)
+
+    # The default value is the current user.
+    chg_user_cmbo.set(f"{username}")
+    chg_task_num_cmbo.set(chg_task_num_cmbo.get())
+
+    # Search through a list of dictionaries.
+    for task in current_user:
+
+        # If task is incomplete set the values in the correct widget.
+        if task["No"] == chg_task_num_cmbo.get():
+            chg_task_num_cmbo.set(f"{task['No']}")
+            chg_user_cmbo.set(f"{task['username']}")
+            chg_title.insert(tk.END, f"{task['title']}")
+            chg_descript.insert(tk.END, f"{task['description']}")
+            chg_status.insert(tk.END, task["complete task"])
+            convert_date = datetime.strptime(task["due date"].lstrip(), "%d %b %Y")
+            chg_due_date_cal.selection_set(convert_date)
 
 
 # ===============Main Function===============
@@ -1216,4 +1345,13 @@ if __name__ == "__main__":
 
     Fixed line 465 - TypeError: descriptor 'strftime' for 'datetime.date' objects doesn't apply to a 'str' object:
     - https://stackoverflow.com/questions/30112357/typeerror-descriptor-strftime-requires-a-datetime-date-object-but-received
+
+    Functions of tkCalendar:
+    - https://tkcalendar.readthedocs.io/en/stable/Calendar.html
+
+    Fixed date conversion error for search_list:
+    - https://stackoverflow.com/questions/25015711/time-data-does-not-match-format
+
+    Removed the search button and adding bindings to chg_task_num_cmbo:
+    - https://stackoverflow.com/questions/73238441/tkinter-how-to-pass-arguments-when-comboboxselected-is-bound-to-a-method
 """
