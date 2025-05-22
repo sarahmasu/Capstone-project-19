@@ -256,6 +256,7 @@ def register():
         font=("Arial", 12),
         width=10,
         command=lambda: submit_user(
+            reg_win,
             new_user.get().lower(),
             new_passwd.get().lower(),
             confirm_new_passwd.get().lower(),
@@ -274,47 +275,6 @@ def register():
         bg="#46a094",
         fg="#ffffff",
     )
-
-    # Method check whether the passwords match
-    # If the passwords match append the new user and their password to the user.txt file
-
-    # ----Submit User----
-    def submit_user(new_user, new_passwd, confirm_new_passwd):
-        try:
-            with open("user.txt", "a") as add_line:
-
-                if new_user in user:
-                    messagebox.showwarning(
-                        "Warning",
-                        f"The username '{new_user}', already exists! Please enter a new user name.",
-                    )
-                else:
-                    if new_passwd == confirm_new_passwd:
-
-                        add_line.writelines(f"\n{new_user}, {confirm_new_passwd}")
-                        messagebox.showinfo("Success", "New user successfully saved!")
-                        reg_win.destroy()
-
-                    # If the user enters nothing for either password or confirm password textbox
-                    # display warning
-                    elif (
-                        new_passwd == ""
-                        or confirm_new_passwd == ""
-                        or (new_passwd == "" and confirm_new_passwd == "")
-                    ):
-                        messagebox.showwarning(
-                            "Warning",
-                            "No, input. Please enter a password for the new user.",
-                        )
-
-                    # Else request the user to re-enter the passwords until they match
-                    else:
-                        messagebox.showerror(
-                            "Error", "The passwords do not match! Please try again!"
-                        )
-
-        except Exception as error:
-            messagebox.showerror("Error", f"An error has occurred: {error}")
 
     # ----Grids----
 
@@ -635,6 +595,7 @@ def view_tasks(username, menu):
     frame = tk.Frame(view_tasks_win, bg="#333333")
 
     txt_bx = tk.Text(frame, width=48, height=25, wrap="word", font=("Arial", 11))
+    txt_bx.config(state=tk.DISABLED) # Prevents users from editing the text box.
 
     vert_scroll = ttk.Scrollbar(frame, orient="vertical", command=txt_bx.yview)
     horizon_scroll = ttk.Scrollbar(frame, orient="horizontal", command=txt_bx.xview)
@@ -780,7 +741,7 @@ def view_tasks(username, menu):
         chg_descript = tk.Text(
             frame, width=27, height=3, font=("Arial", 12), wrap=tk.WORD
         )
-        chg_title = tk.Text(frame, width=27, height=2, font=("Arial", 12), wrap= tk.WORD)
+        chg_title = tk.Text(frame, width=27, height=2, font=("Arial", 12), wrap=tk.WORD)
 
         #     ++Calendar++
         chg_due_date_cal = Calendar(
@@ -966,10 +927,10 @@ def clear(root):
             clear(widget)
 
         # Clears all Text Widgets
-        '''if isinstance(widget, tk.Text):
+        """if isinstance(widget, tk.Text):
             widget.delete("1.0", tk.END)
         elif not isinstance(widget, tk.Text):
-            clear(widget)'''
+            clear(widget)"""
 
 
 # ----Submit Tasks----
@@ -999,6 +960,47 @@ def submit_tasks(
 
     except FileNotFoundError:
         messagebox.showerror(title="Error", message="File not found!")
+
+
+# ----Submit User----
+
+
+def submit_user(root, new_user, new_passwd, confirm_new_passwd):
+    try:
+        with open("user.txt", "a") as add_line:
+
+            if new_user in user:
+                messagebox.showwarning(
+                    "Warning",
+                    f"The username '{new_user}', already exists! Please enter a new user name.",
+                )
+            else:
+                if new_passwd == confirm_new_passwd:
+
+                    add_line.writelines(f"\n{new_user}, {confirm_new_passwd}")
+                    messagebox.showinfo("Success", "New user successfully saved!")
+                    root.destroy()
+
+                # If the user enters nothing for either password or confirm password textbox
+                # display warning
+                elif (
+                    new_passwd == ""
+                    or confirm_new_passwd == ""
+                    or (new_passwd == "" and confirm_new_passwd == "")
+                ):
+                    messagebox.showwarning(
+                        "Warning",
+                        "No, input. Please enter a password for the new user.",
+                    )
+
+                # Else request the user to re-enter the passwords until they match
+                else:
+                    messagebox.showerror(
+                        "Error", "The passwords do not match! Please try again!"
+                    )
+
+    except Exception as error:
+        messagebox.showerror("Error", f"An error has occurred: {error}")
 
 
 # ----View Tasks---
@@ -1157,7 +1159,7 @@ def search_list_event(
     chg_due_date_cal,
     txt_bx,
 ):
-    
+
     # Clear all entry widgets everytime the button is clicked.
     clear(frame)
     chg_descript.delete("1.0", tk.END)
