@@ -1194,8 +1194,7 @@ def update_task(
                 with open("tasks.txt", "r", encoding="utf-8") as find_line:
                     line = find_line.readlines()
                     line[tsk_num - 1] = (
-                        f"{tsk_user}, {tsk_title}, {tsk_descript}, "
-                        f"{tsk_assign_date}, {tsk_due_date}, {tsk_status}\n"
+                        f"{tsk_user}, {tsk_title}, {tsk_descript}, {tsk_assign_date}, {tsk_due_date}, {tsk_status}\n"
                     )
 
                 # Update that specific task
