@@ -595,7 +595,7 @@ def view_tasks(username, menu):
     frame = tk.Frame(view_tasks_win, bg="#333333")
 
     txt_bx = tk.Text(frame, width=48, height=25, wrap="word", font=("Arial", 11))
-    txt_bx.config(state=tk.DISABLED) # Prevents users from editing the text box.
+    # txt_bx.config(state=tk.DISABLED)  # Prevents users from editing the text box.
 
     vert_scroll = ttk.Scrollbar(frame, orient="vertical", command=txt_bx.yview)
     horizon_scroll = ttk.Scrollbar(frame, orient="horizontal", command=txt_bx.xview)
@@ -797,6 +797,15 @@ def view_tasks(username, menu):
             font=("Arial", 12),
             bg="#46a094",
             fg="#ffffff",
+            command=lambda: update_task(
+                txt_bx,
+                chg_task_num_cmbo,
+                chg_title,
+                chg_user_cmbo,
+                chg_descript,
+                chg_status,
+                chg_due_date_cal,
+            ),
         )
 
     # ---- Scrollbar ----
@@ -1144,6 +1153,54 @@ def read_my_tasks(username, txt_bx):
 # ----Update data Section----
 
 
+def update_task(
+    txt_bx,
+    chg_tsk_num_cmbo,
+    chg_title,
+    chg_user_cmbo,
+    chg_descript,
+    chg_status,
+    chg_due_date_cal,
+):
+    try:
+
+        for task in current_user:
+
+            # Gets the selected task number.
+            if task["No"] == chg_tsk_num_cmbo.get():
+                tsk_num = int(task["No"])
+                tsk_user = chg_user_cmbo.get().strip()
+                tsk_title = chg_title.get("1.0", tk.END).strip()
+                tsk_descript = chg_descript.get("1.0", tk.END).strip()
+                tsk_status = chg_status.get().strip()
+                tsk_due_date = chg_due_date_cal.selection_get().strftime("%d %b %Y")
+
+                # Updates the task using the task number
+                with open("tasks.txt", "r", encoding="utf-8") as find_line:
+                    line = find_line.readlines()
+                    line[tsk_num - 1] = (
+                        f"{tsk_user}, {tsk_title}, {tsk_descript}, {task["assigned date"]}, {tsk_due_date}, {tsk_status}\n"
+                    )
+
+                with open("task.txt", "w", encoding="utf-8") as update_line:
+                    update_line.writelines(line)
+
+            # Displays the updated list. Fix this
+            display_tasks(
+                txt_bx,
+                task["No"],
+                task["title"],
+                task["username"],
+                task["assigned date"],
+                task["due date"],
+                task["complete task"],
+                task["description"],
+            )
+
+    except Exception as error:
+        messagebox.showerror("Error", f"Failed to update task. {error}")
+
+
 # ----Search list Section----
 
 
@@ -1163,6 +1220,8 @@ def search_list_event(
     # Clear all entry widgets everytime the button is clicked.
     clear(frame)
     chg_descript.delete("1.0", tk.END)
+    chg_title.delete("1.0", tk.END)
+    txt_bx.delete("1.0", tk.END)
 
     # Search through a list of dictionaries.
     for task in current_user:
@@ -1189,7 +1248,7 @@ def search_list_event(
             chg_due_date_cal.selection_set(convert_date)
 
 
-#   +++ Button Event +++
+#   +++ Button Event (No longer in use) +++
 def search_list(
     frame,
     chg_task_num_cmbo,
