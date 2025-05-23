@@ -665,6 +665,19 @@ def view_tasks(username, menu):
         except FileNotFoundError:
             messagebox.showerror(title="Error", message="File not found!")
 
+        # ---- Grid Layout ----
+        info_lbl.grid(row=0, column=0, columnspan=4, pady=10, sticky="ew")
+
+        txt_bx.grid(row=1, column=2, rowspan=8, columnspan=2, sticky="ew")
+        vert_scroll.grid(row=1, column=4, rowspan=8, sticky="ns")
+        horizon_scroll.grid(row=9, column=2, columnspan=2, sticky="ew")
+
+        close_btn.grid(row=10, column=1, columnspan=4, pady=10, sticky="ew")
+
+        # ---- Scrollbar ----
+        txt_bx["yscrollcommand"] = vert_scroll.set
+        txt_bx["xscrollcommand"] = horizon_scroll.set
+
     elif menu == "View my tasks":
 
         view_tasks_win.title("My Tasks")
@@ -799,6 +812,7 @@ def view_tasks(username, menu):
             fg="#ffffff",
             command=lambda: update_task(
                 txt_bx,
+                username,
                 chg_task_num_cmbo,
                 chg_title,
                 chg_user_cmbo,
@@ -808,50 +822,50 @@ def view_tasks(username, menu):
             ),
         )
 
-    # ---- Scrollbar ----
-    txt_bx["yscrollcommand"] = vert_scroll.set
-    txt_bx["xscrollcommand"] = horizon_scroll.set
+        # ---- Bindings ----
+        chg_task_num_cmbo.bind(
+            "<<ComboboxSelected>>",
+            lambda event: search_list_event(
+                event,
+                frame,
+                chg_task_num_cmbo,
+                chg_title,
+                chg_user_cmbo,
+                chg_descript,
+                chg_status,
+                chg_due_date_cal,
+                txt_bx,
+            ),
+        )
 
-    # ---- Grid layout ----
+        # ---- Scrollbar ----
+        txt_bx["yscrollcommand"] = vert_scroll.set
+        txt_bx["xscrollcommand"] = horizon_scroll.set
 
-    info_lbl.grid(row=0, column=0, columnspan=4, pady=10, sticky="ew")
+        # ---- Grid layout ----
 
-    task_num_lbl.grid(row=1, column=0, pady=5, padx=5, sticky="w")
-    chg_user_lbl.grid(row=2, column=0, pady=5, padx=5, sticky="w")
-    chg_title_lbl.grid(row=3, column=0, pady=5, padx=5, sticky="w")
-    chg_descript_lbl.grid(row=4, column=0, pady=5, padx=5, sticky="w")
-    chg_status_lbl.grid(row=5, column=0, pady=5, padx=5, sticky="w")
-    chg_due_date_lbl.grid(row=6, column=0, pady=5, padx=5, sticky="w")
+        info_lbl.grid(row=0, column=0, columnspan=4, pady=10, sticky="ew")
 
-    chg_task_num_cmbo.grid(row=1, column=1, padx=5, pady=5, sticky="w")
-    chg_user_cmbo.grid(row=2, column=1, padx=5, pady=5, sticky="w")
-    chg_title.grid(row=3, column=1, pady=5, padx=5, sticky="w")
-    chg_descript.grid(row=4, column=1, pady=5, padx=5, sticky="w")
-    chg_status.grid(row=5, column=1, pady=5, padx=5, sticky="w")
-    chg_due_date_cal.grid(row=6, column=1, pady=5, padx=5, sticky="w")
+        task_num_lbl.grid(row=1, column=0, pady=5, padx=5, sticky="w")
+        chg_user_lbl.grid(row=2, column=0, pady=5, padx=5, sticky="w")
+        chg_title_lbl.grid(row=3, column=0, pady=5, padx=5, sticky="w")
+        chg_descript_lbl.grid(row=4, column=0, pady=5, padx=5, sticky="w")
+        chg_status_lbl.grid(row=5, column=0, pady=5, padx=5, sticky="w")
+        chg_due_date_lbl.grid(row=6, column=0, pady=5, padx=5, sticky="w")
 
-    txt_bx.grid(row=1, column=2, rowspan=8, columnspan=2, sticky="ew")
-    vert_scroll.grid(row=1, column=4, rowspan=6, sticky="ns")
-    horizon_scroll.grid(row=8, column=2, columnspan=2, sticky="ew")
+        chg_task_num_cmbo.grid(row=1, column=1, padx=5, pady=5, sticky="w")
+        chg_user_cmbo.grid(row=2, column=1, padx=5, pady=5, sticky="w")
+        chg_title.grid(row=3, column=1, pady=5, padx=5, sticky="w")
+        chg_descript.grid(row=4, column=1, pady=5, padx=5, sticky="w")
+        chg_status.grid(row=5, column=1, pady=5, padx=5, sticky="w")
+        chg_due_date_cal.grid(row=6, column=1, pady=5, padx=5, sticky="w")
 
-    update_btn.grid(row=9, column=2, pady=10, sticky="ew")
-    close_btn.grid(row=9, column=3, pady=10, sticky="ew")
+        txt_bx.grid(row=1, column=2, rowspan=8, columnspan=2, sticky="ew")
+        vert_scroll.grid(row=1, column=4, rowspan=6, sticky="ns")
+        horizon_scroll.grid(row=8, column=2, columnspan=2, sticky="ew")
 
-    # ---- Bindings ----
-    chg_task_num_cmbo.bind(
-        "<<ComboboxSelected>>",
-        lambda event: search_list_event(
-            event,
-            frame,
-            chg_task_num_cmbo,
-            chg_title,
-            chg_user_cmbo,
-            chg_descript,
-            chg_status,
-            chg_due_date_cal,
-            txt_bx,
-        ),
-    )
+        close_btn.grid(row=9, column=3, pady=10, sticky="ew")
+        update_btn.grid(row=9, column=2, pady=10, sticky="ew")
 
     frame.pack()
 
@@ -1109,7 +1123,7 @@ def read_my_tasks(username, txt_bx):
         # Iterate through task.txt file
         for count, line in enumerate(lines, start=1):
             # Split the lines where there is a comma and a space
-            split_lines = line.split(",")
+            split_lines = line.strip().split(",")
 
             # Check if user is assigned a task
             if username in split_lines[0]:
@@ -1155,6 +1169,7 @@ def read_my_tasks(username, txt_bx):
 
 def update_task(
     txt_bx,
+    username,
     chg_tsk_num_cmbo,
     chg_title,
     chg_user_cmbo,
@@ -1163,7 +1178,6 @@ def update_task(
     chg_due_date_cal,
 ):
     try:
-
         for task in current_user:
 
             # Gets the selected task number.
@@ -1172,35 +1186,31 @@ def update_task(
                 tsk_user = chg_user_cmbo.get().strip()
                 tsk_title = chg_title.get("1.0", tk.END).strip()
                 tsk_descript = chg_descript.get("1.0", tk.END).strip()
+                tsk_assign_date = task["assigned date"]
                 tsk_status = chg_status.get().strip()
                 tsk_due_date = chg_due_date_cal.selection_get().strftime("%d %b %Y")
 
-                # Updates the task using the task number
+                # Checks for the correct task number
                 with open("tasks.txt", "r", encoding="utf-8") as find_line:
                     line = find_line.readlines()
                     line[tsk_num - 1] = (
-                        f"{tsk_user}, {tsk_title}, {tsk_descript}, {task["assigned date"]}, {tsk_due_date}, {tsk_status}\n"
+                        f"{tsk_user}, {tsk_title}, {tsk_descript}, "
+                        f"{tsk_assign_date}, {tsk_due_date}, {tsk_status}\n"
                     )
 
-                with open("task.txt", "w", encoding="utf-8") as update_line:
+                # Update that specific task
+                with open("tasks.txt", "w", encoding="utf-8") as update_line:
                     update_line.writelines(line)
 
-            # Displays the updated list. Fix this
-            display_tasks(
-                txt_bx,
-                task["No"],
-                task["title"],
-                task["username"],
-                task["assigned date"],
-                task["due date"],
-                task["complete task"],
-                task["description"],
-            )
+        current_user.clear()
+        txt_bx.delete("1.0", tk.END)
+
+        read_my_tasks(username, txt_bx)
 
     except Exception as error:
         messagebox.showerror("Error", f"Failed to update task. {error}")
 
-
+    
 # ----Search list Section----
 
 
