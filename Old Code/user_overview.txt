@@ -1,0 +1,48 @@
+User Overview report
+_________________________________________________
+Total users: 6
+Total assigned: 3
+Percentage of assigned tasks: 50.0%
+Percentage of assigned complete tasks: 0%
+Percentage of assigned incomplete tasks: 100.0%
+Percentage of assigned overdue tasks: 100.0%
+
+Tasks assigned to users
+_________________________________________________
+
+admin: 33.33%
+sally: 0.0%
+emily: 16.67%
+caleb: 16.67%
+sarah: 0.0%
+anna : 0.0%
+
+Completed tasks assigned to users
+_________________________________________________
+
+admin: 0.0%
+caleb: 0.0%
+emily: 0.0%
+sally: 0.0%
+sarah: 0.0%
+anna : 0.0%
+
+Incomplete tasks assigned to users
+_________________________________________________
+
+admin: 50.0%
+caleb: 25.0%
+emily: 25.0%
+sally: 0.0%
+sarah: 0.0%
+anna : 0.0%
+
+Incomplete and overdue tasks assigned to users
+_________________________________________________
+
+admin: 50.0%
+caleb: 25.0%
+emily: 25.0%
+sally: 0.0%
+sarah: 0.0%
+anna : 0.0%
