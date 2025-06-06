@@ -1,47 +1,9 @@
 # =====importing libraries===========
 from datetime import date
 from datetime import datetime
+from admin_lib.admin import reg_user, display_stats
 
 # =====Functions Section======
-
-# ===Explanation of Function===
-"""
-        The reg_user function takes the username as an argument.
-        A list with, the names of all the usernames created,
-        will be used to check if the username already exists.
-
-        If the username exists, the while loop will loop until
-        the user enters a username that does not exist in the list.
-
-        If the username does not exist, the function will return the 
-        new username.
-"""
-# ===End of Explanation===
-
-
-def reg_user(user_name):
-    with open("user.txt", "r", encoding="utf-8") as read:
-        find_user = read.readlines()
-
-        list_username = []
-        list_username.clear()
-
-        for find in find_user:
-            split_lines = find.strip().split(", ")
-            list_username.append(split_lines[0])
-
-    if user_name not in list_username:
-        add_new_user = user_name
-        return add_new_user
-
-    if user_name in list_username:
-        while user_name in list_username:
-            print(f"{user_name} already exist!")
-            add_new_user = input("Please enter a new username: ")
-
-            if add_new_user not in list_username:
-                return add_new_user
-
 
 # ===Explanation of Function====
 """
@@ -77,7 +39,7 @@ def add_task():
         task_complete = "No"
 
         file.writelines(
-            f"\n{user_task}, {task_title}, {task_description}, "\
+            f"\n{user_task}, {task_title}, {task_description}, "
             f"{current_date}, {task_due_date}, {task_complete}"
         )
 
@@ -193,14 +155,14 @@ def view_mine():
 
                 print("_________________________________________________\n")
 
-                current_str = f"{count}, {my_username}, {my_title}, "\
-                f"{my_description}, {my_assigned_date}, {my_due_date}, {my_complete_task}"
-                
+                current_str = (
+                    f"{count}, {my_username}, {my_title}, "
+                    f"{my_description}, {my_assigned_date}, {my_due_date}, {my_complete_task}"
+                )
+
                 current_user.append(current_str)
 
-    task_num = int(
-        input("Enter the task number you wish to edit (-1 to cancel): ")
-    )
+    task_num = int(input("Enter the task number you wish to edit (-1 to cancel): "))
     try:
         for my_user in current_user:
             data = my_user.strip().split(", ")
@@ -245,8 +207,10 @@ def view_mine():
                     with open("tasks.txt", "r", encoding="utf-8") as update_line:
                         lines = update_line.readlines()
                         count = int(count)
-                        lines[count -1] = f"{my_username}, {my_title}, {my_description}, "\
+                        lines[count - 1] = (
+                            f"{my_username}, {my_title}, {my_description}, "
                             f"{my_assigned_date}, {my_due_date}, {my_complete_task}\n"
+                        )
 
                     with open("tasks.txt", "w", encoding="utf-8") as update_line:
                         update_line.writelines(lines)
@@ -274,8 +238,10 @@ def view_mine():
                                 lines = update_line.readlines()
                             count = int(count)
                             my_username = user_edit
-                            lines[count - 1] = f"{my_username}, {my_title}, {my_description}, "\
+                            lines[count - 1] = (
+                                f"{my_username}, {my_title}, {my_description}, "
                                 f"{my_assigned_date}, {my_due_date}, {my_complete_task}\n"
+                            )
 
                             with open(
                                 "tasks.txt", "w", encoding="utf-8"
@@ -295,8 +261,10 @@ def view_mine():
                                         lines = update_line.readlines()
 
                                     my_username = user_edit
-                                    lines[count -1] = f"{my_username}, {my_title}, {my_description}, "\
+                                    lines[count - 1] = (
+                                        f"{my_username}, {my_title}, {my_description}, "
                                         f"{my_assigned_date}, {my_due_date}, {my_complete_task}\n"
+                                    )
 
                                     with open(
                                         "tasks.txt", "w", encoding="utf-8"
@@ -316,8 +284,10 @@ def view_mine():
                             lines = update_line.readlines()
 
                         my_due_date = change_date
-                        lines[count - 1] = f"{my_username}, {my_title}, {my_description}, "\
+                        lines[count - 1] = (
+                            f"{my_username}, {my_title}, {my_description}, "
                             f"{my_assigned_date}, {my_due_date}, {my_complete_task}\n"
+                        )
 
                         with open("tasks.txt", "w", encoding="utf-8") as update_line:
                             update_line.writelines(lines)
@@ -331,7 +301,7 @@ def view_mine():
                     while mark_complete != "yes" or mark_complete != "no":
                         print("Oops, incorrect input!")
                         mark_complete = input(
-                            "\Please confirm if you would like to mark the task as complete (yes/no): "
+                            "Please confirm if you would like to mark the task as complete (yes/no): "
                         ).lower()
 
                         if mark_complete == "yes":
@@ -342,8 +312,10 @@ def view_mine():
                             ) as update_line:
                                 lines = update_line.readlines()
 
-                            lines[count - 1] = f"{my_username}, {my_title}, {my_description}, "\
+                            lines[count - 1] = (
+                                f"{my_username}, {my_title}, {my_description}, "
                                 f"{my_assigned_date}, {my_due_date}, {my_complete_task}\n"
+                            )
 
                             with open(
                                 "tasks.txt", "w", encoding="utf-8"
@@ -354,8 +326,10 @@ def view_mine():
 
                         elif mark_complete == "no":
                             count = int(count)
-                            select_edt = input("\nWould you like to assign a different user to the "\
-                                               "task or change the due date (user/due date): ").lower()
+                            select_edt = input(
+                                "\nWould you like to assign a different user to the "
+                                "task or change the due date (user/due date): "
+                            ).lower()
 
                             if select_edt == "user":
                                 user_edit = input(
@@ -369,8 +343,10 @@ def view_mine():
                                         lines = update_line.readlines()
 
                                     my_username = user_edit
-                                    lines[count -1] = f"{my_username}, {my_title}, {my_description}, "\
+                                    lines[count - 1] = (
+                                        f"{my_username}, {my_title}, {my_description}, "
                                         f"{my_assigned_date}, {my_due_date}, {my_complete_task}\n"
+                                    )
 
                                     with open(
                                         "tasks.txt", "w", encoding="utf-8"
@@ -390,8 +366,10 @@ def view_mine():
                                                 lines = update_line.readlines()
 
                                             my_username = user_edit
-                                            lines[count -1] = f"{my_username}, {my_title}, {my_description}, "\
+                                            lines[count - 1] = (
+                                                f"{my_username}, {my_title}, {my_description}, "
                                                 f"{my_assigned_date}, {my_due_date}, {my_complete_task}\n"
+                                            )
 
                                             with open(
                                                 "tasks.txt", "w", encoding="utf-8"
@@ -412,8 +390,10 @@ def view_mine():
                                     lines = update_line.readlines()
                                 count = int(count)
                                 my_due_date = change_date
-                                lines[count-1] = f"{my_username}, {my_title}, {my_description}, "\
+                                lines[count - 1] = (
+                                    f"{my_username}, {my_title}, {my_description}, "
                                     f"{my_assigned_date}, {my_due_date}, {my_complete_task}\n"
+                                )
 
                                 with open(
                                     "tasks.txt", "w", encoding="utf-8"
@@ -693,31 +673,6 @@ def generate_report():
     print("\nUser and Task overview reports generated!\n")
 
 
-def display_stats():
-    try:
-        generate_report()
-        with open("task_overview.txt", "r", encoding="utf-8") as read_tasks:
-            read = read_tasks.readlines()
-            print()
-            for lines in read:
-                split_lines = lines.strip()
-                print(split_lines)
-            print("_________________________________________________\n")
-
-        with open("user_overview.txt", "r", encoding="utf-8") as read_users:
-            read = read_users.readlines()
-
-            for lines in read:
-                strip_lines = lines.strip()
-                print(strip_lines)
-
-            print("_________________________________________________\n")
-    except FileNotFoundError:
-        print(
-            "The reports do not exist. First generate the reports, gr on the menu, the program will be able to display them."
-        )
-
-
 # ====Login Section====
 
 # Open the user.txt file and read the lines
@@ -853,6 +808,7 @@ if username == "admin":
             generate_report()
 
         elif menu == "ds":
+            generate_report()
             display_stats()
 
         elif menu == "e":

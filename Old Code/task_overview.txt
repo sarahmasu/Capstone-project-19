@@ -1,8 +1,0 @@
-Task Overview report
-_________________________________________________
-Total tasks; 4
-Total complete tasks: 0
-Total incomplete tasks: 4
-Total incomplete and overdue tasks: 4
-Percentage of incomplete tasks: 100.0%
-Percentage of overdue tasks: 100.0%
