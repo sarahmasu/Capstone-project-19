@@ -110,11 +110,11 @@ View All Task window displays, as the name states, all tasks.
 </p>
 
 View My Tasks displays tasks of the current user. On this window, the user can search for their task by selecting the task number using the combobox. Once they a task number has been chosen, the program retrieves the task and displays it on the text widget on the left and the right, and selects the user from the list in the combobox, inserts the task title, task description, and task completion status on the entry and text widgets, and selects that tasks due date on the calendar widget. If the user wishes to update the task, they can change:
-* The task's assigned user, using the combobox.
-* The task's title and completion status, using the entry widget.
+* The task's assigned user uses the combobox.
+* The task's title and completion status are available using the entry widget.
 * The task's description, using a text widget.
 * The task's due date by selecting a new date on the calendar widget.
-When the user is done updating the task, they just need to click on the 'Update' button to update to task (currently not available).
+When the user is done updating the task, they just need to click on the 'Update' button to update to task. The task is updated, and the text widget refreshes to reflect the changes.
 
 ### 2.4. Statistics <a name="view_stats"></a>
 
