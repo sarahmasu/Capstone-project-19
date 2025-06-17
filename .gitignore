@@ -4,5 +4,5 @@
 dir_to_ignore/
 Test widgets
 .vscode
-menu_functions/__pycache__/
-Old Code/Capstone 24/library/__pycache__/
+menu_functions/__pycache__
+Old Code/Capstone 24/library/__pycache__
