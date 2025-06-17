@@ -257,7 +257,7 @@ def update_task(
         current_user.clear()
         txt_bx.delete("1.0", tk.END)
 
-        read_my_tasks(username, txt_bx)
+        read_my_tasks(username, txt_bx, current_user)
 
     except Exception as error:
         messagebox.showerror("Error", f"Failed to update task. {error}")
