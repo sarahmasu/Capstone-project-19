@@ -4,3 +4,4 @@
 dir_to_ignore/
 Test widgets
 .vscode
+__pycache__/
