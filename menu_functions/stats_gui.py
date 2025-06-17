@@ -1,7 +1,6 @@
 # =============Libraries=============
 import tkinter as tk
 from tkinter import messagebox
-from tkcalendar import *
 
 # =============GUI Section=============
 
