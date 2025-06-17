@@ -1,6 +1,5 @@
 # =============Libraries=============
 import tkinter as tk
-from tkcalendar import *
 import menu_functions.functions as fun
 
 # =============GUI Section=============

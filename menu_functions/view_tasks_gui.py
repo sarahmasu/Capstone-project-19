@@ -287,6 +287,7 @@ def view_tasks(username, menu, current_user, task_num_list, check_username, toda
                 chg_descript,
                 chg_status,
                 chg_due_date_cal,
+                current_user,
             ),
         )
 
@@ -303,6 +304,7 @@ def view_tasks(username, menu, current_user, task_num_list, check_username, toda
                 chg_status,
                 chg_due_date_cal,
                 txt_bx,
+                current_user
             ),
         )
 

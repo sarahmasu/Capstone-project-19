@@ -1,6 +1,5 @@
 # =============Libraries=============
 import tkinter as tk
-from tkcalendar import *
 import menu_functions.register_gui as reg
 import menu_functions.add_tasks_gui as add
 import menu_functions.view_tasks_gui as view
