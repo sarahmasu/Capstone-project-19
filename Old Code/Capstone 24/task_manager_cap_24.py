@@ -1,9 +1,6 @@
 # =====importing libraries===========
-from library.admin import reg_user, display_stats
-from library.add_tasks import add_task
-from library.generate_report import generate_report
-from library.login import login
-from library.view_tasks import view_all, view_mine
+from library.admin_functions import reg_user, display_stats
+from library.standard_functions import *
 
 # =====Dictionaries and Lists=====
 
@@ -29,7 +26,7 @@ if username == "admin":
     va - view all tasks
     vm - view my tasks
     gr - generate report
-    ds - disply statistics
+    ds - display statistics
     e - exit
     : """
         ).lower()
@@ -83,7 +80,6 @@ if username == "admin":
             generate_report(check_username)
 
         elif menu == "ds":
-            generate_report()
             display_stats()
 
         elif menu == "e":
