@@ -33,7 +33,7 @@ def read_users(check_username, check_passwd, user):
         print(f"An error occurred: {error}")
 
 
-# +++tasks.txt for current user+++ 
+# +++tasks.txt for current user+++
 # don't use this function
 def read_my_tasks(username, txt_bx, current_user):
 
