@@ -1,9 +1,3 @@
-# =====importing libraries===========
-from datetime import date
-from datetime import datetime
-
-# =====Functions Section======
-
 # ===Explanation of Function===
 """
         The reg_user function takes the username as an argument.
