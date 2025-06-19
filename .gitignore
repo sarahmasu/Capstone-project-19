@@ -4,3 +4,7 @@ Test widgets/
 .vscode/
 Tasks/
 **/__pycache__
+
+# Files to ignore
+Old Code/tasks.txt
+Old Code/user.txt
