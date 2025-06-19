@@ -135,14 +135,14 @@ else:
 # https://stackoverflow.com/questions/43681377/how-to-make-sure-a-user-inputted-password-matches-the-username-registered-to-tha
 # Reference: https://www.programiz.com/python-programming/datetime/current-datetime
 
-# Count the the occurance of all the user
+# Count the the occurrence of all the user
 # Reference: https://stackoverflow.com/questions/2161752/how-to-count-the-frequency-of-the-elements-in-an-unordered-list
 
 # Reference for line 210:
 # https://www.geeksforgeeks.org/count-number-of-lines-in-a-text-file-in-python/
 
 # Increment values of a dictionary at certain keys:
-# Refernce: https://stackoverflow.com/questions/10654499/removing-duplicate-keys-from-python-dictionary-but-summing-the-values
+# Reference: https://stackoverflow.com/questions/10654499/removing-duplicate-keys-from-python-dictionary-but-summing-the-values
 
 # Add missing keys and values to a dictionary:
 # Reference: https://www.geeksforgeeks.org/python-combine-the-values-of-two-dictionaries-having-same-key/

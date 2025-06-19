@@ -280,7 +280,7 @@ def search_list_event(
     current_user,
 ):
 
-    # Clear all entry widgets everytime the button is clicked.
+    # Clear all entry widgets every time the button is clicked.
     clear(frame)
     chg_descript.delete("1.0", tk.END)
     chg_title.delete("1.0", tk.END)
@@ -323,7 +323,7 @@ def search_list(
     username,
     current_user,
 ):
-    # Clear all entry widgets everytime the button is clicked.
+    # Clear all entry widgets every time the button is clicked.
     clear(frame)
     chg_descript.delete("1.0", tk.END)
 
@@ -483,7 +483,7 @@ def generate_report(check_username):
 
         # Struggled to count the number of users.
         # Increment values of a dictionary at certain keys:
-        # Refernce: https://stackoverflow.com/questions/10654499/removing-duplicate-keys-from-python-dictionary-but-summing-the-values
+        # Reference: https://stackoverflow.com/questions/10654499/removing-duplicate-keys-from-python-dictionary-but-summing-the-values
         
         user_dict = {x: check_list.count(x) for x in check_username}
 
