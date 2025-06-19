@@ -484,7 +484,7 @@ def generate_report(check_username):
         # Struggled to count the number of users.
         # Increment values of a dictionary at certain keys:
         # Reference: https://stackoverflow.com/questions/10654499/removing-duplicate-keys-from-python-dictionary-but-summing-the-values
-        
+
         user_dict = {x: check_list.count(x) for x in check_username}
 
         # Calculate the percentages of assigned tasks to each user
@@ -533,7 +533,7 @@ def generate_report(check_username):
         # Add missing keys and values to task_comp_dict.
         # Add missing keys and values to a dictionary:
         # Reference: https://www.geeksforgeeks.org/python-combine-the-values-of-two-dictionaries-having-same-key/
-        
+
         for key in check_user_dict:
             tasks_comp_dict[key] = check_user_dict[key] + tasks_comp_dict.get(key, 0)
 
@@ -638,4 +638,15 @@ def generate_report(check_username):
         for key, val in due_date_dict.items():
             write_user.writelines(f"\n{key:5}: {val}%")
 
-    print("\nUser and Task overview reports generated!\n")
+    messagebox.showinfo("Success","User and Task overview reports generated!")
+
+
+def display_stats(txt_bx):
+    try:
+        with open("task_overview.txt", "r", encoding="utf-8") as read_tasks:
+            lines = read_tasks.readlines()
+    except FileNotFoundError:
+        messagebox.showerror(
+            "File Not Found",
+            "The files do not exist, please generate the report to read them.",
+        )
