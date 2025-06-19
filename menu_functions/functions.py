@@ -362,3 +362,37 @@ def clear(root):
             widget.delete("1.0", tk.END)
         elif not isinstance(widget, tk.Text):
             clear(widget)"""
+
+# ----Generate report----
+    # ____Explanation___
+    """
+        Function generates reports and creates two text files, 
+        task_overview.txt and user_overview.txt, based on the
+        information from user.txt and tasks.txt files. The files and be
+        viewed by admin.
+
+        task_overview.txt file contains:
+            - Counts the total number of tasks.
+            - Counts the total number of complete and incomplete tasks.
+            - Counts the total number of incomplete and overdue tasks.
+            - Calculates the percentage of complete and incomplete tasks.
+            - Calculates the percentage of incomplete and incomplete tasks.
+
+        user_overview.txt file contains:
+            - Counts the total number of users.
+            - Counts the total number of users assigned tasks.
+            - Calculate the percentage of incomplete assigned tasks.
+            - Calculate the percentage of complete and overdue tasks.
+            - Calculate the percentage of complete assigned tasks.
+    """
+
+
+def generate_report(check_username):
+
+    total_overdue_incomplete = 0
+    total_incomplete_task = 0
+    total_complete_task = 0
+
+    count_complete_users = 0
+    count_incomplete_users = 0
+    count_overdue_user = 0
