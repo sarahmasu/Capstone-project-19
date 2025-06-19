@@ -1,7 +1,6 @@
-
-
-
+# Ignore the following directories
 dir_to_ignore/
-Test widgets
-.vscode
+Test widgets/
+.vscode/
+Tasks/
 **/__pycache__
