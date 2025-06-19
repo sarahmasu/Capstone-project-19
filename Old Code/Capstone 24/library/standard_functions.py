@@ -18,7 +18,7 @@ def login(check_username, check_passwd):
             check_username.append(split_lines[0])
             check_passwd.append(split_lines[1])
 
-        # Create a dictionay to check the user credentials
+        # Create a dictionary to check the user credentials
         user = dict(zip(check_username, check_passwd))
 
     # Request the user to enter the username
@@ -36,7 +36,7 @@ def login(check_username, check_passwd):
                 break
 
             else:
-                print("Acccess denied! Password is incorrect.")
+                print("Access denied! Password is incorrect.")
 
     # If the username is incorrect
     else:
@@ -54,7 +54,7 @@ def login(check_username, check_passwd):
                     break
 
                 else:
-                    print("Acccess denied! Password is incorrect.")
+                    print("Access denied! Password is incorrect.")
 
                     # While the password is incorrect, loop until the correct
                     # password is given
@@ -95,7 +95,7 @@ def add_task():
         # the description and when it's due
         user_task = input("\nEnter the user you want to assign a task to: ")
         task_title = input("Enter the title of the task: ")
-        task_description = input("Enter the decription of the task: ")
+        task_description = input("Enter the description of the task: ")
         task_due_date = input("Enter the due date of the task (dd Mon YYYY): ")
 
         # Get current date and format it to dd Mon YYYY
@@ -176,7 +176,7 @@ def view_all():
         - The program will request the user to enter the number 
           assigned to the task (-1 to cancel).
         - If the user selects the specific task they wish to edit,
-          the progeram should ask the user if they wish to mark the
+          the program should ask the user if they wish to mark the
           task as complete.
         - The program should also ask if they wish to assign the task
           to someone else or to change the due date of the task (The 
@@ -263,7 +263,7 @@ def view_mine(username, check_username):
 
                 # User must confirm whether or not they wish to mark the task as complete
                 mark_complete = input(
-                    "\nWould you like to the aforemention task as complete (yes/no): "
+                    "\nWould you like to the aforementioned task as complete (yes/no): "
                 ).lower()
 
                 # if yes the task will be marked as complete
