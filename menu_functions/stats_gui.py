@@ -1,6 +1,7 @@
 # =============Libraries=============
 import tkinter as tk
 from tkinter import messagebox
+import menu_functions.functions as fun
 
 # =============GUI Section=============
 
