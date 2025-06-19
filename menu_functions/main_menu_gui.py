@@ -4,6 +4,7 @@ import menu_functions.register_gui as reg
 import menu_functions.add_tasks_gui as add
 import menu_functions.view_tasks_gui as view
 import menu_functions.stats_gui as stat
+import menu_functions.functions as fun
 
 # =============GUI Section=============
 
@@ -131,7 +132,7 @@ def menu(username, check_username, current_user, task_num_list, today):
 
         add_btn = tk.Button(
             frame,
-            text="Add task",
+            text="Add Task",
             bg="#333333",
             fg="#ffffff",
             width=15,
@@ -141,7 +142,7 @@ def menu(username, check_username, current_user, task_num_list, today):
 
         va_btn = tk.Button(
             frame,
-            text="View all tasks",
+            text="View All Tasks",
             bg="#333333",
             fg="#ffffff",
             width=15,
@@ -158,7 +159,7 @@ def menu(username, check_username, current_user, task_num_list, today):
 
         vm_btn = tk.Button(
             frame,
-            text="View my tasks",
+            text="View My Tasks",
             bg="#333333",
             fg="#ffffff",
             width=15,
@@ -171,6 +172,16 @@ def menu(username, check_username, current_user, task_num_list, today):
                 check_username,
                 today,
             ),
+        )
+
+        gen_report_btn = tk.Button(
+            frame,
+            text="Generate Report",
+            bg="#333333",
+            fg="#ffffff",
+            width=15,
+            font=("Arial", 10),
+            command=lambda: fun.generate_report(check_username),
         )
 
         close_btn = tk.Button(
@@ -187,9 +198,10 @@ def menu(username, check_username, current_user, task_num_list, today):
         title_lbl.grid(row=0, column=0, columnspan=2, pady=25, sticky="news")
         menu_lbl.grid(row=1, column=0, pady=5)
 
-        add_btn.grid(row=3, column=0, pady=5, padx=10, sticky="EW")
-        va_btn.grid(row=4, column=0, pady=5, padx=10, sticky="EW")
-        vm_btn.grid(row=5, column=0, pady=5, padx=10, sticky="EW")
+        add_btn.grid(row=3, column=0, pady=5, padx=10, sticky="ew")
+        va_btn.grid(row=4, column=0, pady=5, padx=10, sticky="ew")
+        vm_btn.grid(row=5, column=0, pady=5, padx=10, sticky="ew")
+        gen_report_btn.grid(row=6, column=0, pady=5, padx=10, sticky="ew")
 
         close_btn.grid(row=7, column=0, pady=20, sticky="ew")
 
