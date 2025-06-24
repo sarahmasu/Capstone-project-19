@@ -388,7 +388,7 @@ def clear(root):
     """
 
 
-def generate_report(check_username):
+def generate_report(check_username, txt_bx):
 
     # Variables to store the results
     total_overdue_incomplete_task = 0
@@ -588,7 +588,7 @@ def generate_report(check_username):
     with open("task_overview.txt", "w", encoding="utf-8") as write_task:
         write_task.writelines(
             "Task Overview report\n"
-            "_________________________________________________\n"
+            "_______________________________________________\n"
             f"Total tasks; {total_tasks}\n"
             f"Total complete tasks: {total_complete_task}\n"
             f"Total incomplete tasks: {total_incomplete_task}\n"
@@ -600,7 +600,7 @@ def generate_report(check_username):
     with open("user_overview.txt", "w", encoding="utf-8") as write_user:
         write_user.writelines(
             "User Overview report\n"
-            "_________________________________________________\n"
+            "_______________________________________________\n"
             f"Total users: {total_users}\n"
             f"Total assigned: {total_assigned_users}\n"
             f"Percentage of assigned tasks: {round(percent_assigned_users, 2)}%\n"
@@ -608,7 +608,7 @@ def generate_report(check_username):
             f"Percentage of assigned incomplete tasks: {round(percent_assigned_incomplete, 2)}%\n"
             f"Percentage of assigned overdue tasks: {round(percent_assigned_incomplete_overdue, 2)}%"
             f"\n\nTasks assigned to users\n"
-            f"_________________________________________________\n"
+            f"_______________________________________________\n"
         )
 
         for key, val in user_dict.items():
@@ -616,7 +616,7 @@ def generate_report(check_username):
 
         write_user.writelines(
             "\n\nCompleted tasks assigned to users\n"
-            "_________________________________________________\n"
+            "_______________________________________________\n"
         )
 
         for key, val in tasks_comp_dict.items():
@@ -624,7 +624,7 @@ def generate_report(check_username):
 
         write_user.writelines(
             "\n\nIncomplete tasks assigned to users\n"
-            "_________________________________________________\n"
+            "_______________________________________________\n"
         )
 
         for key, val in tasks_incomp_dict.items():
@@ -632,19 +632,38 @@ def generate_report(check_username):
 
         write_user.writelines(
             "\n\nIncomplete and overdue tasks assigned to users\n"
-            "_________________________________________________\n"
+            "_______________________________________________\n"
         )
 
         for key, val in due_date_dict.items():
             write_user.writelines(f"\n{key:5}: {val}%")
 
-    messagebox.showinfo("Success","User and Task overview reports generated!")
+    messagebox.showinfo("Success", "User and Task overview reports generated!")
+
+    display_stats(txt_bx)
 
 
 def display_stats(txt_bx):
+    txt_bx.delete("1.0", tk.END)
     try:
         with open("task_overview.txt", "r", encoding="utf-8") as read_tasks:
             lines = read_tasks.readlines()
+
+            for tasks in lines:
+                strip_lines = tasks.strip()
+                txt_bx.insert(tk.END, f"{strip_lines}\n")
+
+        txt_bx.insert(tk.END, f"______________________________________________\n")
+
+        with open("user_overview.txt", "r", encoding="utf-8") as read_users:
+            lines = read_users.readlines()
+
+            for users in lines:
+                strip_lines = users.strip()
+                txt_bx.insert(tk.END, f"{strip_lines}\n")
+
+        txt_bx.insert(tk.END, f"______________________________________________\n")
+
     except FileNotFoundError:
         messagebox.showerror(
             "File Not Found",
