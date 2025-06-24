@@ -99,7 +99,7 @@ def menu(username, check_username, current_user, task_num_list, today):
             fg="#ffffff",
             width=15,
             font=("Arial", 10),
-            command=lambda: stat.stats(),
+            command=lambda: stat.stats(check_username),
         )
 
         close_btn = tk.Button(
