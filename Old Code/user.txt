@@ -1,6 +1,0 @@
-admin, adm1n
-sally, 12345
-emily, 98765
-caleb, ad123
-sarah, 45030
-anna, lmno
