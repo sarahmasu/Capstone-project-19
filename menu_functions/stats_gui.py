@@ -9,13 +9,16 @@ import menu_functions.functions as fun
 # ----Statistics Section----
 
 
-def stats(check_username):
+def stats(frame, check_username):
 
-    stats_win = tk.Toplevel()
+    '''stats_win = tk.Toplevel()
     stats_win.title("Statistics")
     stats_win.config(bg="#333333")
     #stats_win.geometry("250x200")
-    frame = tk.Frame(stats_win, bg="#333333")
+    frame = tk.Frame(stats_win, bg="#333333")'''
+
+    # Clear the frame first
+    fun.clear_frame(frame)
 
     # ---- Widgets ----
     header_lbl = tk.Label(
@@ -37,16 +40,6 @@ def stats(check_username):
         command= lambda: fun.generate_report(check_username, txt_bx)
     )
 
-    close_btn = tk.Button(
-        frame,
-        text="Close",
-        width=15,
-        font=("Arial", 12),
-        command=stats_win.destroy,
-        bg="#46a094",
-        fg="#ffffff",
-    )
-
     # ----- Populate Textbox ----
     
     fun.display_stats(txt_bx)
@@ -58,9 +51,6 @@ def stats(check_username):
     txt_bx.grid(row=1, column=2, rowspan=8, columnspan=2, sticky="ew")
     vert_scroll.grid(row=1, column=4, rowspan=8, sticky="ns")
     horizon_scroll.grid(row=9, column=2, columnspan=2, sticky="ew")
-
-    gen_report_btn.grid(row=10, column=2, pady=10, sticky="we")
-    close_btn.grid(row=10, column=3, pady=10, sticky="we")
 
     # ---- Scrollbar ----
     txt_bx["yscrollcommand"] = vert_scroll.set

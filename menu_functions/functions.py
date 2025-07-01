@@ -97,7 +97,6 @@ def submit_tasks(
     current_date,
     task_due_date,
     task_complete,
-    root,
 ):
 
     try:
@@ -110,7 +109,6 @@ def submit_tasks(
                 f"\n{user_task}, {task_title}, {task_description}, {current_date}, {task_due_date}, {task_complete}"
             )
         messagebox.showinfo(title="Success", message="New task saved!")
-        root.destroy()
 
     except FileNotFoundError:
         messagebox.showerror(title="Error", message="File not found!")
@@ -119,7 +117,7 @@ def submit_tasks(
 # ----Submit User----
 
 
-def submit_user(root, user, new_user, new_passwd, confirm_new_passwd):
+def submit_user(user, new_user, new_passwd, confirm_new_passwd):
     try:
         with open("user.txt", "a") as add_line:
 
@@ -133,7 +131,6 @@ def submit_user(root, user, new_user, new_passwd, confirm_new_passwd):
 
                     add_line.writelines(f"\n{new_user}, {confirm_new_passwd}")
                     messagebox.showinfo("Success", "New user successfully saved!")
-                    root.destroy()
 
                 # If the user enters nothing for either password or confirm password textbox
                 # display warning
@@ -345,12 +342,13 @@ def search_list(
             chg_due_date_cal.selection_set(convert_date)
 
 
-# ----Clear text----
+# ----Clear text and widgets----
 
 
-def clear(root):
+#   +++Clear texts+++
+def clear(frame):
 
-    for widget in root.winfo_children():
+    for widget in frame.winfo_children():
         # Clears all Entry Widgets
         if isinstance(widget, tk.Entry):
             widget.delete(0, tk.END)
@@ -358,10 +356,10 @@ def clear(root):
             clear(widget)
 
         # Clears all Text Widgets
-        """if isinstance(widget, tk.Text):
+        if isinstance(widget, tk.Text):
             widget.delete("1.0", tk.END)
         elif not isinstance(widget, tk.Text):
-            clear(widget)"""
+            clear(widget)
 
     # ----Generate report----
 
@@ -386,6 +384,16 @@ def clear(root):
             - Calculate the percentage of complete and overdue tasks.
             - Calculate the percentage of complete assigned tasks.
     """
+
+
+#   +++Clear frame+++
+def clear_frame(frame):
+
+    for widget in frame.winfo_children():
+        widget.destroy()
+
+
+# ----Generate report----
 
 
 def generate_report(check_username, txt_bx):
@@ -643,6 +651,9 @@ def generate_report(check_username, txt_bx):
     display_stats(txt_bx)
 
 
+# ----Display stats----
+
+
 def display_stats(txt_bx):
     txt_bx.delete("1.0", tk.END)
     try:
@@ -669,3 +680,9 @@ def display_stats(txt_bx):
             "File Not Found",
             "The files do not exist, please generate the report to read them.",
         )
+
+# =====References=====
+'''
+    - Clear widgets in frame:
+    https://www.geeksforgeeks.org/python/how-to-clear-out-a-frame-in-the-tkinter/
+'''

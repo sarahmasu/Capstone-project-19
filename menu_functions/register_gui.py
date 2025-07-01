@@ -7,13 +7,16 @@ import menu_functions.functions as fun
 # ----Register Function----
 
 
-def register():
+def register(frame):
 
     # Creates a child window
-    reg_win = tk.Toplevel()
+    '''reg_win = tk.Toplevel()
     reg_win.title("Register")
     reg_win.config(bg="#333333")
-    frame = tk.Frame(reg_win, bg="#333333")
+    frame = tk.Frame(reg_win, bg="#333333")'''
+
+    # Clear the frame first
+    fun.clear_frame(frame)
 
     reg_label = tk.Label(
         frame,
@@ -47,7 +50,6 @@ def register():
         font=("Arial", 12),
         width=10,
         command=lambda: fun.submit_user(
-            reg_win,
             new_user.get().lower(),
             new_passwd.get().lower(),
             confirm_new_passwd.get().lower(),
@@ -62,7 +64,7 @@ def register():
         text="Clear",
         font=("Arial", 12),
         width=10,
-        command=lambda: fun.clear(reg_win),
+        command=lambda: fun.clear(frame),
         bg="#46a094",
         fg="#ffffff",
     )
