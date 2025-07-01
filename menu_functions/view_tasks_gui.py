@@ -11,11 +11,14 @@ import menu_functions.functions as fun
 # ----View tasks Section----
 
 
-def view_tasks(username, menu, current_user, task_num_list, check_username, today):
-    view_tasks_win = tk.Toplevel()
+def view_tasks(frame, username, menu, current_user, task_num_list, check_username, today):
+    '''view_tasks_win = tk.Toplevel()
     view_tasks_win.config(bg="#333333")
     view_tasks_win.resizable(True, True)
-    frame = tk.Frame(view_tasks_win, bg="#333333")
+    frame = tk.Frame(view_tasks_win, bg="#333333")'''
+
+    # Clear the frame first
+    fun.clear_frame(frame)
 
     txt_bx = tk.Text(frame, width=48, height=25, wrap="word", font=("Arial", 11))
     # txt_bx.config(state=tk.DISABLED)  # Prevents users from editing the text box.
@@ -23,19 +26,9 @@ def view_tasks(username, menu, current_user, task_num_list, check_username, toda
     vert_scroll = ttk.Scrollbar(frame, orient="vertical", command=txt_bx.yview)
     horizon_scroll = ttk.Scrollbar(frame, orient="horizontal", command=txt_bx.xview)
 
-    close_btn = tk.Button(
-        frame,
-        text="Close",
-        width=15,
-        font=("Arial", 12),
-        command=view_tasks_win.destroy,
-        bg="#46a094",
-        fg="#ffffff",
-    )
-
     if menu == "View all tasks":
 
-        view_tasks_win.title("View All Tasks")
+        '''view_tasks_win.title("View All Tasks")'''
 
         # ---- Widgets ----
         info_lbl = tk.Label(
@@ -45,6 +38,16 @@ def view_tasks(username, menu, current_user, task_num_list, check_username, toda
             fg="#ffffff",
             font=("Arial", 20),
         )
+
+        gen_report_btn = tk.Button(
+        frame,
+        text="Generate report",
+        width=15,
+        font=("Arial", 12),
+        bg="#46a094",
+        fg="#ffffff",
+        command= lambda: fun.generate_report(check_username, txt_bx)
+    )
 
         # ---- Read File ----
 
@@ -94,8 +97,8 @@ def view_tasks(username, menu, current_user, task_num_list, check_username, toda
         txt_bx.grid(row=1, column=2, rowspan=8, columnspan=2, sticky="ew")
         vert_scroll.grid(row=1, column=4, rowspan=8, sticky="ns")
         horizon_scroll.grid(row=9, column=2, columnspan=2, sticky="ew")
-
-        close_btn.grid(row=10, column=1, columnspan=4, pady=10, sticky="ew")
+        
+        gen_report_btn.grid(row=10, column=2, columnspan=2, pady=10, sticky="we")
 
         # ---- Scrollbar ----
         txt_bx["yscrollcommand"] = vert_scroll.set
@@ -103,7 +106,7 @@ def view_tasks(username, menu, current_user, task_num_list, check_username, toda
 
     elif menu == "View my tasks":
 
-        view_tasks_win.title("My Tasks")
+        '''view_tasks_win.title("My Tasks")'''
         current_user.clear()
         task_num_list.clear()
 
@@ -291,6 +294,16 @@ def view_tasks(username, menu, current_user, task_num_list, check_username, toda
             ),
         )
 
+        clear_btn = tk.Button(
+            frame,
+            text="Clear",
+            width=15,
+            font=("Arial", 12),
+            bg="#46a094",
+            fg='#ffffff',
+            command=lambda:fun.clear(frame)
+        )
+
         # ---- Bindings ----
         chg_task_num_cmbo.bind(
             "<<ComboboxSelected>>",
@@ -334,7 +347,7 @@ def view_tasks(username, menu, current_user, task_num_list, check_username, toda
         vert_scroll.grid(row=1, column=4, rowspan=6, sticky="ns")
         horizon_scroll.grid(row=8, column=2, columnspan=2, sticky="ew")
 
-        close_btn.grid(row=9, column=3, pady=10, sticky="ew")
         update_btn.grid(row=9, column=2, pady=10, sticky="ew")
+        clear_btn.grid(row=9, column=3, pady=10, sticky="ew")
 
     frame.pack()

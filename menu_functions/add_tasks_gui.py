@@ -11,12 +11,15 @@ import menu_functions.functions as fun
 
 # Request the user to assign other users tasks, the name of the task the description and due date.
 # Saves the input into tasks.txt file.
-def add_task(check_username, today):
+def add_task(frame, check_username, today):
 
-    task_win = tk.Toplevel()
+    '''task_win = tk.Toplevel()
     task_win.title("Add Task")
     task_win.config(bg="#333333")
-    frame = tk.Frame(task_win, bg="#333333")
+    frame = tk.Frame(task_win, bg="#333333")'''
+    
+    # Clear the frame first
+    fun.clear_frame(frame)
 
     # ----Labels----
     instr_lbl = tk.Label(
@@ -139,7 +142,6 @@ def add_task(check_username, today):
             current_date_lbl2.cget("text"),
             task_due_date.selection_get().strftime("%d %b %Y"),
             task_complete_lbl.cget("text"),
-            task_win,
         ),
         bg="#46a094",
         fg="#ffffff",
@@ -150,17 +152,7 @@ def add_task(check_username, today):
         text="Clear",
         width=15,
         font=("Arial", 12),
-        command=lambda: fun.clear(task_win),
-        bg="#46a094",
-        fg="#ffffff",
-    )
-
-    close_btn = tk.Button(
-        frame,
-        text="Close",
-        width=15,
-        font=("Arial", 12),
-        command=task_win.destroy,
+        command=lambda: fun.clear(frame),
         bg="#46a094",
         fg="#ffffff",
     )
@@ -290,7 +282,5 @@ def add_task(check_username, today):
         padx=5,
         pady=5,
     )
-
-    close_btn.grid(row=7, column=2, padx=5, pady=5, sticky="w")
 
     frame.pack()

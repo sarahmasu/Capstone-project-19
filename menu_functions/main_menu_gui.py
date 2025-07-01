@@ -15,12 +15,14 @@ def menu(username, check_username, current_user, task_num_list, today):
 
     menu_win = tk.Tk()
     menu_win.title("Task Manager")
-    # menu_win.geometry("500x400")
     menu_win.configure(bg="#333333")
-    frame = tk.Frame(bg="#333333")
+
+    # ----Frames-----
+    menu_frame = tk.Frame(menu_win, bg="#333333", width=250, height=500)
+    side_frame = tk.Frame(menu_win, bg="#333333")
 
     title_lbl = tk.Label(
-        frame,
+        menu_frame,
         text=f"Welcome, {username}",
         bg="#333333",
         fg="#46a094",
@@ -28,7 +30,7 @@ def menu(username, check_username, current_user, task_num_list, today):
     )
 
     menu_lbl = tk.Label(
-        frame,
+        menu_frame,
         text="Select one of the following options:",
         bg="#333333",
         fg="#ffffff",
@@ -39,33 +41,34 @@ def menu(username, check_username, current_user, task_num_list, today):
     if username == "admin":
 
         reg_btn = tk.Button(
-            frame,
+            menu_frame,
             text="Register user",
             bg="#333333",
             fg="#ffffff",
             width=15,
             font=("Arial", 10),
-            command=lambda: reg.register(),
+            command=lambda: reg.register(side_frame),
         )
 
         add_btn = tk.Button(
-            frame,
+            menu_frame,
             text="Add task",
             bg="#333333",
             fg="#ffffff",
             width=15,
             font=("Arial", 10),
-            command=lambda: add.add_task(check_username, today),
+            command=lambda: add.add_task(side_frame, check_username, today),
         )
 
         va_btn = tk.Button(
-            frame,
+            menu_frame,
             text="View all tasks",
             bg="#333333",
             fg="#ffffff",
             width=15,
             font=("Arial", 10),
             command=lambda: view.view_tasks(
+                side_frame,
                 username,
                 va_btn.cget("text"),
                 current_user,
@@ -76,13 +79,14 @@ def menu(username, check_username, current_user, task_num_list, today):
         )
 
         vm_btn = tk.Button(
-            frame,
+            menu_frame,
             text="View my tasks",
             bg="#333333",
             fg="#ffffff",
             width=15,
             font=("Arial", 10),
             command=lambda: view.view_tasks(
+                side_frame,
                 username,
                 vm_btn.cget("text"),
                 current_user,
@@ -93,17 +97,27 @@ def menu(username, check_username, current_user, task_num_list, today):
         )
 
         stats_btn = tk.Button(
-            frame,
+            menu_frame,
             text="Statistics",
             bg="#333333",
             fg="#ffffff",
             width=15,
             font=("Arial", 10),
-            command=lambda: stat.stats(check_username),
+            command=lambda: stat.stats(side_frame, check_username),
+        )
+
+        clear_frame_btn = tk.Button(
+            menu_frame,
+            text = "Clear frame",
+            bg="#333333",
+            fg="#ffffff",
+            width=15,
+            font=("Arial", 10),
+            command=lambda: fun.clear_frame(side_frame)
         )
 
         close_btn = tk.Button(
-            frame,
+            menu_frame,
             text="Close",
             bg="#333333",
             fg="#ffffff",
@@ -124,14 +138,10 @@ def menu(username, check_username, current_user, task_num_list, today):
 
         close_btn.grid(row=7, column=0, pady=20, sticky="ew")
 
-        frame.pack()
-
-        menu_win.mainloop()
-
     else:
 
         add_btn = tk.Button(
-            frame,
+            menu_frame,
             text="Add Task",
             bg="#333333",
             fg="#ffffff",
@@ -141,7 +151,7 @@ def menu(username, check_username, current_user, task_num_list, today):
         )
 
         va_btn = tk.Button(
-            frame,
+            menu_frame,
             text="View All Tasks",
             bg="#333333",
             fg="#ffffff",
@@ -158,7 +168,7 @@ def menu(username, check_username, current_user, task_num_list, today):
         )
 
         vm_btn = tk.Button(
-            frame,
+            menu_frame,
             text="View My Tasks",
             bg="#333333",
             fg="#ffffff",
@@ -175,7 +185,7 @@ def menu(username, check_username, current_user, task_num_list, today):
         )
 
         gen_report_btn = tk.Button(
-            frame,
+            menu_frame,
             text="Generate Report",
             bg="#333333",
             fg="#ffffff",
@@ -185,7 +195,7 @@ def menu(username, check_username, current_user, task_num_list, today):
         )
 
         close_btn = tk.Button(
-            frame,
+            menu_frame,
             text="Close",
             bg="#333333",
             fg="#ffffff",
@@ -205,6 +215,14 @@ def menu(username, check_username, current_user, task_num_list, today):
 
         close_btn.grid(row=7, column=0, pady=20, sticky="ew")
 
-        frame.pack()
+    menu_frame.pack(side="left", padx=10, pady=5, fill="both")
+    side_frame.pack(side="right", fill="both", padx=10, pady=5)
 
-        menu_win.mainloop()
+    menu_win.mainloop()
+
+
+# ====References====
+"""
+    - Helped with adding multiple frames in one window:
+      https://www.pythonguis.com/faq/pack-place-and-grid-in-tkinter/
+"""
