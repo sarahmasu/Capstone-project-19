@@ -17,8 +17,13 @@ def menu(username, check_username, current_user, task_num_list, today):
     menu_win.title("Task Manager")
     menu_win.configure(bg="#333333")
 
+    height = menu_win.winfo_screenheight()
+    width = menu_win.winfo_screenwidth()
+
+    # print(f"Screen width x height = {width} x {height}\n")
     # ----Frames-----
-    menu_frame = tk.Frame(menu_win, bg="#333333", width=250, height=500)
+    menu_frame = tk.Frame(
+        menu_win, bg="#333333", width=250, height=500)
     side_frame = tk.Frame(menu_win, bg="#333333")
 
     title_lbl = tk.Label(
@@ -108,12 +113,12 @@ def menu(username, check_username, current_user, task_num_list, today):
 
         clear_frame_btn = tk.Button(
             menu_frame,
-            text = "Clear frame",
+            text="Clear frame",
             bg="#333333",
             fg="#ffffff",
             width=15,
             font=("Arial", 10),
-            command=lambda: fun.clear_frame(side_frame)
+            command=lambda: fun.clear_frame(side_frame),
         )
 
         close_btn = tk.Button(
@@ -211,9 +216,8 @@ def menu(username, check_username, current_user, task_num_list, today):
         add_btn.grid(row=3, column=0, pady=5, padx=10, sticky="ew")
         va_btn.grid(row=4, column=0, pady=5, padx=10, sticky="ew")
         vm_btn.grid(row=5, column=0, pady=5, padx=10, sticky="ew")
-        gen_report_btn.grid(row=6, column=0, pady=5, padx=10, sticky="ew")
 
-        close_btn.grid(row=7, column=0, pady=20, sticky="ew")
+        close_btn.grid(row=9, column=0, pady=20, sticky="ew")
 
     menu_frame.pack(side="left", padx=10, pady=5, fill="both")
     side_frame.pack(side="right", fill="both", padx=10, pady=5)

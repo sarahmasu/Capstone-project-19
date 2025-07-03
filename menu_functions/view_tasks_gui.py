@@ -17,6 +17,11 @@ def view_tasks(frame, username, menu, current_user, task_num_list, check_usernam
     view_tasks_win.resizable(True, True)
     frame = tk.Frame(view_tasks_win, bg="#333333")'''
 
+    height = frame.winfo_screenheight()
+    width = frame.winfo_screenwidth()
+
+    #print(f"Screen width x height = {width} x {height}\n")
+
     # Clear the frame first
     fun.clear_frame(frame)
 
