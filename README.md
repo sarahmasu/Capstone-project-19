@@ -94,7 +94,7 @@ There are two options when it comes to viewing tasks: view all assigned tasks an
 
 #### View all tasks <a name="view_all"></a>
 <p align="center">
-    <img src="/Images/View_all_tasks_menu.PNG" alt="Screenshot of View all tasks window" width="400" height="550">
+    <img src="/Images/View_all_tasks_menu.PNG" alt="Screenshot of View all tasks window" height="550">
 </p>
 <p align="center">
     <em>View tasks window for all tasks.</em>
