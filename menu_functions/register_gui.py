@@ -10,20 +10,24 @@ import menu_functions.functions as fun
 def register(frame):
 
     # Creates a child window
-    '''reg_win = tk.Toplevel()
+    """reg_win = tk.Toplevel()
     reg_win.title("Register")
     reg_win.config(bg="#333333")
-    frame = tk.Frame(reg_win, bg="#333333")'''
+    frame = tk.Frame(reg_win, bg="#333333")"""
 
     # Clear the frame first
     fun.clear_frame(frame)
+
+    title_lbl = tk.Label(
+        frame, text="Registration", bg="#333333", fg="#46a094", font=("Arial", 18)
+    )
 
     reg_label = tk.Label(
         frame,
         text="Please enter the following:",
         bg="#333333",
         fg="#ffffff",
-        font=("Arial", 16),
+        font=("Arial", 15),
     )
 
     # Request user to enter a user's username and password
@@ -70,19 +74,20 @@ def register(frame):
     )
 
     # ----Grids----
+    title_lbl.grid(row=0, column=0, columnspan=2, pady=25, sticky="news")
 
-    reg_label.grid(row=0, column=0, columnspan=2, padx=5, pady=25, sticky="ew")
+    reg_label.grid(row=1, column=0, columnspan=2, pady=5, sticky="w")
 
-    user_lbl.grid(row=1, column=0, pady=5, sticky="w")
-    new_user.grid(row=1, column=1, padx=5, pady=5, sticky="w")
+    user_lbl.grid(row=2, column=0, pady=5, sticky="w")
+    new_user.grid(row=2, column=1, padx=5, pady=5, sticky="w")
 
-    passwd_lbl.grid(row=2, column=0, pady=5, sticky="w")
-    new_passwd.grid(row=2, column=1, padx=5, pady=5, sticky="w")
+    passwd_lbl.grid(row=3, column=0, pady=5, sticky="w")
+    new_passwd.grid(row=3, column=1, padx=5, pady=5, sticky="w")
 
-    confirm_lbl.grid(row=3, column=0, pady=5, sticky="w")
-    confirm_new_passwd.grid(row=3, column=1, padx=5, pady=5, sticky="w")
+    confirm_lbl.grid(row=4, column=0, pady=5, sticky="w")
+    confirm_new_passwd.grid(row=4, column=1, padx=5, pady=5, sticky="w")
 
-    submit_btn.grid(row=4, column=0, padx=5, pady=5, sticky="e")
-    clear_btn.grid(row=4, column=1, padx=5, pady=5, sticky="w")
+    submit_btn.grid(row=5, column=0, pady=5, sticky="e")
+    clear_btn.grid(row=5, column=1, pady=5, sticky="w")
 
     frame.pack()

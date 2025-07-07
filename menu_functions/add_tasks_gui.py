@@ -12,62 +12,46 @@ import menu_functions.functions as fun
 # Request the user to assign other users tasks, the name of the task the description and due date.
 # Saves the input into tasks.txt file.
 def add_task(frame, check_username, today):
-
-    '''task_win = tk.Toplevel()
+    # Creates second window
+    """task_win = tk.Toplevel()
     task_win.title("Add Task")
     task_win.config(bg="#333333")
-    frame = tk.Frame(task_win, bg="#333333")'''
-    
+    frame = tk.Frame(task_win, bg="#333333")"""
+
     # Clear the frame first
     fun.clear_frame(frame)
 
     # ----Labels----
+    header_lbl = tk.Label(
+        frame, text="Assign Tasks", bg="#333333", fg="#46a094", font=("Arial", 18)
+    )
+
     instr_lbl = tk.Label(
         frame,
         text="Please complete the following:",
         bg="#333333",
         fg="#ffffff",
-        font=("Arial", 18),
+        font=("Arial", 15),
     )
 
     user_lbl = tk.Label(
-        frame,
-        text="Select a user: ",
-        bg="#333333",
-        fg="#ffffff",
-        font=("Arial", 12),
+        frame, text="Select a user: ", bg="#333333", fg="#ffffff", font=("Arial", 12)
     )
 
     title_lbl = tk.Label(
-        frame,
-        text="Task title: ",
-        bg="#333333",
-        fg="#ffffff",
-        font=("Arial", 12),
+        frame, text="Task title: ", bg="#333333", fg="#ffffff", font=("Arial", 12)
     )
 
     description_lbl = tk.Label(
-        frame,
-        text="Task description: ",
-        fg="#ffffff",
-        bg="#333333",
-        font=("Arial", 12),
+        frame, text="Task description: ", fg="#ffffff", bg="#333333", font=("Arial", 12)
     )
 
     due_date_lbl = tk.Label(
-        frame,
-        text="Select due date: ",
-        bg="#333333",
-        fg="#ffffff",
-        font=("Arial", 12),
+        frame, text="Select due date: ", bg="#333333", fg="#ffffff", font=("Arial", 12)
     )
 
     current_date_lbl = tk.Label(
-        frame,
-        text="Current date: ",
-        bg="#333333",
-        fg="#ffffff",
-        font=("Arial", 12),
+        frame, text="Current date: ", bg="#333333", fg="#ffffff", font=("Arial", 12)
     )
 
     current_date_lbl2 = tk.Label(
@@ -79,29 +63,18 @@ def add_task(frame, check_username, today):
     )
 
     status_lbl = tk.Label(
-        frame,
-        text="Task complete: ",
-        bg="#333333",
-        fg="#ffffff",
-        font=("Arial", 12),
+        frame, text="Task complete: ", bg="#333333", fg="#ffffff", font=("Arial", 12)
     )
 
     task_complete_lbl = tk.Label(
-        frame,
-        text="No",
-        bg="#333333",
-        fg="#ffffff",
-        font=("Arial", 12),
+        frame, text="No", bg="#333333", fg="#ffffff", font=("Arial", 12)
     )
 
     # ----Combobox----
     select_user = tk.StringVar()
 
     user_cmbo = ttk.Combobox(
-        frame,
-        width=25,
-        textvariable=select_user,
-        font=("Arial", 12),
+        frame, width=25, textvariable=select_user, font=("Arial", 12)
     )
 
     user_cmbo["values"] = tuple(check_username)
@@ -160,127 +133,33 @@ def add_task(frame, check_username, today):
     # ----Grid layout---
 
     # ++Labels++
-    instr_lbl.grid(
-        row=0,
-        column=0,
-        columnspan=3,
-        padx=10,
-        pady=25,
-        sticky="we",
-    )
+    header_lbl.grid(row=0, column=0, columnspan=3, pady=25, sticky="news")
+    instr_lbl.grid(row=1, column=0, columnspan=3, pady=5, sticky="w")
 
-    user_lbl.grid(
-        row=1,
-        column=0,
-        padx=5,
-        pady=5,
-        sticky="w",
-    )
+    user_lbl.grid(row=2, column=0, padx=5, pady=5, sticky="w")
+    title_lbl.grid(row=3, column=0, padx=5, pady=5, sticky="w")
+    description_lbl.grid(row=4, column=0, padx=5, pady=5, sticky="w")
 
-    title_lbl.grid(
-        row=2,
-        column=0,
-        padx=5,
-        pady=5,
-        sticky="w",
-    )
+    due_date_lbl.grid(row=5, column=0, padx=5, pady=5, sticky="w")
 
-    description_lbl.grid(
-        row=3,
-        column=0,
-        padx=5,
-        pady=5,
-        sticky="w",
-    )
+    current_date_lbl.grid(row=6, column=0, padx=5, pady=5, sticky="w")
+    current_date_lbl2.grid(row=6, column=1, padx=5, pady=5, sticky="w")
 
-    due_date_lbl.grid(
-        row=4,
-        column=0,
-        padx=5,
-        pady=5,
-        sticky="w",
-    )
-
-    current_date_lbl.grid(
-        row=5,
-        column=0,
-        padx=5,
-        pady=5,
-        sticky="w",
-    )
-
-    current_date_lbl2.grid(
-        row=5,
-        column=1,
-        padx=5,
-        pady=5,
-        sticky="w",
-    )
-
-    status_lbl.grid(
-        row=6,
-        column=0,
-        padx=5,
-        pady=5,
-        sticky="w",
-    )
-    task_complete_lbl.grid(
-        row=6,
-        column=1,
-        padx=5,
-        pady=5,
-        sticky="w",
-    )
+    status_lbl.grid(row=7, column=0, padx=5, pady=5, sticky="w")
+    task_complete_lbl.grid(row=7, column=1, padx=5, pady=5, sticky="w")
 
     # ++Text and Entry++
-    task_title_txt.grid(
-        row=2,
-        column=1,
-        padx=5,
-        pady=5,
-        sticky="w",
-    )
-
-    task_description_txt.grid(
-        row=3,
-        column=1,
-        padx=5,
-        pady=5,
-        sticky="w",
-    )
+    task_title_txt.grid(row=3, column=1, padx=5, pady=5, sticky="w")
+    task_description_txt.grid(row=4, column=1, padx=5, pady=5, sticky="w")
 
     # ++Calendar++
-    task_due_date.grid(
-        row=4,
-        column=1,
-        padx=5,
-        pady=5,
-        sticky="w",
-    )
+    task_due_date.grid(row=5, column=1, padx=5, pady=5, sticky="w")
 
     # ++Combobox++
-    user_cmbo.grid(
-        row=1,
-        column=1,
-        pady=5,
-        padx=5,
-        sticky="w",
-    )
+    user_cmbo.grid(row=2, column=1, pady=5, padx=5, sticky="w")
 
     # ++buttons++
-    save_task_btn.grid(
-        row=7,
-        column=0,
-        padx=5,
-        pady=5,
-        sticky="e",
-    )
-
-    clear_btn.grid(
-        row=7,
-        column=1,
-        padx=5,
-        pady=5,
-    )
+    save_task_btn.grid(row=8, column=0, pady=5, sticky="e")
+    clear_btn.grid(row=8, column=1, pady=5, sticky="w")
 
     frame.pack()

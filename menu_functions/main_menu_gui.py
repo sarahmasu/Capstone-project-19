@@ -15,23 +15,25 @@ def menu(username, check_username, current_user, task_num_list, today):
 
     menu_win = tk.Tk()
     menu_win.title("Task Manager")
+    menu_win.minsize(357, 400)
     menu_win.configure(bg="#333333")
 
-    height = menu_win.winfo_screenheight()
-    width = menu_win.winfo_screenwidth()
+    height = menu_win.winfo_height()
+    width = menu_win.winfo_width()
 
     # print(f"Screen width x height = {width} x {height}\n")
     # ----Frames-----
-    menu_frame = tk.Frame(
-        menu_win, bg="#333333", width=250, height=500)
-    side_frame = tk.Frame(menu_win, bg="#333333")
+    top_frame = tk.Frame(menu_win, bg="#333333")
+    bottom_frame = tk.Frame(menu_win, bg="#333333")
+    menu_frame = tk.Frame(top_frame, bg="#333333", width=250, height=400)
+    side_frame = tk.Frame(top_frame, bg="#333333")
 
     title_lbl = tk.Label(
         menu_frame,
         text=f"Welcome, {username}",
         bg="#333333",
         fg="#46a094",
-        font=("Arial", 24),
+        font=("Arial", 18),
     )
 
     menu_lbl = tk.Label(
@@ -42,7 +44,7 @@ def menu(username, check_username, current_user, task_num_list, today):
         font=("Arial", 15),
     )
 
-    # Options for "admin" and other users
+    # Options for "admin"
     if username == "admin":
 
         reg_btn = tk.Button(
@@ -50,8 +52,8 @@ def menu(username, check_username, current_user, task_num_list, today):
             text="Register user",
             bg="#333333",
             fg="#ffffff",
-            width=15,
-            font=("Arial", 10),
+            width=10,
+            font=("Arial", 11),
             command=lambda: reg.register(side_frame),
         )
 
@@ -60,8 +62,8 @@ def menu(username, check_username, current_user, task_num_list, today):
             text="Add task",
             bg="#333333",
             fg="#ffffff",
-            width=15,
-            font=("Arial", 10),
+            width=10,
+            font=("Arial", 11),
             command=lambda: add.add_task(side_frame, check_username, today),
         )
 
@@ -70,8 +72,8 @@ def menu(username, check_username, current_user, task_num_list, today):
             text="View all tasks",
             bg="#333333",
             fg="#ffffff",
-            width=15,
-            font=("Arial", 10),
+            width=10,
+            font=("Arial", 11),
             command=lambda: view.view_tasks(
                 side_frame,
                 username,
@@ -88,8 +90,8 @@ def menu(username, check_username, current_user, task_num_list, today):
             text="View my tasks",
             bg="#333333",
             fg="#ffffff",
-            width=15,
-            font=("Arial", 10),
+            width=10,
+            font=("Arial", 11),
             command=lambda: view.view_tasks(
                 side_frame,
                 username,
@@ -106,8 +108,8 @@ def menu(username, check_username, current_user, task_num_list, today):
             text="Statistics",
             bg="#333333",
             fg="#ffffff",
-            width=15,
-            font=("Arial", 10),
+            width=10,
+            font=("Arial", 11),
             command=lambda: stat.stats(side_frame, check_username),
         )
 
@@ -126,43 +128,45 @@ def menu(username, check_username, current_user, task_num_list, today):
             text="Close",
             bg="#333333",
             fg="#ffffff",
-            width=15,
-            font=("Arial", 10),
+            width=10,
+            font=("Arial", 11),
             command=menu_win.destroy,
         )
 
         # Grids
         title_lbl.grid(row=0, column=0, columnspan=2, pady=25, sticky="news")
-        menu_lbl.grid(row=1, column=0, pady=5)
+        menu_lbl.grid(row=1, column=0, pady=5, sticky="w")
 
-        reg_btn.grid(row=2, column=0, pady=5, padx=10, sticky="EW")
-        add_btn.grid(row=3, column=0, pady=5, padx=10, sticky="EW")
-        va_btn.grid(row=4, column=0, pady=5, padx=10, sticky="EW")
-        vm_btn.grid(row=5, column=0, pady=5, padx=10, sticky="EW")
-        stats_btn.grid(row=6, column=0, pady=5, padx=10, sticky="EW")
+        reg_btn.grid(row=2, column=0, pady=5, padx=5, sticky="ew")
+        add_btn.grid(row=3, column=0, pady=5, padx=5, sticky="ew")
+        va_btn.grid(row=4, column=0, pady=5, padx=5, sticky="ew")
+        vm_btn.grid(row=5, column=0, pady=5, padx=5, sticky="ew")
+        stats_btn.grid(row=6, column=0, pady=5, padx=5, sticky="ew")
 
-        close_btn.grid(row=7, column=0, pady=20, sticky="ew")
+        close_btn.grid(row=7, column=0,pady=20, padx=5, sticky="ew")
 
+    # Options for other users
     else:
 
         add_btn = tk.Button(
             menu_frame,
-            text="Add Task",
+            text="Add task",
             bg="#333333",
             fg="#ffffff",
-            width=15,
-            font=("Arial", 10),
-            command=lambda: add.add_task(check_username, today),
+            width=10,
+            font=("Arial", 11),
+            command=lambda: add.add_task(side_frame, check_username, today),
         )
 
         va_btn = tk.Button(
             menu_frame,
-            text="View All Tasks",
+            text="View all tasks",
             bg="#333333",
             fg="#ffffff",
-            width=15,
-            font=("Arial", 10),
+            width=10,
+            font=("Arial", 11),
             command=lambda: view.view_tasks(
+                side_frame,
                 username,
                 va_btn.cget("text"),
                 current_user,
@@ -174,12 +178,13 @@ def menu(username, check_username, current_user, task_num_list, today):
 
         vm_btn = tk.Button(
             menu_frame,
-            text="View My Tasks",
+            text="View my tasks",
             bg="#333333",
             fg="#ffffff",
-            width=15,
-            font=("Arial", 10),
+            width=10,
+            font=("Arial", 11),
             command=lambda: view.view_tasks(
+                side_frame,
                 username,
                 vm_btn.cget("text"),
                 current_user,
@@ -194,8 +199,8 @@ def menu(username, check_username, current_user, task_num_list, today):
             text="Generate Report",
             bg="#333333",
             fg="#ffffff",
-            width=15,
-            font=("Arial", 10),
+            width=10,
+            font=("Arial", 11),
             command=lambda: fun.generate_report(check_username),
         )
 
@@ -204,8 +209,8 @@ def menu(username, check_username, current_user, task_num_list, today):
             text="Close",
             bg="#333333",
             fg="#ffffff",
-            width=15,
-            font=("Arial", 10),
+            width=10,
+            font=("Arial", 11),
             command=menu_win.destroy,
         )
 
@@ -217,10 +222,11 @@ def menu(username, check_username, current_user, task_num_list, today):
         va_btn.grid(row=4, column=0, pady=5, padx=10, sticky="ew")
         vm_btn.grid(row=5, column=0, pady=5, padx=10, sticky="ew")
 
-        close_btn.grid(row=9, column=0, pady=20, sticky="ew")
+        close_btn.grid(row=7, column=0, pady=20, padx=5, sticky="ew")
 
+    top_frame.pack(side="top", fill="both")
     menu_frame.pack(side="left", padx=10, pady=5, fill="both")
-    side_frame.pack(side="right", fill="both", padx=10, pady=5)
+    side_frame.pack(side="left", padx=10, pady=5, fill="both")
 
     menu_win.mainloop()
 
