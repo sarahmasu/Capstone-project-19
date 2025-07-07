@@ -97,7 +97,7 @@ def login_user(
 
     # if the username and the password is correct, proceed.
     if username in user and passwd == user[username]:
-        messagebox.showinfo(title="Success", message="Access granted!")
+        # messagebox.showinfo(title="Success", message="Access granted!")
 
         # Closes the Login window
         root.destroy()
