@@ -11,19 +11,25 @@ import menu_functions.functions as fun
 # ----View tasks Section----
 
 
-def view_tasks(frame, username, menu, current_user, task_num_list, check_username, today):
-    '''view_tasks_win = tk.Toplevel()
+def view_tasks(
+    frame, username, menu, current_user, task_num_list, check_username, today
+):
+    """view_tasks_win = tk.Toplevel()
     view_tasks_win.config(bg="#333333")
     view_tasks_win.resizable(True, True)
-    frame = tk.Frame(view_tasks_win, bg="#333333")'''
+    frame = tk.Frame(view_tasks_win, bg="#333333")"""
 
-    height = frame.winfo_screenheight()
-    width = frame.winfo_screenwidth()
+    height = frame.winfo_height()
+    width = frame.winfo_width()
 
-    #print(f"Screen width x height = {width} x {height}\n")
+    # print(f"Screen width x height = {width} x {height}\n")
 
     # Clear the frame first
     fun.clear_frame(frame)
+
+    title_lbl = tk.Label(
+        frame, text="View Tasks", bg="#333333", fg="#46a094", font=("Arial", 18)
+    )
 
     txt_bx = tk.Text(frame, width=48, height=25, wrap="word", font=("Arial", 11))
     # txt_bx.config(state=tk.DISABLED)  # Prevents users from editing the text box.
@@ -33,7 +39,7 @@ def view_tasks(frame, username, menu, current_user, task_num_list, check_usernam
 
     if menu == "View all tasks":
 
-        '''view_tasks_win.title("View All Tasks")'''
+        """view_tasks_win.title("View All Tasks")"""
 
         # ---- Widgets ----
         info_lbl = tk.Label(
@@ -41,18 +47,18 @@ def view_tasks(frame, username, menu, current_user, task_num_list, check_usernam
             text="List of all the tasks",
             bg="#333333",
             fg="#ffffff",
-            font=("Arial", 20),
+            font=("Arial", 15),
         )
 
         gen_report_btn = tk.Button(
-        frame,
-        text="Generate report",
-        width=15,
-        font=("Arial", 12),
-        bg="#46a094",
-        fg="#ffffff",
-        command= lambda: fun.generate_report(check_username, txt_bx)
-    )
+            frame,
+            text="Generate report",
+            width=15,
+            font=("Arial", 12),
+            bg="#46a094",
+            fg="#ffffff",
+            command=lambda: fun.generate_report(check_username, txt_bx),
+        )
 
         # ---- Read File ----
 
@@ -97,13 +103,14 @@ def view_tasks(frame, username, menu, current_user, task_num_list, check_usernam
             messagebox.showerror(title="Error", message="File not found!")
 
         # ---- Grid Layout ----
-        info_lbl.grid(row=0, column=0, columnspan=4, pady=10, sticky="ew")
+        title_lbl.grid(row=0, column=0, columnspan=4, pady=25, sticky="news")
+        info_lbl.grid(row=1, column=0, columnspan=4, pady=5, sticky="w")
 
-        txt_bx.grid(row=1, column=2, rowspan=8, columnspan=2, sticky="ew")
-        vert_scroll.grid(row=1, column=4, rowspan=8, sticky="ns")
-        horizon_scroll.grid(row=9, column=2, columnspan=2, sticky="ew")
-        
-        gen_report_btn.grid(row=10, column=2, columnspan=2, pady=10, sticky="we")
+        txt_bx.grid(row=2, column=2, rowspan=8, columnspan=2, sticky="ew")
+        vert_scroll.grid(row=2, column=4, rowspan=8, sticky="ns")
+        horizon_scroll.grid(row=10, column=2, columnspan=2, sticky="ew")
+
+        gen_report_btn.grid(row=11, column=2, columnspan=2, pady=10, sticky="we")
 
         # ---- Scrollbar ----
         txt_bx["yscrollcommand"] = vert_scroll.set
@@ -111,7 +118,7 @@ def view_tasks(frame, username, menu, current_user, task_num_list, check_usernam
 
     elif menu == "View my tasks":
 
-        '''view_tasks_win.title("My Tasks")'''
+        """view_tasks_win.title("My Tasks")"""
         current_user.clear()
         task_num_list.clear()
 
@@ -174,7 +181,7 @@ def view_tasks(frame, username, menu, current_user, task_num_list, check_usernam
             text=f"List of {username}'s tasks",
             bg="#333333",
             fg="#ffffff",
-            font=("Arial", 20),
+            font=("Arial", 15),
         )
 
         task_num_lbl = tk.Label(
@@ -305,8 +312,8 @@ def view_tasks(frame, username, menu, current_user, task_num_list, check_usernam
             width=15,
             font=("Arial", 12),
             bg="#46a094",
-            fg='#ffffff',
-            command=lambda:fun.clear(frame)
+            fg="#ffffff",
+            command=lambda: fun.clear(frame),
         )
 
         # ---- Bindings ----
@@ -322,7 +329,7 @@ def view_tasks(frame, username, menu, current_user, task_num_list, check_usernam
                 chg_status,
                 chg_due_date_cal,
                 txt_bx,
-                current_user
+                current_user,
             ),
         )
 
@@ -332,27 +339,28 @@ def view_tasks(frame, username, menu, current_user, task_num_list, check_usernam
 
         # ---- Grid layout ----
 
-        info_lbl.grid(row=0, column=0, columnspan=4, pady=10, sticky="ew")
+        title_lbl.grid(row=0, column=0, columnspan=4, pady=25, sticky="news")
+        info_lbl.grid(row=1, column=0, columnspan=4, pady=5, sticky="w")
 
-        task_num_lbl.grid(row=1, column=0, pady=5, padx=5, sticky="w")
-        chg_user_lbl.grid(row=2, column=0, pady=5, padx=5, sticky="w")
-        chg_title_lbl.grid(row=3, column=0, pady=5, padx=5, sticky="w")
-        chg_descript_lbl.grid(row=4, column=0, pady=5, padx=5, sticky="w")
-        chg_status_lbl.grid(row=5, column=0, pady=5, padx=5, sticky="w")
-        chg_due_date_lbl.grid(row=6, column=0, pady=5, padx=5, sticky="w")
+        task_num_lbl.grid(row=2, column=0, pady=5, padx=5, sticky="w")
+        chg_user_lbl.grid(row=3, column=0, pady=5, padx=5, sticky="w")
+        chg_title_lbl.grid(row=4, column=0, pady=5, padx=5, sticky="w")
+        chg_descript_lbl.grid(row=5, column=0, pady=5, padx=5, sticky="w")
+        chg_status_lbl.grid(row=6, column=0, pady=5, padx=5, sticky="w")
+        chg_due_date_lbl.grid(row=7, column=0, pady=5, padx=5, sticky="w")
 
-        chg_task_num_cmbo.grid(row=1, column=1, padx=5, pady=5, sticky="w")
-        chg_user_cmbo.grid(row=2, column=1, padx=5, pady=5, sticky="w")
-        chg_title.grid(row=3, column=1, pady=5, padx=5, sticky="w")
-        chg_descript.grid(row=4, column=1, pady=5, padx=5, sticky="w")
-        chg_status.grid(row=5, column=1, pady=5, padx=5, sticky="w")
-        chg_due_date_cal.grid(row=6, column=1, pady=5, padx=5, sticky="w")
+        chg_task_num_cmbo.grid(row=2, column=1, padx=5, pady=5, sticky="w")
+        chg_user_cmbo.grid(row=3, column=1, padx=5, pady=5, sticky="w")
+        chg_title.grid(row=4, column=1, pady=5, padx=5, sticky="w")
+        chg_descript.grid(row=5, column=1, pady=5, padx=5, sticky="w")
+        chg_status.grid(row=6, column=1, pady=5, padx=5, sticky="w")
+        chg_due_date_cal.grid(row=7, column=1, pady=5, padx=5, sticky="w")
 
-        txt_bx.grid(row=1, column=2, rowspan=8, columnspan=2, sticky="ew")
-        vert_scroll.grid(row=1, column=4, rowspan=6, sticky="ns")
-        horizon_scroll.grid(row=8, column=2, columnspan=2, sticky="ew")
+        txt_bx.grid(row=2, column=2, rowspan=8, columnspan=2, sticky="ew")
+        vert_scroll.grid(row=2, column=4, rowspan=6, sticky="ns")
+        horizon_scroll.grid(row=9, column=2, columnspan=2, sticky="ew")
 
-        update_btn.grid(row=9, column=2, pady=10, sticky="ew")
-        clear_btn.grid(row=9, column=3, pady=10, sticky="ew")
+        update_btn.grid(row=10, column=2, pady=10, sticky="ew")
+        clear_btn.grid(row=10, column=3, pady=10, sticky="ew")
 
     frame.pack()
