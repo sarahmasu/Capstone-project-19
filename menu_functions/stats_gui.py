@@ -22,10 +22,10 @@ def stats(frame, check_username):
 
     # ---- Widgets ----
     header_lbl = tk.Label(
-        frame, text="Statistics", bg="#333333", fg="#ffffff", font=("Arial", 25)
+        frame, text="Statistics", bg="#333333", fg="#ffffff", font=("Arial", 18)
     )
 
-    txt_bx = tk.Text(frame, width=48, height=25, wrap="word", font=("Arial", 9))
+    txt_bx = tk.Text(frame, width=48, height=25, wrap="word", font=("Arial", 11))
 
     vert_scroll = ttk.Scrollbar(frame, orient="vertical", command=txt_bx.yview)
     horizon_scroll = ttk.Scrollbar(frame, orient="horizontal", command=txt_bx.xview)
