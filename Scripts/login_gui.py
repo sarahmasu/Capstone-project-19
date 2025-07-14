@@ -1,7 +1,7 @@
 # ====Import Libraries====
 from tkinter import messagebox
-import menu_functions.main_menu_gui as main
-import menu_functions.functions as fun
+import Scripts.main_menu_gui as main
+import Scripts.functions as fun
 import tkinter as tk
 
 

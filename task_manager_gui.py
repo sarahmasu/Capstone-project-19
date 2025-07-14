@@ -1,7 +1,7 @@
 # ====Import Libraries====
 from datetime import date
-from menu_functions.functions import check_file
-from menu_functions.login_gui import login
+from Scripts.functions import check_file
+from Scripts.login_gui import login
 
 # ====Dictionaries & Lists====
 

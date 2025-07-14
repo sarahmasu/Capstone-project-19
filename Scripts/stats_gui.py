@@ -2,7 +2,7 @@
 import tkinter as tk
 from tkinter import ttk
 from tkcalendar import *
-import menu_functions.functions as fun
+import Scripts.functions as fun
 
 # =============GUI Section=============
 

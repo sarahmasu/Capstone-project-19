@@ -1,10 +1,10 @@
 # =============Libraries=============
 import tkinter as tk
-import menu_functions.register_gui as reg
-import menu_functions.add_tasks_gui as add
-import menu_functions.view_tasks_gui as view
-import menu_functions.stats_gui as stat
-import menu_functions.functions as fun
+import Scripts.register_gui as reg
+import Scripts.add_tasks_gui as add
+import Scripts.view_tasks_gui as view
+import Scripts.stats_gui as stat
+import Scripts.functions as fun
 
 # =============GUI Section=============
 

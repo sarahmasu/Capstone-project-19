@@ -4,7 +4,7 @@ from tkinter import ttk
 from tkinter import messagebox
 from tkcalendar import *
 import os.path
-import menu_functions.functions as fun
+import Scripts.functions as fun
 
 # =============GUI Section=============
 
