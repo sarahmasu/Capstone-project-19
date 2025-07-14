@@ -1,6 +1,6 @@
 # =============Libraries=============
 import tkinter as tk
-import menu_functions.functions as fun
+import Scripts.functions as fun
 
 # =============GUI Section=============
 
