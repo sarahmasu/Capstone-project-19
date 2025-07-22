@@ -161,5 +161,3 @@ def add_task(frame, check_username, today):
     # ++buttons++
     save_task_btn.grid(row=8, column=0, pady=5, sticky="e")
     clear_btn.grid(row=8, column=1, pady=5, sticky="w")
-
-    frame.pack()

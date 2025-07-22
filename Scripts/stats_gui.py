@@ -25,7 +25,7 @@ def stats(frame, check_username):
         frame, text="Statistics", bg="#333333", fg="#ffffff", font=("Arial", 18)
     )
 
-    txt_bx = tk.Text(frame, width=48, height=25, wrap="word", font=("Arial", 11))
+    txt_bx = tk.Text(frame, width=48, height=25, wrap="word", font=("Arial", 10))
 
     vert_scroll = ttk.Scrollbar(frame, orient="vertical", command=txt_bx.yview)
     horizon_scroll = ttk.Scrollbar(frame, orient="horizontal", command=txt_bx.xview)
@@ -55,5 +55,3 @@ def stats(frame, check_username):
     # ---- Scrollbar ----
     txt_bx["yscrollcommand"] = vert_scroll.set
     txt_bx["xscrollcommand"] = horizon_scroll.set
-
-    frame.pack()

@@ -356,11 +356,9 @@ def view_tasks(
         chg_status.grid(row=6, column=1, pady=5, padx=5, sticky="w")
         chg_due_date_cal.grid(row=7, column=1, pady=5, padx=5, sticky="w")
 
-        txt_bx.grid(row=2, column=2, rowspan=8, columnspan=2, sticky="ew")
+        txt_bx.grid(row=2, column=2, rowspan=8, columnspan=2, sticky="nw")
         vert_scroll.grid(row=2, column=4, rowspan=6, sticky="ns")
         horizon_scroll.grid(row=9, column=2, columnspan=2, sticky="ew")
 
         update_btn.grid(row=10, column=2, pady=10, sticky="ew")
         clear_btn.grid(row=10, column=3, pady=10, sticky="ew")
-
-    frame.pack()

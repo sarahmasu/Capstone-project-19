@@ -89,5 +89,3 @@ def register(frame):
 
     submit_btn.grid(row=5, column=0, pady=5, sticky="e")
     clear_btn.grid(row=5, column=1, pady=5, sticky="w")
-
-    frame.pack()
