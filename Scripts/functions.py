@@ -4,6 +4,17 @@ import tkinter as tk
 from tkinter import messagebox
 from tkcalendar import *
 import os.path
+import matplotlib
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
+
+# =============Dictionary=============
+# Dictionaries to store keys and their values
+tasks_comp_dict = {}
+tasks_incomp_dict = {}
+check_user_dict = {}
+user_dict = {}
+due_date_dict = {}
 
 # =============Function=============
 
@@ -420,20 +431,11 @@ def generate_report(check_username, txt_bx):
     task_list = []
     task_list.clear()
 
-    # Dictionaries to store keys and their values
-    tasks_comp_dict = {}
+    # Clears dictionaries before populating
     tasks_comp_dict.clear()
-
-    tasks_incomp_dict = {}
     tasks_incomp_dict.clear()
-
-    check_user_dict = {}
     check_user_dict.clear()
-
-    user_dict = {}
     user_dict.clear()
-
-    due_date_dict = {}
     due_date_dict.clear()
 
     # ---Read file---
@@ -650,6 +652,10 @@ def generate_report(check_username, txt_bx):
 
     display_stats(txt_bx)
 
+# ----Display Graph----
+def plot_graph(check_username):
+    pass
+
 
 # ----Display stats----
 
@@ -681,8 +687,18 @@ def display_stats(txt_bx):
             "The files do not exist, please generate the report to read them.",
         )
 
+
+# ----Scrollable Canvas----
+
+def on_configure(event, canvas):
+    canvas.configure(scrollregion=canvas.bbox("all"))
+
 # =====References=====
 '''
     - Clear widgets in frame:
     https://www.geeksforgeeks.org/python/how-to-clear-out-a-frame-in-the-tkinter/
+
+    - Makes the canvas scrollable:
+    https://stackoverflow.com/questions/40526496/vertical-scrollbar-for-frame-in-tkinter-python
+    
 '''
