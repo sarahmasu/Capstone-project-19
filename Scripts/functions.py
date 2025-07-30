@@ -8,14 +8,6 @@ import matplotlib
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
 
-# =============Dictionary=============
-# Dictionaries to store keys and their values
-tasks_comp_dict = {}
-tasks_incomp_dict = {}
-check_user_dict = {}
-user_dict = {}
-due_date_dict = {}
-
 # =============Function=============
 
 # ----Read_data Section----
@@ -431,11 +423,20 @@ def generate_report(check_username, txt_bx):
     task_list = []
     task_list.clear()
 
-    # Clears dictionaries before populating
+    # Dictionaries to store keys and their values
+    tasks_comp_dict = {}
     tasks_comp_dict.clear()
+
+    tasks_incomp_dict = {}
     tasks_incomp_dict.clear()
+
+    check_user_dict = {}
     check_user_dict.clear()
+
+    user_dict = {}
     user_dict.clear()
+
+    due_date_dict = {}
     due_date_dict.clear()
 
     # ---Read file---
@@ -691,7 +692,7 @@ def display_stats(txt_bx):
 # ----Scrollable Canvas----
 
 def on_configure(event, canvas):
-    canvas.configure(scrollregion=canvas.bbox("all"))
+    canvas.configure(scrollregion=canvas.bbox('all'))
 
 # =====References=====
 '''
