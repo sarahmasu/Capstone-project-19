@@ -4,6 +4,9 @@ import tkinter as tk
 from tkinter import messagebox
 from tkcalendar import *
 import os.path
+import matplotlib
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
 
 # =============Function=============
 
@@ -650,6 +653,10 @@ def generate_report(check_username, txt_bx):
 
     display_stats(txt_bx)
 
+# ----Display Graph----
+def plot_graph(check_username):
+    pass
+
 
 # ----Display stats----
 
@@ -681,8 +688,18 @@ def display_stats(txt_bx):
             "The files do not exist, please generate the report to read them.",
         )
 
+
+# ----Scrollable Canvas----
+
+def on_configure(event, canvas):
+    canvas.configure(scrollregion=canvas.bbox('all'))
+
 # =====References=====
 '''
     - Clear widgets in frame:
     https://www.geeksforgeeks.org/python/how-to-clear-out-a-frame-in-the-tkinter/
+
+    - Makes the canvas scrollable:
+    https://stackoverflow.com/questions/40526496/vertical-scrollbar-for-frame-in-tkinter-python
+    
 '''

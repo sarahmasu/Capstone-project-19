@@ -1,5 +1,6 @@
 # =============Libraries=============
 import tkinter as tk
+from tkinter import ttk
 import Scripts.register_gui as reg
 import Scripts.add_tasks_gui as add
 import Scripts.view_tasks_gui as view
@@ -15,18 +16,19 @@ def menu(username, check_username, current_user, task_num_list, today):
 
     menu_win = tk.Tk()
     menu_win.title("Task Manager")
-    menu_win.minsize(357, 400)
+    menu_win.geometry('900x600') #wxh
     menu_win.configure(bg="#333333")
+    menu_win.resizable(0,0)
 
     height = menu_win.winfo_height()
     width = menu_win.winfo_width()
 
     # print(f"Screen width x height = {width} x {height}\n")
-    # ----Frames-----
-    top_frame = tk.Frame(menu_win, bg="#333333")
-    bottom_frame = tk.Frame(menu_win, bg="#333333")
-    menu_frame = tk.Frame(top_frame, bg="#333333", width=250, height=400)
-    side_frame = tk.Frame(top_frame, bg="#333333")
+
+    # ----Frames/Canvas-----
+    main_frame = tk.Frame(menu_win, bg="#333333")
+    menu_frame = tk.Frame(main_frame, bg="#333333", width=150, height=800)
+    side_frame = tk.Frame(main_frame, bg="#333333", width=650, height=800)
 
     title_lbl = tk.Label(
         menu_frame,
@@ -110,7 +112,7 @@ def menu(username, check_username, current_user, task_num_list, today):
             fg="#ffffff",
             width=10,
             font=("Arial", 11),
-            command=lambda: stat.stats(side_frame, check_username),
+            command=lambda: stat.stats(side_frame),
         )
 
         clear_frame_btn = tk.Button(
@@ -143,7 +145,7 @@ def menu(username, check_username, current_user, task_num_list, today):
         vm_btn.grid(row=5, column=0, pady=5, padx=5, sticky="ew")
         stats_btn.grid(row=6, column=0, pady=5, padx=5, sticky="ew")
 
-        close_btn.grid(row=7, column=0,pady=20, padx=5, sticky="ew")
+        close_btn.grid(row=7, column=0, pady=20, padx=5, sticky="ew")
 
     # Options for other users
     else:
@@ -224,12 +226,27 @@ def menu(username, check_username, current_user, task_num_list, today):
 
         close_btn.grid(row=7, column=0, pady=20, padx=5, sticky="ew")
 
-    top_frame.pack(side="top", fill="both")
+    # ----Frame/Canvas placement----
+    # +++Pack+++
+    """ 
+    main_frame.pack(side="top", fill="both")
     menu_frame.pack(side="left", padx=10, pady=5, fill="both")
     side_frame.pack(side="left", padx=10, pady=5, fill="both")
+    widget_frame.pack(side="left", fill='both' ) 
+    """
+
+    # +++Grid+++
+    # Outer frame
+    main_frame.grid(row=0, column=0,padx=10, sticky='news')
+
+    # Inner frame
+    menu_frame.grid(row=0, column=0, padx=15, sticky="nw")
+    side_frame.grid(row=0, column=1, padx=15, sticky="new")
+    #side_frame.configure(width=600)
 
     menu_win.mainloop()
 
+    
 
 # ====References====
 """

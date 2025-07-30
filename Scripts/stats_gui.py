@@ -9,7 +9,7 @@ import Scripts.functions as fun
 # ----Statistics Section----
 
 
-def stats(frame, check_username):
+def stats(frame):
 
     '''stats_win = tk.Toplevel()
     stats_win.title("Statistics")
@@ -19,6 +19,22 @@ def stats(frame, check_username):
 
     # Clear the frame first
     fun.clear_frame(frame)
+
+    '''canvas = tk.Canvas(frame, bg="#333333", height=550, width=500)
+    widget_frame = tk.Frame(canvas, bg="#333333")
+
+    # ----Scrollbar----
+    vert_scrollbar = ttk.Scrollbar(frame, orient=tk.VERTICAL, command=canvas.yview)
+    hori_scrollbar = ttk.Scrollbar(frame, orient=tk.HORIZONTAL, command=canvas.xview)
+
+    # +++Bindings/Configure canvas+++
+    canvas.bind("<Configure>", lambda event: canvas.configure(scrollregion=canvas.bbox('all')))
+
+    canvas.configure(yscrollcommand=vert_scrollbar.set)
+    canvas.configure(xscrollcommand=hori_scrollbar.set)
+
+    # +++Create canvas+++
+    canvas.create_window((0, 0), window=widget_frame, anchor="nw")'''
 
     # ---- Widgets ----
     header_lbl = tk.Label(
@@ -30,15 +46,15 @@ def stats(frame, check_username):
     vert_scroll = ttk.Scrollbar(frame, orient="vertical", command=txt_bx.yview)
     horizon_scroll = ttk.Scrollbar(frame, orient="horizontal", command=txt_bx.xview)
 
-    gen_report_btn = tk.Button(
-        frame,
+    '''gen_report_btn = tk.Button(
+        widget_frame,
         text="Generate report",
         width=15,
         font=("Arial", 12),
         bg="#46a094",
         fg="#ffffff",
         command= lambda: fun.generate_report(check_username, txt_bx)
-    )
+    )'''
 
     # ----- Populate Textbox ----
     
@@ -46,14 +62,23 @@ def stats(frame, check_username):
     txt_bx.config(state=tk.DISABLED)
 
     # ---- Grid ----
-    header_lbl.grid(row=0, column=0, columnspan=4, pady=10, sticky="ew")
+    header_lbl.grid(row=0, column=0, columnspan=4, pady=30, sticky="news")
 
-    txt_bx.grid(row=1, column=2, rowspan=8, columnspan=2, sticky="ew")
+    txt_bx.grid(row=1, column=2, rowspan=8, columnspan=2, sticky="nw")
     vert_scroll.grid(row=1, column=4, rowspan=8, sticky="ns")
-    horizon_scroll.grid(row=9, column=2, columnspan=2, sticky="ew")
+    #horizon_scroll.grid(row=9, column=2, columnspan=2, sticky="ew")
 
     # ---- Scrollbar ----
     txt_bx["yscrollcommand"] = vert_scroll.set
     txt_bx["xscrollcommand"] = horizon_scroll.set
 
-    frame.pack()
+    # ---- Pack Layout ----
+    #canvas.pack(side='left', fill='both', expand=True)
+    #canvas.configure(height=450, width=400)
+    #vert_scrollbar.pack(side='left', fill='y')
+    # hori_scrollbar.pack(side='bottom', fill='x')
+
+    # ---- Canvas Layout ----
+    '''canvas.grid(row=0, column=0, sticky="ew")
+    vert_scrollbar.grid(row=0, column=1, sticky='ns')
+    hori_scrollbar.grid(row=1, column=0, sticky='ew')'''
