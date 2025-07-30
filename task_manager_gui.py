@@ -80,4 +80,7 @@ if __name__ == "__main__":
 
     Fixed the issue with import functions from the same folder:
     - https://stackoverflow.com/questions/43865291/import-function-from-a-file-in-the-same-folder
+
+    Added canvas to act as a scrollable frame for bigger guis:
+    https://stackoverflow.com/questions/40526496/vertical-scrollbar-for-frame-in-tkinter-python
 """
