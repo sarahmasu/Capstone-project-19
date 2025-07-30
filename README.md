@@ -59,8 +59,8 @@ There are two functions exclusive to the admin, which are:
 - Register user
 
 <p align="center">
-    <img src="/Images/Main_menu_admin.PNG" alt="Screenshot of Menu window for admin" height = "400" width="350">
-    <img src="/Images/Main_menu_users.PNG" alt="Screenshot of Menu window for users" height="400" width="350">
+    <img src="/Images/Main_menu_admin.PNG" alt="Screenshot of Menu window for admin" height = "450" width="400">
+    <img src="/Images/Main_menu_users.PNG" alt="Screenshot of Menu window for users" height="450" width="400">
 </p>
 <p align="center">
     <em>Main menu windows for admin (left) and other users (right).</em>
