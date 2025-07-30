@@ -27,15 +27,31 @@ def view_tasks(
     # Clear the frame first
     fun.clear_frame(frame)
 
+    canvas = tk.Canvas(frame, bg="#333333", height=575, width=515, borderwidth=0, highlightthickness=0)
+    widget_frame = tk.Frame(canvas, bg="#333333")
+
+    # ----Scrollbar----
+    vert_scrollbar = ttk.Scrollbar(frame, orient=tk.VERTICAL, command=canvas.yview)
+    hori_scrollbar = ttk.Scrollbar(frame, orient=tk.HORIZONTAL, command=canvas.xview)
+
+    # +++Bindings/Configure canvas+++
+    canvas.bind("<Configure>", lambda event: canvas.configure(scrollregion=canvas.bbox('all')))
+
+    canvas.configure(yscrollcommand=vert_scrollbar.set)
+    canvas.configure(xscrollcommand=hori_scrollbar.set)
+
+    # +++Create canvas+++
+    canvas.create_window((0, 0), window=widget_frame, anchor="nw")
+
     title_lbl = tk.Label(
-        frame, text="View Tasks", bg="#333333", fg="#46a094", font=("Arial", 18)
+        widget_frame, text="View Tasks", bg="#333333", fg="#46a094", font=("Arial", 18)
     )
 
-    txt_bx = tk.Text(frame, width=48, height=25, wrap="word", font=("Arial", 11))
+    txt_bx = tk.Text(widget_frame, width=48, height=24, wrap="word", font=("Arial", 11))
     # txt_bx.config(state=tk.DISABLED)  # Prevents users from editing the text box.
 
-    vert_scroll = ttk.Scrollbar(frame, orient="vertical", command=txt_bx.yview)
-    horizon_scroll = ttk.Scrollbar(frame, orient="horizontal", command=txt_bx.xview)
+    vert_scroll = ttk.Scrollbar(widget_frame, orient="vertical", command=txt_bx.yview) 
+    horizon_scroll = ttk.Scrollbar(widget_frame, orient="horizontal", command=txt_bx.xview)
 
     if menu == "View all tasks":
 
@@ -43,7 +59,7 @@ def view_tasks(
 
         # ---- Widgets ----
         info_lbl = tk.Label(
-            frame,
+            widget_frame,
             text="List of all the tasks",
             bg="#333333",
             fg="#ffffff",
@@ -51,7 +67,7 @@ def view_tasks(
         )
 
         gen_report_btn = tk.Button(
-            frame,
+            widget_frame,
             text="Generate report",
             width=15,
             font=("Arial", 12),
@@ -103,14 +119,17 @@ def view_tasks(
             messagebox.showerror(title="Error", message="File not found!")
 
         # ---- Grid Layout ----
-        title_lbl.grid(row=0, column=0, columnspan=4, pady=25, sticky="news")
+        title_lbl.grid(row=0, column=0, columnspan=4, pady=20, sticky="news")
         info_lbl.grid(row=1, column=0, columnspan=4, pady=5, sticky="w")
 
-        txt_bx.grid(row=2, column=2, rowspan=8, columnspan=2, sticky="ew")
-        vert_scroll.grid(row=2, column=4, rowspan=8, sticky="ns")
-        horizon_scroll.grid(row=10, column=2, columnspan=2, sticky="ew")
+        txt_bx.grid(row=2, column=2, columnspan=2, sticky="new")
+        vert_scroll.grid(row=2, column=4, sticky="ns")
+        #horizon_scroll.grid(row=5, column=2, columnspan=2, sticky="ew")
 
-        gen_report_btn.grid(row=11, column=2, columnspan=2, pady=10, sticky="we")
+        gen_report_btn.grid(row=6, column=2, columnspan=2, pady=10, sticky="we")
+
+        # ---- Canvas Layout ----
+        canvas.grid(row=0, column=0, sticky="nw")
 
         # ---- Scrollbar ----
         txt_bx["yscrollcommand"] = vert_scroll.set
@@ -177,7 +196,7 @@ def view_tasks(
         # ---- Widgets ----
         #    ++Labels++
         info_lbl = tk.Label(
-            frame,
+            widget_frame,
             text=f"List of {username}'s tasks",
             bg="#333333",
             fg="#ffffff",
@@ -185,7 +204,7 @@ def view_tasks(
         )
 
         task_num_lbl = tk.Label(
-            frame,
+            widget_frame,
             text="Select task number:",
             bg="#333333",
             fg="#ffffff",
@@ -193,7 +212,7 @@ def view_tasks(
         )
 
         chg_title_lbl = tk.Label(
-            frame,
+            widget_frame,
             text="Change task title:",
             bg="#333333",
             fg="#ffffff",
@@ -201,7 +220,7 @@ def view_tasks(
         )
 
         chg_status_lbl = tk.Label(
-            frame,
+            widget_frame,
             text="Change task status:",
             bg="#333333",
             fg="#ffffff",
@@ -209,7 +228,7 @@ def view_tasks(
         )
 
         chg_user_lbl = tk.Label(
-            frame,
+            widget_frame,
             text="Change assigned user:",
             bg="#333333",
             fg="#ffffff",
@@ -217,7 +236,7 @@ def view_tasks(
         )
 
         chg_due_date_lbl = tk.Label(
-            frame,
+            widget_frame,
             text="Change due date:",
             bg="#333333",
             fg="#ffffff",
@@ -225,7 +244,7 @@ def view_tasks(
         )
 
         chg_descript_lbl = tk.Label(
-            frame,
+            widget_frame,
             text="Change task description:",
             bg="#333333",
             fg="#ffffff",
@@ -233,15 +252,15 @@ def view_tasks(
         )
 
         #   ++Text and entry++
-        chg_status = tk.Entry(frame, width=27, font=("Arial", 12))
+        chg_status = tk.Entry(widget_frame, width=27, font=("Arial", 12))
         chg_descript = tk.Text(
-            frame, width=27, height=3, font=("Arial", 12), wrap=tk.WORD
+            widget_frame, width=27, height=3, font=("Arial", 12), wrap=tk.WORD
         )
-        chg_title = tk.Text(frame, width=27, height=2, font=("Arial", 12), wrap=tk.WORD)
+        chg_title = tk.Text(widget_frame, width=27, height=2, font=("Arial", 12), wrap=tk.WORD)
 
         #     ++Calendar++
         chg_due_date_cal = Calendar(
-            frame,
+            widget_frame,
             selectmode="day",
             year=today.year,
             month=today.month,
@@ -260,7 +279,7 @@ def view_tasks(
         select_user = tk.StringVar()
         #  Tasks
         chg_task_num_cmbo = ttk.Combobox(
-            frame,
+            widget_frame,
             width=25,
             textvariable=select_task,
             font=("Arial", 12),
@@ -275,7 +294,7 @@ def view_tasks(
 
         # Users
         chg_user_cmbo = ttk.Combobox(
-            frame,
+            widget_frame,
             width=25,
             textvariable=select_user,
             font=("Arial", 12),
@@ -287,7 +306,7 @@ def view_tasks(
 
         # ++Buttons++
         update_btn = tk.Button(
-            frame,
+            widget_frame,
             text="Update",
             width=15,
             font=("Arial", 12),
@@ -307,7 +326,7 @@ def view_tasks(
         )
 
         clear_btn = tk.Button(
-            frame,
+            widget_frame,
             text="Clear",
             width=15,
             font=("Arial", 12),
@@ -321,7 +340,7 @@ def view_tasks(
             "<<ComboboxSelected>>",
             lambda event: fun.search_list_event(
                 event,
-                frame,
+                widget_frame,
                 chg_task_num_cmbo,
                 chg_title,
                 chg_user_cmbo,
@@ -340,7 +359,7 @@ def view_tasks(
         # ---- Grid layout ----
 
         title_lbl.grid(row=0, column=0, columnspan=4, pady=25, sticky="news")
-        info_lbl.grid(row=1, column=0, columnspan=4, pady=5, sticky="w")
+        info_lbl.grid(row=1, column=0, columnspan=4, pady=3, sticky="w")
 
         task_num_lbl.grid(row=2, column=0, pady=5, padx=5, sticky="w")
         chg_user_lbl.grid(row=3, column=0, pady=5, padx=5, sticky="w")
@@ -358,7 +377,18 @@ def view_tasks(
 
         txt_bx.grid(row=2, column=2, rowspan=8, columnspan=2, sticky="nw")
         vert_scroll.grid(row=2, column=4, rowspan=6, sticky="ns")
-        horizon_scroll.grid(row=9, column=2, columnspan=2, sticky="ew")
+        #horizon_scroll.grid(row=9, column=2, columnspan=2, sticky="ew")
 
         update_btn.grid(row=10, column=2, pady=10, sticky="ew")
         clear_btn.grid(row=10, column=3, pady=10, sticky="ew")
+
+        # ---- Pack Layout ----
+        '''canvas.pack(side='left',fill='both', expand=True)
+        canvas.configure(height=450, width=750)
+        vert_scrollbar.pack(side='right', fill='y')
+        hori_scrollbar.pack(side='bottom', fill='both')'''
+
+        # ---- Canvas Layout ----
+        canvas.grid(row=0, column=0, sticky="nw")
+        #vert_scrollbar.grid(row=0, column=1, sticky='ns')
+        hori_scrollbar.grid(row=1, column=0, sticky='ew')
