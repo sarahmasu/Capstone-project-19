@@ -38,14 +38,14 @@ def register(frame):
         frame, text="Password: ", bg="#333333", fg="#ffffff", font=("Arial", 12)
     )
 
-    new_user = tk.Entry(frame, width=20, font=("Arial", 12))
-    new_passwd = tk.Entry(frame, width=20, show="*", font=("Arial", 12))
+    new_user = tk.Entry(frame, width=25, font=("Arial", 12))
+    new_passwd = tk.Entry(frame, width=25, show="*", font=("Arial", 12))
 
     # Request the user to re-enter the password
     confirm_lbl = tk.Label(
         frame, text="Confirm password: ", bg="#333333", fg="#ffffff", font=("Arial", 12)
     )
-    confirm_new_passwd = tk.Entry(frame, show="*", width=20, font=("Arial", 12))
+    confirm_new_passwd = tk.Entry(frame, show="*", width=25, font=("Arial", 12))
 
     # Submits user to user.txt file
     submit_btn = tk.Button(
@@ -74,18 +74,19 @@ def register(frame):
     )
 
     # ----Grids----
-    title_lbl.grid(row=0, column=0, columnspan=2, pady=25, sticky="news")
+    # +++Label widgets+++
+    title_lbl.grid(row=0, column=0, columnspan=4, pady=25, sticky="news")
+    reg_label.grid(row=1, column=0, columnspan=4, pady=5, sticky="w")
 
-    reg_label.grid(row=1, column=0, columnspan=2, pady=5, sticky="w")
+    user_lbl.grid(row=2, column=0, pady=5, padx=5, sticky="w")
+    passwd_lbl.grid(row=3, column=0, pady=5, padx=5, sticky="w")
+    confirm_lbl.grid(row=4, column=0, pady=5, padx=5, sticky="w")
 
-    user_lbl.grid(row=2, column=0, pady=5, sticky="w")
-    new_user.grid(row=2, column=1, padx=5, pady=5, sticky="w")
+    # +++Entry widgets+++
+    new_user.grid(row=2, column=1, padx=5, pady=5, columnspan=2, sticky="w")
+    new_passwd.grid(row=3, column=1, padx=5, pady=5, columnspan=2, sticky="w")
+    confirm_new_passwd.grid(row=4, column=1, padx=5, pady=5, columnspan=2, sticky="w")
 
-    passwd_lbl.grid(row=3, column=0, pady=5, sticky="w")
-    new_passwd.grid(row=3, column=1, padx=5, pady=5, sticky="w")
-
-    confirm_lbl.grid(row=4, column=0, pady=5, sticky="w")
-    confirm_new_passwd.grid(row=4, column=1, padx=5, pady=5, sticky="w")
-
-    submit_btn.grid(row=5, column=0, pady=5, sticky="e")
-    clear_btn.grid(row=5, column=1, pady=5, sticky="w")
+    # +++Button widgets+++
+    submit_btn.grid(row=5, column=1, pady=5, sticky="ew")
+    clear_btn.grid(row=5, column=2, pady=5, sticky="ew")
