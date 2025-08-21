@@ -4,9 +4,11 @@ import tkinter as tk
 from tkinter import messagebox
 from tkcalendar import *
 import os.path
-import matplotlib
-from matplotlib.figure import Figure
-from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
+import matplotlib.pyplot as plt
+import numpy as np
+
+"""from matplotlib.figure import Figure
+from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)"""
 
 # =============Function=============
 
@@ -454,7 +456,7 @@ def generate_report(check_username, txt_bx):
             due_date = split_lines[4]
             complete_task = split_lines[5]
 
-            # Count the number of complete an incomplete tasks
+            # Count the number of complete and incomplete tasks
             total_complete_task += complete_task.count("Yes")
             total_incomplete_task += complete_task.count("No")
 
@@ -465,9 +467,10 @@ def generate_report(check_username, txt_bx):
             if task_due < today:
                 total_overdue_incomplete_task += complete_task.count("No")
 
-            # Use the check_list to add the users assigned to a task,
+            # Use the check_list to add the users from tasks.txt file,
             # then append the non-duplicates to the dup_list.
             check_list.append(assigned_user)
+
             [
                 dup_list.append(assigned_user)
                 for assigned_user in check_list
@@ -476,14 +479,13 @@ def generate_report(check_username, txt_bx):
 
             task_list.append(assigned_user + ", " + complete_task)
 
-            # Count all the complete tasks and incomplete tasks
-            # assigned to the users.
+            # Counts users that complete and have not completed their tasks.
             if "Yes" in complete_task:
                 count_complete_users += 1
             else:
                 count_incomplete_users += 1
 
-            # Count all incomplete and overdue tasks assigned to users
+            # Counts all incomplete and overdue tasks assigned to users
             if task_due < today and "No" in complete_task:
                 count_overdue_user += 1
                 overdue_list.append(assigned_user + ", " + complete_task)
@@ -531,6 +533,7 @@ def generate_report(check_username, txt_bx):
             except:
                 tasks_incomp_dict[assigned_user] = int(complete_task)
 
+        # Add overdue tasks to overdue list
         for key in overdue_list:
             try:
                 key = key.strip().split(", ")
@@ -610,7 +613,7 @@ def generate_report(check_username, txt_bx):
 
     with open("user_overview.txt", "w", encoding="utf-8") as write_user:
         write_user.writelines(
-            "User Overview report\n"
+            "\nUser Overview report\n"
             "_______________________________________________\n"
             f"Total users: {total_users}\n"
             f"Total assigned: {total_assigned_users}\n"
@@ -653,9 +656,52 @@ def generate_report(check_username, txt_bx):
 
     display_stats(txt_bx)
 
+
 # ----Display Graph----
 def plot_graph(check_username):
-    pass
+    # Lists
+    task_list = []
+    task_list.clear()
+
+    user_list = []
+    user_list.clear()
+
+    duplicate_list = []
+    duplicate_list.clear()
+
+    # Dictionary
+    user_dict = {}
+    user_dict.clear()
+
+    with open("tasks.txt", "r", encoding="utf-8") as read_tasks:
+        read_lines = read_tasks.readlines()
+
+        for lines in read_lines:
+            line = lines.strip().split(", ")
+
+            users = line[0]
+            due_date = line[4]
+            task_status = [5]
+
+            user_list.append(users)
+
+            [duplicate_list.append(users) for users in user_list if users not in duplicate_list]
+
+    # Counts how many tasks was assigned per user
+    user_dict = {x: user_list.count(x) for x in check_username}
+
+    total_tasks_list = list(user_dict.values())
+
+    users = np.array(check_username)  # x value: usernames
+    total_task = np.array(total_tasks_list)  # y value: total assigned tasks
+
+    # Plots bar charts
+    plt.title("Tasks assigned to users")
+    plt.xlabel("Users")
+    plt.ylabel("Tasks")
+    plt.bar(users, total_task, label="Total assigned tasks")
+    plt.legend(loc="best")
+    plt.show()
 
 
 # ----Display stats----
@@ -691,15 +737,17 @@ def display_stats(txt_bx):
 
 # ----Scrollable Canvas----
 
+
 def on_configure(event, canvas):
-    canvas.configure(scrollregion=canvas.bbox('all'))
+    canvas.configure(scrollregion=canvas.bbox("all"))
+
 
 # =====References=====
-'''
+"""
     - Clear widgets in frame:
     https://www.geeksforgeeks.org/python/how-to-clear-out-a-frame-in-the-tkinter/
 
     - Makes the canvas scrollable:
     https://stackoverflow.com/questions/40526496/vertical-scrollbar-for-frame-in-tkinter-python
     
-'''
+"""
