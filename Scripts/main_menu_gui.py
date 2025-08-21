@@ -112,7 +112,7 @@ def menu(username, check_username, current_user, task_num_list, today):
             fg="#ffffff",
             width=10,
             font=("Arial", 11),
-            command=lambda: stat.stats(side_frame),
+            command=lambda: stat.stats(side_frame, check_username),
         )
 
         clear_frame_btn = tk.Button(
