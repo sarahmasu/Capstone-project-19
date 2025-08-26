@@ -13,13 +13,13 @@
 
    2.3. [Viewing Tasks](#view_tasks)
 
-      - [View All Tasks](#view_all)
+   - [View All Tasks](#view_all)
 
-      - [View My Tasks](#view_mine)
+   - [View My Tasks](#view_mine)
 
    2.4. [Statistics](#view_stats)
 
-4. [References](#references)
+3. [References](#references)
 
 ## 1. Introduction <a name="introduction"></a>
 
@@ -93,6 +93,7 @@ When you choose to add a task, the program will open the tasks.txt file, then pr
 There are two options when it comes to viewing tasks: view all assigned tasks and tasked assigned to tasks assigned to the current user.
 
 #### View all tasks <a name="view_all"></a>
+
 <p align="center">
     <img src="/Images/View_all_tasks_menu.PNG" alt="Screenshot of View all tasks window" height="550">
 </p>
@@ -102,6 +103,7 @@ There are two options when it comes to viewing tasks: view all assigned tasks an
 View All Task window displays, as the name states, all tasks.
 
 #### View my tasks<a name="view_mine"></a>
+
 <p align="center">
    <img src="/Images/View_my_tasks_window_updated.PNG" alt="Screenshot of View my tasks window" height="550">
 </p>
@@ -110,15 +112,16 @@ View All Task window displays, as the name states, all tasks.
 </p>
 
 View My Tasks displays tasks of the current user. On this window, the user can search for their task by selecting the task number using the combobox. Once they a task number has been chosen, the program retrieves the task and displays it on the text widget on the left and the right, and selects the user from the list in the combobox, inserts the task title, task description, and task completion status on the entry and text widgets, and selects that tasks due date on the calendar widget. If the user wishes to update the task, they can change:
-* The task's assigned user uses the combobox.
-* The task's title and completion status are available using the entry widget.
-* The task's description, using a text widget.
-* The task's due date by selecting a new date on the calendar widget.
-When the user is done updating the task, they just need to click on the 'Update' button to update to task. The task is updated, and the text widget refreshes to reflect the changes.
+
+- The task's assigned user uses the combobox.
+- The task's title and completion status are available using the entry widget.
+- The task's description, using a text widget.
+- The task's due date by selecting a new date on the calendar widget.
+  When the user is done updating the task, they just need to click on the 'Update' button to update to task. The task is updated, and the text widget refreshes to reflect the changes.
 
 ### 2.4. Statistics <a name="view_stats"></a>
 
-This function is available only to admins. It reads all the information in both tasks.txt and user.txt files. The function counts the total number of users and tasks from both text files and outputs the results.
+This function is available only to admins. The program reads and displays both task_overview and user_overview text files to a text box. The button plots a bar charts, the chart displays the number of incomplete an complete tasks assigned to each user.
 
 <p align="center">
     <img src="/Images/Statistics_menu.PNG" alt="Screenshot of Statistics window">
@@ -129,5 +132,5 @@ This function is available only to admins. It reads all the information in both 
 
 ## 3. References <a name="references"></a>
 
-* HyperionDev - Software Engineering Bootcamp: Level 1 Capstone Project 19
-* [Adding captions to images](https://stackoverflow.com/questions/19331362/using-an-image-caption-in-markdown-jekyll)
+- HyperionDev - Software Engineering Bootcamp: Level 1 Capstone Project 19
+- [Adding captions to images](https://stackoverflow.com/questions/19331362/using-an-image-caption-in-markdown-jekyll)
