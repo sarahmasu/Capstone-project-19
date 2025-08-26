@@ -7,9 +7,6 @@ import os.path
 import matplotlib.pyplot as plt
 import numpy as np
 
-"""from matplotlib.figure import Figure
-from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)"""
-
 # =============Function=============
 
 # ----Read_data Section----
@@ -92,6 +89,23 @@ def read_my_tasks(username, txt_bx, current_user):
                 )
 
 
+def update_user_list(check_username):
+    check_username.clear()
+    try:
+        # Open the user.txt file and read the lines
+        with open("user.txt", "r", encoding="utf-8") as file:
+            lines = file.readlines()
+
+            # Traverse through the file'
+            for line in lines:
+                # Strip the string of the newline character \n
+                # Split the string by the comma and the space ","
+                split_lines = line.strip().split(", ")
+                check_username.append(split_lines[0])
+
+    except FileNotFoundError as error:
+        print(f"An error occurred: {error}")
+
 # ----Submit Tasks----
 
 
@@ -122,11 +136,16 @@ def submit_tasks(
 # ----Submit User----
 
 
-def submit_user(user, new_user, new_passwd, confirm_new_passwd):
+def submit_user(check_username, new_user, new_passwd, confirm_new_passwd):
+
+    update_user_list(check_username)
+
     try:
+
+
         with open("user.txt", "a") as add_line:
 
-            if new_user in user:
+            if new_user in check_username:
                 messagebox.showwarning(
                     "Warning",
                     f"The username '{new_user}', already exists! Please enter a new user name.",
@@ -441,6 +460,8 @@ def generate_report(check_username, txt_bx):
     due_date_dict = {}
     due_date_dict.clear()
 
+    update_user_list(check_username)
+
     # ---Read file---
 
     with open("tasks.txt", "r", encoding="utf-8") as read_all_tasks:
@@ -490,111 +511,111 @@ def generate_report(check_username, txt_bx):
                 count_overdue_user += 1
                 overdue_list.append(assigned_user + ", " + complete_task)
 
-        # Stores the default values for the users
-        for i in check_username:
-            check_user_dict[i] = 0
+    # Stores the default values for the users
+    for i in check_username:
+        check_user_dict[i] = 0
 
-        # Struggled to count the number of users.
-        # Increment values of a dictionary at certain keys:
-        # Reference: https://stackoverflow.com/questions/10654499/removing-duplicate-keys-from-python-dictionary-but-summing-the-values
+    # Struggled to count the number of users.
+    # Increment values of a dictionary at certain keys:
+    # Reference: https://stackoverflow.com/questions/10654499/removing-duplicate-keys-from-python-dictionary-but-summing-the-values
 
-        user_dict = {x: check_list.count(x) for x in check_username}
+    user_dict = {x: check_list.count(x) for x in check_username}
 
-        # Calculate the percentages of assigned tasks to each user
-        for key, val in user_dict.items():
-            user_dict[key] = round(val / total_users * 100, 2)
+    # Calculate the percentages of assigned tasks to each user
+    for key, val in user_dict.items():
+        user_dict[key] = round(val / total_users * 100, 2)
 
-        comp_task_list = [sub.replace("Yes", "1") for sub in task_list]
-        comp_task_list = [sub.replace("No", "0") for sub in comp_task_list]
+    comp_task_list = [sub.replace("Yes", "1") for sub in task_list]
+    comp_task_list = [sub.replace("No", "0") for sub in comp_task_list]
 
-        incomp_task_list = [sub.replace("No", "1") for sub in task_list]
-        incomp_task_list = [sub.replace("Yes", "0") for sub in incomp_task_list]
+    incomp_task_list = [sub.replace("No", "1") for sub in task_list]
+    incomp_task_list = [sub.replace("Yes", "0") for sub in incomp_task_list]
 
-        overdue_list = [sub.replace("No", "1") for sub in overdue_list]
+    overdue_list = [sub.replace("No", "1") for sub in overdue_list]
 
-        # Add complete tasks to task_comp_dict
-        for key in comp_task_list:
-            try:
-                key = key.strip().split(", ")
-                assigned_user = key[0]
-                complete_task = key[1]
-                tasks_comp_dict[assigned_user] += int(complete_task)
-            except:
-                tasks_comp_dict[assigned_user] = int(complete_task)
+    # Add complete tasks to task_comp_dict
+    for key in comp_task_list:
+        try:
+            key = key.strip().split(", ")
+            assigned_user = key[0]
+            complete_task = key[1]
+            tasks_comp_dict[assigned_user] += int(complete_task)
+        except:
+            tasks_comp_dict[assigned_user] = int(complete_task)
 
-        # Add incomplete tasks to task_incomp_dict
-        for key in incomp_task_list:
-            try:
-                key = key.strip().split(", ")
-                assigned_user = key[0]
-                complete_task = key[1]
+    # Add incomplete tasks to task_incomp_dict
+    for key in incomp_task_list:
+        try:
+            key = key.strip().split(", ")
+            assigned_user = key[0]
+            complete_task = key[1]
 
-                tasks_incomp_dict[assigned_user] += int(complete_task)
-            except:
-                tasks_incomp_dict[assigned_user] = int(complete_task)
+            tasks_incomp_dict[assigned_user] += int(complete_task)
+        except:
+            tasks_incomp_dict[assigned_user] = int(complete_task)
 
-        # Add overdue tasks to overdue list
-        for key in overdue_list:
-            try:
-                key = key.strip().split(", ")
-                assigned_user = key[0]
-                complete_task = key[1]
+    # Add overdue tasks to overdue list
+    for key in overdue_list:
+        try:
+            key = key.strip().split(", ")
+            assigned_user = key[0]
+            complete_task = key[1]
 
-                due_date_dict[assigned_user] += int(complete_task)
-            except:
-                due_date_dict[assigned_user] = int(complete_task)
+            due_date_dict[assigned_user] += int(complete_task)
+        except:
+            due_date_dict[assigned_user] = int(complete_task)
 
-        # Add missing keys and values to task_comp_dict.
-        # Add missing keys and values to a dictionary:
-        # Reference: https://www.geeksforgeeks.org/python-combine-the-values-of-two-dictionaries-having-same-key/
+    # Add missing keys and values to task_comp_dict.
+    # Add missing keys and values to a dictionary:
+    # Reference: https://www.geeksforgeeks.org/python-combine-the-values-of-two-dictionaries-having-same-key/
 
-        for key in check_user_dict:
-            tasks_comp_dict[key] = check_user_dict[key] + tasks_comp_dict.get(key, 0)
+    for key in check_user_dict:
+        tasks_comp_dict[key] = check_user_dict[key] + tasks_comp_dict.get(key, 0)
 
-        for key, val in tasks_comp_dict.items():
-            tasks_comp_dict[key] = round(val / total_tasks * 100, 2)
+    for key, val in tasks_comp_dict.items():
+        tasks_comp_dict[key] = round(val / total_tasks * 100, 2)
 
-        # Add missing keys and values to task_incomp_dict.
-        for key in check_user_dict:
-            tasks_incomp_dict[key] = check_user_dict[key] + tasks_incomp_dict.get(
-                key, 0
-            )
+    # Add missing keys and values to task_incomp_dict.
+    for key in check_user_dict:
+        tasks_incomp_dict[key] = check_user_dict[key] + tasks_incomp_dict.get(
+            key, 0
+        )
 
-        for key, val in tasks_incomp_dict.items():
-            tasks_incomp_dict[key] = round(val / total_tasks * 100, 2)
+    for key, val in tasks_incomp_dict.items():
+        tasks_incomp_dict[key] = round(val / total_tasks * 100, 2)
 
-        # Add missing keys and values to due_date_dict
-        for key in check_user_dict:
-            due_date_dict[key] = check_user_dict[key] + due_date_dict.get(key, 0)
+    # Add missing keys and values to due_date_dict
+    for key in check_user_dict:
+        due_date_dict[key] = check_user_dict[key] + due_date_dict.get(key, 0)
 
-        for key, val in due_date_dict.items():
-            due_date_dict[key] = round(val / total_tasks * 100, 2)
+    for key, val in due_date_dict.items():
+        due_date_dict[key] = round(val / total_tasks * 100, 2)
 
-        # Calculates the percentage of incomplete and overdue tasks
-        percent_incomplete_tasks = (total_incomplete_task / total_tasks) * 100
-        percent_overdue_tasks = (total_overdue_incomplete_task / total_tasks) * 100
+    # Calculates the percentage of incomplete and overdue tasks
+    percent_incomplete_tasks = (total_incomplete_task / total_tasks) * 100
+    percent_overdue_tasks = (total_overdue_incomplete_task / total_tasks) * 100
 
-        # Gets the total number of user and total users assigned to tasks.
-        assigned_users = len(dup_list)
-        total_assigned_users = assigned_users
+    # Gets the total number of user and total users assigned to tasks.
+    assigned_users = len(dup_list)
+    total_assigned_users = assigned_users
 
-        # Prevents the program from dividing by zero,
-        # by return 0
-        if total_users == 0:
-            percent_assigned_complete = 0
-        else:
-            percent_assigned_users = (total_assigned_users / total_users) * 100
+    # Prevents the program from dividing by zero,
+    # by return 0
+    if total_users == 0:
+        percent_assigned_complete = 0
+    else:
+        percent_assigned_users = (total_assigned_users / total_users) * 100
 
-        if total_tasks == 0:
-            percent_assigned_complete = 0
-            percent_assigned_incomplete = 0
-            percent_assigned_incomplete_overdue = 0
-        else:
-            percent_assigned_complete = (count_complete_users / total_tasks) * 100
-            percent_assigned_incomplete = (count_incomplete_users / total_tasks) * 100
-            percent_assigned_incomplete_overdue = (
-                count_overdue_user / total_tasks
-            ) * 100
+    if total_tasks == 0:
+        percent_assigned_complete = 0
+        percent_assigned_incomplete = 0
+        percent_assigned_incomplete_overdue = 0
+    else:
+        percent_assigned_complete = (count_complete_users / total_tasks) * 100
+        percent_assigned_incomplete = (count_incomplete_users / total_tasks) * 100
+        percent_assigned_incomplete_overdue = (
+            count_overdue_user / total_tasks
+        ) * 100
 
     # ---Write files---
 
@@ -659,6 +680,9 @@ def generate_report(check_username, txt_bx):
 
 # ----Display Graph----
 def plot_graph(check_username):
+
+    update_user_list(check_username)
+    
     # Lists
     task_list = []
     task_list.clear()
@@ -685,7 +709,11 @@ def plot_graph(check_username):
 
             user_list.append(users)
 
-            [duplicate_list.append(users) for users in user_list if users not in duplicate_list]
+            [
+                duplicate_list.append(users)
+                for users in user_list
+                if users not in duplicate_list
+            ]
 
     # Counts how many tasks was assigned per user
     user_dict = {x: user_list.count(x) for x in check_username}

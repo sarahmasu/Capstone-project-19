@@ -56,7 +56,7 @@ def menu(username, check_username, current_user, task_num_list, today):
             fg="#ffffff",
             width=10,
             font=("Arial", 11),
-            command=lambda: reg.register(side_frame),
+            command=lambda: reg.register(side_frame, check_username),
         )
 
         add_btn = tk.Button(

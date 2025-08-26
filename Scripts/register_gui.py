@@ -7,7 +7,7 @@ import Scripts.functions as fun
 # ----Register Function----
 
 
-def register(frame):
+def register(frame, check_username):
 
     # Creates a child window
     """reg_win = tk.Toplevel()
@@ -54,6 +54,7 @@ def register(frame):
         font=("Arial", 12),
         width=10,
         command=lambda: fun.submit_user(
+            check_username,
             new_user.get().lower(),
             new_passwd.get().lower(),
             confirm_new_passwd.get().lower(),
