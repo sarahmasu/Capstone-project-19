@@ -6,6 +6,7 @@ from tkcalendar import *
 import os.path
 import matplotlib.pyplot as plt
 import numpy as np
+from datetime import datetime
 
 # =============Function=============
 
@@ -106,6 +107,7 @@ def update_user_list(check_username):
     except FileNotFoundError as error:
         print(f"An error occurred: {error}")
 
+
 # ----Submit Tasks----
 
 
@@ -141,7 +143,6 @@ def submit_user(check_username, new_user, new_passwd, confirm_new_passwd):
     update_user_list(check_username)
 
     try:
-
 
         with open("user.txt", "a") as add_line:
 
@@ -577,9 +578,7 @@ def generate_report(check_username, txt_bx):
 
     # Add missing keys and values to task_incomp_dict.
     for key in check_user_dict:
-        tasks_incomp_dict[key] = check_user_dict[key] + tasks_incomp_dict.get(
-            key, 0
-        )
+        tasks_incomp_dict[key] = check_user_dict[key] + tasks_incomp_dict.get(key, 0)
 
     for key, val in tasks_incomp_dict.items():
         tasks_incomp_dict[key] = round(val / total_tasks * 100, 2)
@@ -613,9 +612,7 @@ def generate_report(check_username, txt_bx):
     else:
         percent_assigned_complete = (count_complete_users / total_tasks) * 100
         percent_assigned_incomplete = (count_incomplete_users / total_tasks) * 100
-        percent_assigned_incomplete_overdue = (
-            count_overdue_user / total_tasks
-        ) * 100
+        percent_assigned_incomplete_overdue = (count_overdue_user / total_tasks) * 100
 
     # ---Write files---
 
@@ -679,10 +676,24 @@ def generate_report(check_username, txt_bx):
 
 
 # ----Display Graph----
+
+"""
+    Function plots two bar charts next to each other:
+    - Retrieve users, due date, and task status.
+    - Add them to relative lists.
+    - Add usernames to dictionaries as keys and set their values to 0.
+    - Replace Yes and No with 1s and 0s.
+    - Increment to value in the dictionaries.
+    - Create a new list that stores the values of the dictionaries
+    - Plot the bar charts.
+
+"""
+
+
 def plot_graph(check_username):
 
     update_user_list(check_username)
-    
+
     # Lists
     task_list = []
     task_list.clear()
@@ -693,9 +704,26 @@ def plot_graph(check_username):
     duplicate_list = []
     duplicate_list.clear()
 
+    comp_task_list = []
+    comp_task_list.clear()
+
+    incomp_task_list = []
+    incomp_task_list.clear()
+
+    overdue_list = []
+    overdue_list.clear()
+
     # Dictionary
     user_dict = {}
     user_dict.clear()
+
+    comp_task_dict = {}
+    comp_task_dict.clear()
+
+    incomp_task_dict = {}
+    incomp_task_dict.clear()
+
+    today = datetime.today()
 
     with open("tasks.txt", "r", encoding="utf-8") as read_tasks:
         read_lines = read_tasks.readlines()
@@ -705,9 +733,15 @@ def plot_graph(check_username):
 
             users = line[0]
             due_date = line[4]
-            task_status = [5]
+            task_status = line[5]
+
+            task_date = datetime.strptime(due_date, "%d %b %Y")
 
             user_list.append(users)
+            task_list.append(f"{users}, {task_status}")
+
+            if task_date < today and task_status == "No":
+                overdue_list.append(f"{users, {task_status}}")
 
             [
                 duplicate_list.append(users)
@@ -717,17 +751,47 @@ def plot_graph(check_username):
 
     # Counts how many tasks was assigned per user
     user_dict = {x: user_list.count(x) for x in check_username}
+    comp_task_dict = {x: 0 for x in check_username}
+    incomp_task_dict = {x: 0 for x in check_username}
 
-    total_tasks_list = list(user_dict.values())
+    # Replace "Yes" and "No" with 1s and 0s
+    comp_task_list = [tasks.replace("Yes", "1") for tasks in task_list]
+    comp_task_list = [tasks.replace("No", "0") for tasks in comp_task_list]
 
-    users = np.array(check_username)  # x value: usernames
-    total_task = np.array(total_tasks_list)  # y value: total assigned tasks
+    incomp_task_list = [tasks.replace("Yes", "0") for tasks in task_list]
+    incomp_task_list = [tasks.replace("No", "1") for tasks in incomp_task_list]
+
+    for task_status in comp_task_list:
+        key = task_status.strip().split(", ")
+        users = key[0]
+        status = key[1]
+        comp_task_dict[users] += int(status)
+
+    for task_status in incomp_task_list:
+        key = task_status.strip().split(", ")
+        users = key[0]
+        status = key[1]
+        incomp_task_dict[users] += int(status)
+
+    # y-value
+    total_comp_tasks = list(comp_task_dict.values())
+    total_incomp_tasks = list(incomp_task_dict.values())
+    # x-value
+    users = check_username
+
+    x = np.arange(len(users))
+    width = 0.3
 
     # Plots bar charts
     plt.title("Tasks assigned to users")
     plt.xlabel("Users")
     plt.ylabel("Tasks")
-    plt.bar(users, total_task, label="Total assigned tasks")
+
+    plt.bar(x, total_comp_tasks, width, label="Complete tasks")
+    plt.bar(x + width, total_incomp_tasks, width, label="Incomplete tasks")
+
+    plt.xticks(x + width / 2, users)
+
     plt.legend(loc="best")
     plt.show()
 
@@ -777,5 +841,14 @@ def on_configure(event, canvas):
 
     - Makes the canvas scrollable:
     https://stackoverflow.com/questions/40526496/vertical-scrollbar-for-frame-in-tkinter-python
+
+    - How to embed Matplotlib charts in Tkinter GUI?
+    https://www.geeksforgeeks.org/python/how-to-embed-matplotlib-charts-in-tkinter-gui/
+    https://www.geeksforgeeks.org/python/plotting-multiple-bar-charts-using-matplotlib-in-python/
+
+    - How to plot to bar charts on the same chart:
+    https://www.geeksforgeeks.org/python/plotting-multiple-bar-charts-using-matplotlib-in-python/
+    https://stackoverflow.com/questions/19125722/adding-a-matplotlib-legend
+    https://stackoverflow.com/questions/10369681/how-to-plot-bar-graphs-with-same-x-coordinates-side-by-side-dodged
     
 """
