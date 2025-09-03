@@ -7,15 +7,6 @@
 1. [Introduction](#introduction)
 2. [Project Description](#project-description)
 3. [How to use the project](#project-use)
-
-   3.1. [Registering Users](#reg_users)
-
-   3.2. [Adding Tasks](#add_tasks)
-
-   3.3. [Viewing Tasks](#view_tasks)
-
-   3.4. [Statistics](#view_stats)
-
 4. [Conclusion](#conclusion)
 5. [References](#references)
 
