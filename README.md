@@ -46,7 +46,7 @@ To run the project you will need to clone the repo to your machine or download a
 - numpy
 
 <p align="center">
-    <img src = "Images/installation_methods" alt ="Screenshot of options to download project">
+    <img src = "Images/installation_methods.PNG" alt ="Screenshot of options to download project">
 </p>
 
 ## 4. How to use the project? <a name="project-use"></a>
