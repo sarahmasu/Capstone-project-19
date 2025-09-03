@@ -672,8 +672,6 @@ def generate_report(check_username, txt_bx):
 
     messagebox.showinfo("Success", "User and Task overview reports generated!")
 
-    display_stats(txt_bx)
-
 
 # ----Display Graph----
 
